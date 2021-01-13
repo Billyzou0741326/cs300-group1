@@ -1,0 +1,98 @@
+﻿The ChocAn Simulator
+Requirements Document
+Table of Contents
+1        Introduction        3
+1.1        Purpose and Scope        3
+1.2        Target Audience        3
+1.3        Terms and Definitions        3
+2        Product Overview        4
+2.1        Users and Stakeholders        4
+2.1.1        <Stakeholder 1>        4
+2.1.2        <Stakeholder 2>        4
+2.2        Use cases        4
+2.2.1        <Use Case 1>        4
+2.2.2        <Use Case 2>        4
+2.2.3        <Use Case 3>        4
+3        Functional Requirements        5
+3.1        <Functional Requirement 1>        5
+3.1.1        <Functional Requirement 1 Aspects 1>        5
+3.1.2        <Functional Requirement 1 Aspect 2>        5
+3.2        <Functional Requirement 2>        5
+3.3        <Functional Requirement 3>        5
+4        Nonfunctional Requirements        6
+4.1        <Nonfunctional Requirement 1>        6
+4.1.1        < Nonfunctional Requirement 1 Aspects 1>        6
+4.1.2        < Nonfunctional Requirement 1 Aspect 2>        6
+4.2        < Nonfunctional Requirement 2>        6
+4.3        < Nonfunctional Requirement 3>        6
+5        Milestones and Deliverables        7
+5.1        <Milestone/Deliverable 1>        7
+5.1.1        <Milestone/Deliverable 1 Stage 1>        7
+5.1.2        < Milestone/Deliverable 1 Stage 1>        7
+5.2        <Milestone/Deliverable 2>        7
+
+
+________________
+Introduction
+Introduce this document and the project it describes.   You should also summarize the remaining content of the document here.
+Purpose and Scope
+You should describe this document by giving its purpose, scope.
+Target Audience
+Describe the target audience for this document.
+Terms and Definitions
+Define any terms or acronyms you will be using in the remainder of this document.
+________________
+Product Overview
+Give a high level description of the functionality of the project here.  Describe the purpose of this section.  It may be useful to give your definition of a user, a stake holder and a use case.  If there are scope limitations to the project, i.e. things you will not be doing, or are not required to do, this is a good section to put those.
+Users and Stakeholders
+Describe the purpose of this section.  Only a few sentences are expected here.
+<Stakeholder 1>
+List the first stakeholder or class of stakeholders if necessary.  Describe, exactly, their role in the development, deployment, use, maintenance, etc. of the software.
+<Stakeholder 2>
+Don’t forget to remove the surrounding < and > symbols.
+Use cases
+Describe the purpose of this section.  Only a few sentences are expected here.
+<Use Case 1>
+Describe the first use case here.  Be sure to explicitly identify the participants, human or otherwise, and explain their roles.  Diagrams may be effective here, particularly a sequence diagram.
+<Use Case 2>
+Don’t forget to remove the surrounding < and > symbols.
+<Use Case 3>
+Don’t forget to remove the surrounding < and > symbols.
+________________
+Functional Requirements
+Describe the purpose of this section and outline its contents.  Only a few sentences are expected here.  It may help to define a functional requirement.
+<Functional Requirement 1>
+Describe the first functional requirement.  This is the meat of the document, so be sure to use precise language.  Include diagrams when appropriate.
+<Functional Requirement 1 Aspects 1>
+It may be necessary to separate some of the larger functional requirements into several sub-requirements or requirement aspects.
+<Functional Requirement 1 Aspect 2>
+Don’t forget to remove the surrounding < and > symbols.
+<Functional Requirement 2>
+Don’t forget to remove the surrounding < and > symbols.
+<Functional Requirement 3>
+Don’t forget to remove the surrounding < and > symbols.
+________________
+Nonfunctional Requirements
+Describe the purpose of this section and outline its contents.  Only a few sentences are expected here.  It may help to define a nonfunctional requirement.
+<Nonfunctional Requirement 1>
+Describe the first nonfunctional requirement.  This is the meat of the document, so be sure to use precise language.  Include diagrams when appropriate.
+< Nonfunctional Requirement 1 Aspects 1>
+It may be necessary to separate some of the larger nonfunctional requirements into several sub-requirements or requirement aspects.
+< Nonfunctional Requirement 1 Aspect 2>
+Don’t forget to remove the surrounding < and > symbols.
+< Nonfunctional Requirement 2>
+Don’t forget to remove the surrounding < and > symbols.
+< Nonfunctional Requirement 3>
+Don’t forget to remove the surrounding < and > symbols.
+________________
+Milestones and Deliverables
+Describe the purpose of this section and outline its contents.  Describe the milestones on a high level.  Include a description of your workflow plan.  A Gantt chart may be beneficial here.
+<Milestone/Deliverable 1>
+Explain what this milestone consists of.  Identify the deliverable or deliverables that will be produced at this milestone.  Generally describe what work will be done leading up to the conclusion of this milestone.
+<Milestone/Deliverable 1 Stage 1>
+Some of the larger milestones may be broken up into stages.  Explain what is involved in this stage and what deliverable will be produced at the end of this stage.
+< Milestone/Deliverable 1 Stage 1>
+Don’t forget to remove the surrounding < and > symbols.
+<Milestone/Deliverable 2>
+Don’t forget to remove the surrounding < and > symbols.
+<Lastname>
