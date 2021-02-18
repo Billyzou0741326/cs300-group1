@@ -5,7 +5,8 @@
 #include "provider_directory_internal.h"
 
 
-class Service {
+class Service
+{
   public:
     Service();
     Service(int code, double fees, const std::string& name, const std::string& desc);
@@ -25,7 +26,8 @@ class Service {
 };
 
 
-class ProviderDirectory {
+class ProviderDirectory
+{
   public:
     ProviderDirectory();
     ProviderDirectory(const ProviderDirectory&);

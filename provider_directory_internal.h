@@ -23,7 +23,8 @@ template <class K, class V> bool operator> (const Pair<K,V>& c, const K& key);
  *  Key must be comparable via relational operators
  *  */
 template <class K, class V>
-class Pair {
+class Pair
+{
   private:
     K key;
     V* data;
@@ -59,14 +60,15 @@ class Pair {
 /** TreeNode describes a tree's internal node
  * */
 template <class K, class V>
-class TreeNode {
+class TreeNode
+{
   private:
-    enum Color {
-      RED,
-      BLACK,
-    } color;
-    K key;
-    V* data;
+    enum Color
+    {
+      BLACK = 0,
+      RED   = 1,
+    } c;
+    Pair<K,V>* p;
     TreeNode* left;
     TreeNode* right;
     TreeNode* parent;
@@ -83,6 +85,10 @@ class TreeNode {
     TreeNode<K,V>*& getLeft();
     TreeNode<K,V>*& getRight();
     TreeNode<K,V>*& getParent();
+    void pair(const Pair<K,V>& pair);
+    void pair(Pair<K,V>* pair);
+    Pair<K,V>*& pair();
+    Color color() const;
 };
 
 
@@ -90,9 +96,11 @@ class TreeNode {
  *  Implements red-black tree
  *  */
 template <class K, class V>
-class TreeMap {
+class TreeMap
+{
   private:
     TreeNode<K,V>* root;
+    TreeNode<K,V>* nilNode;
     int count;
 
     void freeTree(TreeNode<K,V>);
