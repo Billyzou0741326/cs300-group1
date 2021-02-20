@@ -246,21 +246,21 @@ void TreeNode<K,V>::setParent(TreeNode<K,V>* parent)
 
 
 template <class K, class V>
-TreeNode<K,V>*& TreeNode<K,V>::getLeft()
+TreeNode<K,V>* TreeNode<K,V>::getLeft()
 {
   return left;
 }
 
 
 template <class K, class V>
-TreeNode<K,V>*& TreeNode<K,V>::getRight()
+TreeNode<K,V>* TreeNode<K,V>::getRight()
 {
   return right;
 }
 
 
 template <class K, class V>
-TreeNode<K,V>*& TreeNode<K,V>::getParent()
+TreeNode<K,V>* TreeNode<K,V>::getParent()
 {
   return parent;
 }
@@ -391,6 +391,7 @@ void TreeMap<K,V>::copyTree(TreeNode<K,V>* dest, TreeNode<K,V>* src, TreeNode<K,
       newNode = new TreeNode<K,V>(*src);
       newNode->setLeft(this->nilNode);
       newNode->setRight(this->nilNode);
+      newNode->setParent(this->nilNode);
       ++count;
     }
     root = newNode;
@@ -450,7 +451,7 @@ int TreeMap<K,V>::rotateLeft(TreeNode<K,V>* parent)
   if (parentParent->getLeft() == parent)
     parentParent->setLeft(child);
   else
-    parentParent->setRight(parentParent);
+    parentParent->setRight(child);
 
   child->setParent(parentParent);
   child->setLeft(parent);
@@ -523,6 +524,10 @@ void TreeMap<K,V>::set(const K& key, const V& value)
 
   newNode = new TreeNode<K,V>(key, value);
   newNode->setParent(parent);
+  newNode->setLeft(nil);
+  newNode->setRight(nil);
+  newNode->setColor(TreeNode<K,V>::RED);
+
   if (root == nil)
   {
     this->root = newNode;
@@ -545,9 +550,6 @@ void TreeMap<K,V>::set(const K& key, const V& value)
   }
   ++count;
 
-  newNode->setColor(TreeNode<K,V>::RED);
-  newNode->setLeft(nil);
-  newNode->setRight(nil);
   insertFix(newNode);
 }
 

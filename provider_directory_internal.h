@@ -85,9 +85,9 @@ class TreeNode
     void setLeft(TreeNode<K,V>* left);
     void setRight(TreeNode<K,V>* right);
     void setParent(TreeNode<K,V>* parent);
-    TreeNode<K,V>*& getLeft();
-    TreeNode<K,V>*& getRight();
-    TreeNode<K,V>*& getParent();
+    TreeNode<K,V>* getLeft();
+    TreeNode<K,V>* getRight();
+    TreeNode<K,V>* getParent();
     void setKey(const K& key);
     const K& getKey() const;
     const V& value() const;
