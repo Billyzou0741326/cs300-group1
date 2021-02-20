@@ -107,7 +107,8 @@ class TreeMap
     TreeNode<K,V>* nilNode;
     int count;
 
-    void freeTree(TreeNode<K,V>*&);
+    void copyTree(TreeNode<K,V>* dest, TreeNode<K,V>* src, TreeNode<K,V>* nil);
+    void freeTree(TreeNode<K,V>*);
     int rotateLeft(TreeNode<K,V>* parent);
     int rotateRight(TreeNode<K,V>* parent);
     int insertFix(TreeNode<K,V>* node);

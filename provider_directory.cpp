@@ -190,9 +190,9 @@ template <class K, class V>
 TreeNode<K,V>::TreeNode(const TreeNode<K,V>& another)
   : c(another.color)
   , p(NULL)
-  , left(another.left)
-  , right(another.right)
-  , parent(another.parent)
+  , left(NULL)
+  , right(NULL)
+  , parent(NULL)
 {
   if (another.p != NULL)
     value(*another.p);
@@ -322,17 +322,72 @@ TreeMap<K,V>::TreeMap(const TreeMap& another)
   , nilNode(new TreeNode<K,V>)
   , count(0)
 {
-  // TODO: copy the entire tree
+  copyTree(root, another.root, another.nilNode);
 }
 
 
 template <class K, class V>
 TreeMap<K,V>::~TreeMap()
 {
-  // TODO: remove the entire tree
+  freeTree(root);
   if (nilNode != NULL)
     delete nilNode;
   nilNode = NULL;
+}
+
+
+template <class K, class V>
+void TreeMap<K,V>::copyTree(TreeNode<K,V>* dest, TreeNode<K,V>* src, TreeNode<K,V>* nil)
+{
+  TreeNode<K,V> *newNode, *newLeftNode, *newRightNode;
+
+  if (!src)
+    return;
+
+  if (dest == NULL)
+  {
+    if (src == nil)
+    {
+      newNode = this->nilNode;
+    }
+    else
+    {
+      newNode = new TreeNode<K,V>(*src);
+      newNode->setLeft(this->nilNode);
+      newNode->setRight(this->nilNode);
+      ++count;
+    }
+    root = newNode;
+  }
+
+  if (src->getLeft() != nil)
+  {
+    newLeftNode = new TreeNode<K,V>(*src->getLeft());
+    newLeftNode->setLeft(this->nilNode);
+    newLeftNode->setRight(this->nilNode);
+    newLeftNode->setParent(dest);
+  }
+  else
+    newLeftNode = this->nilNode;
+
+  dest->setLeft(newLeftNode);
+  ++count;
+
+  if (src->getRight() != nil)
+  {
+    newRightNode = new TreeNode<K,V>(*src->getRight());
+    newRightNode->setLeft(this->nilNode);
+    newRightNode->setRight(this->nilNode);
+    newRightNode->setParent(dest);
+  }
+  else
+    newRightNode = this->nilNode;
+
+  dest->setRight(newRightNode);
+  ++count;
+
+  copyTree(newLeftNode, src->getLeft(), nil);
+  copyTree(newRightNode, src->getRight(), nil);
 }
 
 
@@ -727,7 +782,14 @@ void TreeMap<K,V>::clear()
 
 
 template <class K, class V>
-void TreeMap<K,V>::freeTree(TreeNode<K,V>*& root)
+void TreeMap<K,V>::freeTree(TreeNode<K,V>* node)
 {
-  // TODO: implement freeTree
+  TreeNode<K,V>* nil = this->nilNode;
+  if (node == nil)
+    return;
+
+  freeTree(node->getLeft());
+  freeTree(node->getRight());
+  delete node;
+  --count;
 }
