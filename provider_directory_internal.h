@@ -92,6 +92,7 @@ class TreeNode
     void pair(Pair<K,V>* pair);
     Pair<K,V>*& pair();
     Color color() const;
+    void setColor(Color color);
 };
 
 
@@ -106,7 +107,11 @@ class TreeMap
     TreeNode<K,V>* nilNode;
     int count;
 
-    void freeTree(TreeNode<K,V>);
+    void freeTree(TreeNode<K,V>*&);
+    int rotateLeft(TreeNode<K,V>* parent);
+    int rotateRight(TreeNode<K,V>* parent);
+    int insertFix(TreeNode<K,V>* node);
+    int removeFix(TreeNode<K,V>* node);
 
   public:
     TreeMap();
@@ -116,7 +121,7 @@ class TreeMap
     int size() const;
     void remove(const K& key);
     void set(const K& key, const V& value);
-    V& get(const K& key);
+    void get(const K& key, V* value);
     void clear();
 };
 
