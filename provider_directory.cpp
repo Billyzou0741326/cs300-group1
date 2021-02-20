@@ -781,7 +781,7 @@ int TreeMap<K,V>::removeFix(TreeNode<K,V>* node)
 
 
 template <class K, class V>
-int TreeMap<K,V>::get(const K& key, V* value)
+int TreeMap<K,V>::get(const K& key, V* value) const
 {
   TreeNode<K,V>* nil = this->nilNode;
   TreeNode<K,V>* current;
@@ -886,4 +886,51 @@ const std::string& Service::getName() const
 const std::string& Service::getDescription() const
 {
   return description;
+}
+
+
+
+/** # ProviderDirectory */
+ProviderDirectory::ProviderDirectory()
+  : serviceByCode()
+{
+}
+
+
+ProviderDirectory::ProviderDirectory(const ProviderDirectory& another)
+  : serviceByCode(another.serviceByCode)
+{
+}
+
+
+ProviderDirectory::~ProviderDirectory()
+{
+}
+
+
+bool ProviderDirectory::loadFromFile(const std::string& filename)
+{
+  // TODO: complete file reading
+  return true;
+}
+
+
+bool ProviderDirectory::sendTo(const std::string& email) const
+{
+  // TODO: complete email delivery
+  return true;
+}
+
+
+bool ProviderDirectory::validateServiceCode(int serviceCode) const
+{
+  bool found = false;
+  Service* s = NULL;
+  int ok = 0;
+
+  ok = serviceByCode.get(serviceCode, &s);
+  if (0 == ok)
+    found = true;
+
+  return found;
 }

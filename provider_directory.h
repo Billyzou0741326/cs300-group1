@@ -39,7 +39,6 @@ class ProviderDirectory
 
   private:
     TreeMap<int, Service*> serviceByCode;
-
 };
 
 #endif

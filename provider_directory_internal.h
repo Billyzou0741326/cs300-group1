@@ -124,10 +124,14 @@ class TreeMap
     int size() const;
     void remove(const K& key);
     void set(const K& key, const V& value);
-    int get(const K& key, V* value);
+    int get(const K& key, V* value) const;
     void clear();
 };
 
+/** Forward declaration of Service */
+class Service;
+
 template class TreeMap<int, int>;
+template class TreeMap<int, Service*>;
 
 #endif
