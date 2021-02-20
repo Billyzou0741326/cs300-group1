@@ -2,6 +2,7 @@
 #define _PROVIDER_DIRECTORY_H
 
 #include <string>
+#include <fstream>
 #include "provider_directory_internal.h"
 
 
@@ -17,6 +18,11 @@ class Service
     double getFees() const;
     const std::string& getName() const;
     const std::string& getDescription() const;
+
+    void setCode(int code);
+    void setFees(double fees);
+    void setName(const std::string& name);
+    void setDescription(const std::string& desc);
 
   private:
     int code;
@@ -39,6 +45,8 @@ class ProviderDirectory
 
   private:
     TreeMap<int, Service*> serviceByCode;
+
+    int readEntry(std::ifstream& inFile, Service *s);
 };
 
 #endif

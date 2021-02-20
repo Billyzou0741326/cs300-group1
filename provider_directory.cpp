@@ -1,3 +1,6 @@
+#include <fstream>
+#include <cstring>
+#include <stdexcept>
 #include "provider_directory.h"
 #include "provider_directory_internal.h"
 
@@ -889,6 +892,30 @@ const std::string& Service::getDescription() const
 }
 
 
+void Service::setCode(int code)
+{
+  this->code = code;
+}
+
+
+void Service::setFees(double fees)
+{
+  this->fees = fees;
+}
+
+
+void Service::setName(const std::string& name)
+{
+  this->name = name;
+}
+
+
+void Service::setDescription(const std::string& desc)
+{
+  this->description = desc;
+}
+
+
 
 /** # ProviderDirectory */
 ProviderDirectory::ProviderDirectory()
@@ -910,8 +937,119 @@ ProviderDirectory::~ProviderDirectory()
 
 bool ProviderDirectory::loadFromFile(const std::string& filename)
 {
-  // TODO: complete file reading
+  std::ifstream inFile;
+
+  inFile.open(filename.c_str());
+  if (!inFile.is_open())
+    return false;
+
+  Service* s = NULL;
+  int status = 0;
+
+
+  while (!inFile.eof())
+  {
+    s = new Service;
+    status = readEntry(inFile, s);
+
+    if (0 != status)
+    {
+      delete s;
+      return false;
+    }
+
+    serviceByCode.set(s->getCode(), s);
+  }
+
   return true;
+}
+
+
+int ProviderDirectory::readEntry(std::ifstream& inFile, Service *s)
+{
+  if (s == NULL)
+    return -1;
+
+  const char* const fields[] = 
+    { "ServiceCode"
+    , "ServiceName"
+    , "Fees"
+    , "Description"
+    };
+  int status = 0;
+  char buffer[1024];
+  char delimiter = ':';
+  char entryDelimiter[] = "----";
+
+
+  for (int i = 0; i < int(sizeof(fields)/sizeof(fields[0])); ++i)
+  {
+    inFile.getline(buffer, sizeof(buffer), delimiter);
+
+    // I/O error
+    if (!inFile.good())
+      return -1;
+
+    // Invalid format
+    if (0 != strcmp(buffer, fields[i]))
+      return -1;
+
+    inFile.getline(buffer, sizeof(buffer));
+
+    // I/O error
+    if (!inFile.good())
+      return -1;
+
+    switch (i)
+    {
+    case 0: // ServiceCode
+      try
+      {
+        s->setCode(std::stoi(buffer));
+      }
+      catch (std::invalid_argument& err)
+      {
+        return -1;
+      }
+      catch (std::out_of_range& err)
+      {
+        return -1;
+      }
+      break;
+    case 1: // ServiceName
+      s->setName(buffer);
+      break;
+    case 2: // Fees
+      try
+      {
+        s->setFees(std::stod(buffer));
+      }
+      catch (std::invalid_argument& err)
+      {
+        return -1;
+      }
+      catch (std::out_of_range& err)
+      {
+        return -1;
+      }
+      break;
+    case 3: // Description
+      s->setDescription(buffer);
+      break;
+    default:
+      return -1;
+    }
+  }
+
+  inFile.getline(buffer, sizeof(buffer));
+
+  // Invalid format
+  if (0 != strcmp(buffer, entryDelimiter))
+    return -1;
+
+  inFile.peek();
+
+  return status;
 }
 
 
