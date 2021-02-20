@@ -28,7 +28,7 @@ Pair<K,V>::Pair(const K& key, const V& value)
   : key(key)
   , data(NULL)
 {
-  value(data);
+  this->value(value);
 }
 
 
@@ -188,14 +188,14 @@ TreeNode<K,V>::TreeNode()
 
 template <class K, class V>
 TreeNode<K,V>::TreeNode(const TreeNode<K,V>& another)
-  : c(another.color)
+  : c(another.c)
   , p(NULL)
   , left(NULL)
   , right(NULL)
   , parent(NULL)
 {
   if (another.p != NULL)
-    value(*another.p);
+    value(another.p->value());
 }
 
 
@@ -207,8 +207,7 @@ TreeNode<K,V>::TreeNode(const K& key, const V& value)
   , right(NULL)
   , parent(NULL)
 {
-  Pair<K,V> d(key, value);
-  pair(d);
+  p = new Pair<K,V>(key, value);
 }
 
 
@@ -267,6 +266,7 @@ TreeNode<K,V>*& TreeNode<K,V>::getParent()
 }
 
 
+/**
 template <class K, class V>
 void TreeNode<K,V>::pair(const Pair<K,V>& pair)
 {
@@ -287,6 +287,42 @@ template <class K, class V>
 Pair<K,V>*& TreeNode<K,V>::pair()
 {
   return this->p;
+}
+// */
+
+
+template <class K, class V>
+void TreeNode<K,V>::setKey(const K& key)
+{
+  this->p->setKey(key);
+}
+
+
+template <class K, class V>
+const K& TreeNode<K,V>::getKey() const
+{
+  return this->p->getKey();
+}
+
+
+template <class K, class V>
+V& TreeNode<K,V>::value()
+{
+  return this->p->value();
+}
+
+
+template <class K, class V>
+const V& TreeNode<K,V>::value() const
+{
+  return this->p->value();
+}
+
+
+template <class K, class V>
+void TreeNode<K,V>::value(const V& data)
+{
+  this->p->value(data);
 }
 
 
@@ -524,13 +560,13 @@ int TreeMap<K,V>::insertFix(TreeNode<K,V>* child)
   typename TreeNode<K,V>::Color RED = TreeNode<K,V>::RED;
   typename TreeNode<K,V>::Color BLACK = TreeNode<K,V>::BLACK;
 
-  while (child->getParent()->getColor() == RED)
+  while (child->getParent()->color() == RED)
   {
     parent = child->getParent();
     if (parent == parent->getParent()->getLeft())
     {
       uncle = parent->getParent()->getRight();
-      if (uncle->getColor() == RED)
+      if (uncle->color() == RED)
       {
         uncle->setColor(BLACK);
         parent->setColor(BLACK);
@@ -553,7 +589,7 @@ int TreeMap<K,V>::insertFix(TreeNode<K,V>* child)
     else
     {
       uncle = parent->getParent()->getLeft();
-      if (uncle->getColor() == RED)
+      if (uncle->color() == RED)
       {
         uncle->setColor(BLACK);
         parent->setColor(BLACK);
@@ -584,8 +620,7 @@ template <class K, class V>
 void TreeMap<K,V>::remove(const K& key)
 {
   TreeNode<K,V> *nil = this->nilNode;
-  TreeNode<K,V> *target = nil, current, successor, successorChild;
-  typename TreeNode<K,V>::Color RED = TreeNode<K,V>::RED;
+  TreeNode<K,V> *target = nil, *current, *successor, *successorChild;
   typename TreeNode<K,V>::Color BLACK = TreeNode<K,V>::BLACK;
 
   current = this->root;
@@ -647,7 +682,7 @@ void TreeMap<K,V>::remove(const K& key)
     target->value(successor->value());
   }
 
-  if (successor->getColor() == BLACK)
+  if (successor->color() == BLACK)
   {
     delete successor;
     removeFix(successorChild);
@@ -669,35 +704,35 @@ int TreeMap<K,V>::removeFix(TreeNode<K,V>* node)
   if (node == NULL)
     return -1;
 
-  while (node != this->root && node->getColor() == RED)
+  while (node != this->root && node->color() == RED)
   {
     parent = node->getParent();
     if (node == parent->getLeft())
     {
       sibling = parent->getRight();
-      if (sibling->getColor() == RED)
+      if (sibling->color() == RED)
       {
         sibling->setColor(BLACK);
         parent->setColor(RED);
         status = rotateLeft(parent);
         sibling = parent->getRight();
       }
-      if (sibling->getLeft()->getColor() == BLACK &&
-          sibling->getRight()->getColor() == BLACK)
+      if (sibling->getLeft()->color() == BLACK &&
+          sibling->getRight()->color() == BLACK)
       {
         sibling->setColor(RED);
         node = parent;
       }
       else
       {
-        if (sibling->getRight()->getColor() == BLACK)
+        if (sibling->getRight()->color() == BLACK)
         {
           sibling->getLeft()->setColor(BLACK);
           sibling->setColor(RED);
           status = rotateRight(sibling);
           sibling = parent->getRight();
         }
-        sibling->setColor(parent->getColor());
+        sibling->setColor(parent->color());
         parent->setColor(BLACK);
         sibling->getRight()->setColor(BLACK);
         status = rotateLeft(parent);
@@ -707,29 +742,29 @@ int TreeMap<K,V>::removeFix(TreeNode<K,V>* node)
     else
     {
       sibling = parent->getLeft();
-      if (sibling->getColor() == RED)
+      if (sibling->color() == RED)
       {
         sibling->setColor(BLACK);
         parent->setColor(RED);
         status = rotateRight(parent);
         sibling = parent->getLeft();
       }
-      if (sibling->getLeft()->getColor() == BLACK &&
-          sibling->getRight()->getColor() == BLACK)
+      if (sibling->getLeft()->color() == BLACK &&
+          sibling->getRight()->color() == BLACK)
       {
         sibling->setColor(RED);
         node = parent;
       }
       else
       {
-        if (sibling->getLeft()->getColor() == BLACK)
+        if (sibling->getLeft()->color() == BLACK)
         {
           sibling->getRight()->setColor(BLACK);
           sibling->setColor(RED);
           status = rotateLeft(sibling);
           sibling = parent->getLeft();
         }
-        sibling->setColor(parent->getColor());
+        sibling->setColor(parent->color());
         parent->setColor(BLACK);
         sibling->getLeft()->setColor(BLACK);
         status = rotateRight(parent);
@@ -744,14 +779,10 @@ int TreeMap<K,V>::removeFix(TreeNode<K,V>* node)
 
 
 template <class K, class V>
-void TreeMap<K,V>::get(const K& key, V* value)
+int TreeMap<K,V>::get(const K& key, V* value)
 {
-  Pair<K,V>* target = NULL;
   TreeNode<K,V>* nil = this->nilNode;
   TreeNode<K,V>* current;
-
-  if (!value)
-    return;
 
   current = this->root;
   while (current != nil)
@@ -766,11 +797,13 @@ void TreeMap<K,V>::get(const K& key, V* value)
     }
     else
     {
-      target = current->pair();
-      *value = target->value();
-      break;
+      if (value)
+        *value = current->value();
+      return 0;
     }
   }
+
+  return -1;
 }
 
 

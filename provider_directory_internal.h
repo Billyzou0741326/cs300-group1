@@ -88,9 +88,11 @@ class TreeNode
     TreeNode<K,V>*& getLeft();
     TreeNode<K,V>*& getRight();
     TreeNode<K,V>*& getParent();
-    void pair(const Pair<K,V>& pair);
-    void pair(Pair<K,V>* pair);
-    Pair<K,V>*& pair();
+    void setKey(const K& key);
+    const K& getKey() const;
+    const V& value() const;
+    void value(const V& data);
+    V& value();
     Color color() const;
     void setColor(Color color);
 };
@@ -122,8 +124,10 @@ class TreeMap
     int size() const;
     void remove(const K& key);
     void set(const K& key, const V& value);
-    void get(const K& key, V* value);
+    int get(const K& key, V* value);
     void clear();
 };
+
+template class TreeMap<int, int>;
 
 #endif
