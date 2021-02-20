@@ -225,6 +225,78 @@ TreeNode<K,V>::~TreeNode()
 }
 
 
+template <class K, class V>
+void TreeNode<K,V>::setLeft(TreeNode<K,V>* left)
+{
+  this->left = left;
+}
+
+
+template <class K, class V>
+void TreeNode<K,V>::setRight(TreeNode<K,V>* right)
+{
+  this->right = right;
+}
+
+
+template <class K, class V>
+void TreeNode<K,V>::setParent(TreeNode<K,V>* parent)
+{
+  this->parent = parent;
+}
+
+
+template <class K, class V>
+TreeNode<K,V>*& TreeNode<K,V>::getLeft()
+{
+  return left;
+}
+
+
+template <class K, class V>
+TreeNode<K,V>*& TreeNode<K,V>::getRight()
+{
+  return right;
+}
+
+
+template <class K, class V>
+TreeNode<K,V>*& TreeNode<K,V>::getParent()
+{
+  return parent;
+}
+
+
+template <class K, class V>
+void TreeNode<K,V>::pair(const Pair<K,V>& pair)
+{
+  if (this->p != NULL)
+    delete this->p;
+  this->p = new Pair<K,V>(pair);
+}
+
+
+template <class K, class V>
+void TreeNode<K,V>::pair(Pair<K,V>* pair)
+{
+  this->p = pair;
+}
+
+
+template <class K, class V>
+Pair<K,V>*& TreeNode<K,V>::pair()
+{
+  return this->p;
+}
+
+
+template <class K, class V>
+typename TreeNode<K,V>::Color TreeNode<K,V>::color() const
+{
+  return c;
+}
+
+
 
 /** # TreeMap */
 template <class K, class V>

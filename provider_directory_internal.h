@@ -62,12 +62,15 @@ class Pair
 template <class K, class V>
 class TreeNode
 {
-  private:
+  public:
     enum Color
     {
       BLACK = 0,
       RED   = 1,
-    } c;
+    };
+
+  private:
+    Color c;
     Pair<K,V>* p;
     TreeNode* left;
     TreeNode* right;
