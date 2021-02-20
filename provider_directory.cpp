@@ -828,3 +828,62 @@ void TreeMap<K,V>::freeTree(TreeNode<K,V>* node)
   delete node;
   --count;
 }
+
+
+/** # Service */
+Service::Service()
+  : code(0)
+  , fees(0.0)
+  , name()
+  , description()
+{
+}
+
+
+Service::Service(int code, double fees, const std::string& name, const std::string& desc)
+  : code(code)
+  , fees(fees)
+  , name(name)
+  , description(desc)
+{
+}
+
+
+Service::Service(const Service& another)
+  : code(another.code)
+  , fees(another.fees)
+  , name(another.name)
+  , description(another.description)
+{
+}
+
+
+Service::~Service()
+{
+  code = 0;
+  fees = 0.0;
+}
+
+
+int Service::getCode() const
+{
+  return code;
+}
+
+
+double Service::getFees() const
+{
+  return fees;
+}
+
+
+const std::string& Service::getName() const
+{
+  return name;
+}
+
+
+const std::string& Service::getDescription() const
+{
+  return description;
+}

@@ -15,8 +15,8 @@ class Service
 
     int getCode() const;
     double getFees() const;
-    std::string getName() const;
-    std::string getDescription() const;
+    const std::string& getName() const;
+    const std::string& getDescription() const;
 
   private:
     int code;
