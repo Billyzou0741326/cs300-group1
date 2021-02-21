@@ -10,7 +10,7 @@ class member_list
     vector member;
 };
 
-class member_list
+class provider_list
 {
   public:
 
