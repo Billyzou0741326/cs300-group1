@@ -62,12 +62,15 @@ class Pair
 template <class K, class V>
 class TreeNode
 {
-  private:
+  public:
     enum Color
     {
       BLACK = 0,
       RED   = 1,
-    } c;
+    };
+
+  private:
+    Color c;
     Pair<K,V>* p;
     TreeNode* left;
     TreeNode* right;
@@ -82,13 +85,16 @@ class TreeNode
     void setLeft(TreeNode<K,V>* left);
     void setRight(TreeNode<K,V>* right);
     void setParent(TreeNode<K,V>* parent);
-    TreeNode<K,V>*& getLeft();
-    TreeNode<K,V>*& getRight();
-    TreeNode<K,V>*& getParent();
-    void pair(const Pair<K,V>& pair);
-    void pair(Pair<K,V>* pair);
-    Pair<K,V>*& pair();
+    TreeNode<K,V>* getLeft();
+    TreeNode<K,V>* getRight();
+    TreeNode<K,V>* getParent();
+    void setKey(const K& key);
+    const K& getKey() const;
+    const V& value() const;
+    void value(const V& data);
+    V& value();
     Color color() const;
+    void setColor(Color color);
 };
 
 
@@ -103,7 +109,12 @@ class TreeMap
     TreeNode<K,V>* nilNode;
     int count;
 
-    void freeTree(TreeNode<K,V>);
+    void copyTree(TreeNode<K,V>* dest, TreeNode<K,V>* src, TreeNode<K,V>* nil);
+    void freeTree(TreeNode<K,V>*);
+    int rotateLeft(TreeNode<K,V>* parent);
+    int rotateRight(TreeNode<K,V>* parent);
+    int insertFix(TreeNode<K,V>* node);
+    int removeFix(TreeNode<K,V>* node);
 
   public:
     TreeMap();
@@ -113,8 +124,14 @@ class TreeMap
     int size() const;
     void remove(const K& key);
     void set(const K& key, const V& value);
-    V& get(const K& key);
+    int get(const K& key, V* value) const;
     void clear();
 };
+
+/** Forward declaration of Service */
+class Service;
+
+template class TreeMap<int, int>;
+template class TreeMap<int, Service*>;
 
 #endif
