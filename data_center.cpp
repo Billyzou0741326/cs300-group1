@@ -136,7 +136,36 @@ int DataCenter::updateLists(){
 }
 
 int DataCenter::recordService(){
-    UI("Service Recording");
+    int memberNumber = 0;
+    string date;
+    int serviceCode = 0;
+    char confirm = 'N';
+    string comments;
+    
+    UI(memberNumber, "Please enter member number");
+    //validate number TODO
+    UI(date, "Enter date of service (MM-DD-YYYY)");
+    
+    //input and verify service code by displaying name
+    while(confirm != 'Y'){
+        UI(serviceCode, "Enter six digit service code");
+        //special message for non-existent service TODO
+        UI(confirm, "You provided: [service name]? (y/n)");
+        confirm = toupper(confirm);
+    }
+
+    UI(confirm, "Would you like to enter comments? (y/n)");
+    confirm = toupper(confirm);
+    if(confirm == 'Y'){
+        UI(comments, "Enter comments (up to 100 characters)");
+    }
+
+
+    //Create and populate service record object TODO
+
+
+    UI("Service Successfully Recorded!");
+
     return 1;
 }
 
