@@ -162,6 +162,24 @@ void DataCenter::UI(string & str, string prompt){
 void DataCenter::UI(int & num, string prompt){
     UIPrompt(prompt);
     cin >> num;
+    while(cin.fail()){
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << "Input error, please try again: ";
+        cin >> num;
+    }
+    cin.ignore(100, '\n');
+}
+
+void DataCenter::UI(char & value, string prompt){
+    UIPrompt(prompt);
+    cin >> value;
+    while(cin.fail()){
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << "Input error, please try again: ";
+        cin >> value;
+    }
     cin.ignore(100, '\n');
 }
 
