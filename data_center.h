@@ -33,6 +33,7 @@ class DataCenter{
         void UI(std::string);
         void UI(std::string &, std::string);
         void UI(int &, std::string);
+        void UI(char &, std::string);
 };
 
 
