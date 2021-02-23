@@ -55,7 +55,17 @@ void DataCenter::providerMenu(){
         switch(choice){
             //Verify Member Number
             case 1:
-                UI("1");
+                UI(var, "Enter member number");
+                retval = memberList.validate_member(var);
+                if(retval == 0)
+                    UI("Validated");
+                else{
+                //Could add a case for an invalid number i.e. >/< 9 digits
+                    if(retval == 2)
+                        UI("Member not found");
+                    if(retval == 1)
+                        UI("Member suspended");
+                }
                 break;
             //Request Provider Directory
             case 2:
