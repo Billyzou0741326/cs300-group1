@@ -1,7 +1,20 @@
-// Member and Provider Lists
+// Member and Provider Lists - Class Interfaces
+// Group 1, ChocAn Project
+// Jeffrey Jernstrom
+// =============================================================================
+
 #include <vector>
 #include <string>
-#include "person.h"
+//#include "person.h"
+using namespace std;
+
+// Testing Classes =============================================================
+
+class member {};
+class provider {};
+class service_record {};
+
+// Member List Class ===========================================================
 
 class member_list
 {
@@ -30,15 +43,15 @@ public:
 
   // Replaces a member from the list
   // Returns true for success, false for no match / empty list
-  bool edit(int member_id, member &toupdate);
+  bool edit_member(int member_id, member &toupdate);
 
   // Removes a member from the list given a member ID
   // Returns true for success, false for no match / empty list
-  bool remove(int member_id);
+  bool remove_member(int member_id);
 
   // Determines if a member in the list has a valid membership given an ID
   // Returns 0 if valid, 1 for invalid, 2 for no match / empty list
-  int validate(int member_id);
+  int validate_member(int member_id);
 
   // Save the member list to file with the given filename
   // Returns true for success, false for failure
@@ -54,9 +67,11 @@ public:
   bool generate_report(int member_id);
 
 private:
-  vector member;
+  vector <member> mList ();
 
 };
+
+// Provider List Class =========================================================
 
 class provider_list
 {
@@ -113,6 +128,6 @@ public:
   bool generate_accounting_report();
 
 private:
-  vector provider;
+  vector <provider> pList ();
 
 };
