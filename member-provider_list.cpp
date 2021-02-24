@@ -26,6 +26,12 @@ member_list::~member_list()
 
 bool member_list::retrieve_member(int member_id, member &found)
 {
+  for (int i = 0; i <= mList.size(); ++i) {
+    if (i == member_id) {
+      // mList[i].copy(found);
+      return true;
+    }
+  }
   
   return false;
 }
@@ -70,7 +76,7 @@ bool member_list::load_list(string filename)
   return false;
 }
 
-bool generate_report(int member_id)
+bool generate_member_report(int member_id)
 {
   return false;
 }

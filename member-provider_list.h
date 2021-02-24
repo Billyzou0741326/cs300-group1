@@ -64,7 +64,7 @@ public:
   // Member service report - List of a member's service record for the past 
   // seven days. Creates a text file in Member_Reports directory.
   // Returns true for success, false otherwise.
-  bool generate_report(int member_id);
+  bool generate_member_report(int member_id);
 
 private:
   vector <member> mList ();
@@ -113,6 +113,11 @@ public:
   // Load the provider list from a file with the given filename
   // Returns true for success, false for bad filename
   bool load_list(string filename);
+
+  // Provider Service Report - List of a providers's service record for the past 
+  // seven days. Creates a text file in Provider_Reports directory.
+  // Returns true for success, false otherwise.
+  bool generate_provider_report(int member_id);
 
   // EFT Report - List of privider names, ID Numbers, Total Amout Charged for
   // the past seven days 
