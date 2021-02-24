@@ -4,13 +4,13 @@
 #include <fstream>
 using namespace std;
 
-/*
+
 int main(){
     DataCenter dataCenter;
     dataCenter.providerMenu();
     //dataCenter.managerMenu();
     return 0;
-}*/
+}
 
 
 
@@ -46,6 +46,8 @@ DataCenter::DataCenter(){
 void DataCenter::providerMenu(){
     int choice = 0;
     int again = 1;
+    int retval = 0;
+    int var = 0;
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
 
@@ -53,18 +55,32 @@ void DataCenter::providerMenu(){
         UI(choice, providerOptions);
         
         switch(choice){
+
             //Verify Member Number
             case 1:
-                UI("1");
+                UI(var, "Enter member number");
+                retval = memberList.validate_member(var);
+                if(retval == 0)
+                    UI("Validated");
+                else{
+                //Could add a case for an invalid number i.e. >/< 9 digits
+                    if(retval == 2)
+                        UI("Member not found");
+                    if(retval == 1)
+                        UI("Member suspended");
+                }
                 break;
+
             //Request Provider Directory
             case 2:
                 UI("2");
                 break;
+
             //Record Service
             case 3:
                 recordService();
                 break;
+
             //Exit
             case 9:
                 UI("Thanks for using the program.");
@@ -75,6 +91,7 @@ void DataCenter::providerMenu(){
                 UI("Sorry, I didn't understand your input.");
                 break;
         }
+
     } while(again);
 
 }
@@ -83,6 +100,8 @@ void DataCenter::providerMenu(){
 void DataCenter::managerMenu(){
     int choice = 0;
     int again = 1;
+    int retval = 0;
+    int var = 0;
 
     cout << "Welcome to the ChocAn Data Center Interactive Terminal" << endl;
 
@@ -94,36 +113,51 @@ void DataCenter::managerMenu(){
             case 1:
                 UI("1");
                 break;
+
             //Manipulate Provider List
             case 2:
                 UI("2");
                 break;
+
             //Member Report
             case 3:
-                UI("3");
+                UI(var, "Enter member number");
+                if(!memberList.generate_report(var))
+                    UI("Report generation failure! Check input.");
+                else UI("Report successfully generated.");
                 break;
+
             //Provider Report
             case 4:
                 UI("4");
                 break;
+
             //EFT Report
             case 5:
-                UI("5");
+                if(!providerList.generate_ETF_report())
+                    UI("Record generation failure! Check input.");
+                else UI("EFT record successfully generated.");
                 break;
+
             //Accounting Report
             case 6:
-                UI("6");
+                if(!providerList.generate_ETF_report())
+                    UI("Report generation failure! Check input.");
+                else UI("Accounting report successfully generated.");
                 break;
+
             //Exit
             case 9:
                 UI("Thanks for using the program.");
                 UI("");
                 again = 0;
                 break;
+
             default:
                 UI("Sorry, I didn't understand your input.");
                 break;
         }
+
     } while(again);
 }
 
@@ -136,7 +170,36 @@ int DataCenter::updateLists(){
 }
 
 int DataCenter::recordService(){
-    UI("Service Recording");
+    int memberNumber = 0;
+    string date;
+    int serviceCode = 0;
+    char confirm = 'N';
+    string comments;
+    
+    UI(memberNumber, "Please enter member number");
+    //validate number TODO
+    UI(date, "Enter date of service (MM-DD-YYYY)");
+    
+    //input and verify service code by displaying name
+    while(confirm != 'Y'){
+        UI(serviceCode, "Enter six digit service code");
+        //special message for non-existent service TODO
+        UI(confirm, "You provided: [service name]? (y/n)");
+        confirm = toupper(confirm);
+    }
+
+    UI(confirm, "Would you like to enter comments? (y/n)");
+    confirm = toupper(confirm);
+    if(confirm == 'Y'){
+        UI(comments, "Enter comments (up to 100 characters)");
+    }
+
+
+    //Create and populate service record object TODO
+
+
+    UI("Service Successfully Recorded!");
+
     return 1;
 }
 
@@ -162,6 +225,24 @@ void DataCenter::UI(string & str, string prompt){
 void DataCenter::UI(int & num, string prompt){
     UIPrompt(prompt);
     cin >> num;
+    while(cin.fail()){
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << "Input error, please try again: ";
+        cin >> num;
+    }
+    cin.ignore(100, '\n');
+}
+
+void DataCenter::UI(char & value, string prompt){
+    UIPrompt(prompt);
+    cin >> value;
+    while(cin.fail()){
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << "Input error, please try again: ";
+        cin >> value;
+    }
     cin.ignore(100, '\n');
 }
 
