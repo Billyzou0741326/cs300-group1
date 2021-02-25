@@ -119,7 +119,7 @@ public:
   // Returns true for success, false otherwise.
   bool generate_provider_report(int member_id);
 
-  // EFT Report - List of privider names, ID Numbers, Total Amout Charged for
+  // EFT Report - List of provider names, ID Numbers, Total Amout Charged for
   // the past seven days 
   // Creates a text file in ETF_Reports directory.
   // Returns true for success, false otherwise.
