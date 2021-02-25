@@ -122,7 +122,7 @@ void DataCenter::managerMenu(){
             //Member Report
             case 3:
                 UI(var, "Enter member number");
-                if(!memberList.generate_report(var))
+                if(!memberList.generate_member_report(var))
                     UI("Report generation failure! Check input.");
                 else UI("Report successfully generated.");
                 break;
