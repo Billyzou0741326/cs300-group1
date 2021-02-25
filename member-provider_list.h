@@ -50,7 +50,8 @@ public:
   bool remove_member(int member_id);
 
   // Determines if a member in the list has a valid membership given an ID
-  // Returns 0 if valid, 1 for invalid, 2 for no match / empty list
+  // Returns 0 if valid, 1 for invalid, 2 for no match / empty list, 3 for 
+  // invalid input < 0 or > 999999999
   int validate_member(int member_id);
 
   // Save the member list to file with the given filename
