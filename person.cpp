@@ -9,8 +9,7 @@ person::person()
       street_address(),
       city(),
       state(),
-      zipcode(0),
-      current_member(true)
+      zipcode(0)
 {
 
 }
@@ -21,15 +20,13 @@ person::person(string set_name,
                string set_street, 
                string set_city,
                string set_state,
-               uint set_zip,
-               bool set_current)
+               uint set_zip)
     : name(set_name),
       ID_number(set_ID),
       street_address(set_street),
       city(set_city),
       state(set_state),
-      zipcode(set_zip),
-      current_member(set_current)
+      zipcode(set_zip)
 {
 
 }
@@ -54,16 +51,22 @@ person::person(const person & source)
 /* ------ Person Functions ------ */
 
 
-bool person::display_member()
+bool person::display()
 {
     cout << "Name   : " << name << endl
          << "ID #   : " << ID_number << endl
-         << "Address: " << street_address << ", " << city << ", " << state << " " << zipcode << endl
-         << "Valid  : ";
-
-    (current_member) ? cout << "Yes\n\n": cout << "No\n\n";
-
+         << "Address: " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
     return true;
+}
+
+bool person::display_member()
+{
+
+    cout << "[1] Name   : " << name << endl
+         << "[2] ID #   : " << ID_number << endl
+         << "[3] Address: " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
+
+		return true;
 }
 
 // Copy to the passed in person 
@@ -75,7 +78,7 @@ bool person::copy(person & copy_to)
     copy_to.city = city;
     copy_to.state = state;
     copy_to.zipcode = zipcode;
-    copy_to.current_member = current_member;
+    //copy_to.current_member = current_member;
     
     return true;
 }
@@ -88,7 +91,8 @@ bool person::compare(uint ID_to_compare)
 
 bool person::validate_info(uint ID_to_validate)
 {
-    return (ID_to_validate == ID_number) && current_member;
+    //return (ID_to_validate == ID_number) && current_member;
+		return true;
 }
 
 

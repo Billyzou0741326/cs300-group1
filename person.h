@@ -14,10 +14,10 @@ class person
            string set_street, 
            string set_city,
            string set_state,
-           uint set_zip,
-           bool set_current);
+           uint set_zip);
 
-    bool display_member();             // fill out later, this display for mack specific
+    bool display();             // Display for testing
+		bool display_member();			//Display Formatted for Mack
     bool copy(person & copy_to);        // copy current person into sent in person
     bool compare(uint ID_to_compare);     // compare the ID of number passed in to current person
     bool validate_info(uint ID_number); // checks ID number with member directory and returns status
@@ -37,22 +37,31 @@ class person
     string city;
     string state;
     uint zipcode;
-    bool current_member;
 };
 
-/*
+
 class member: public person
 {
 
   public:
     member();
+		member(bool set_current_member);
     ~member();
+	
+			
+		bool display_member(); //display the current members information MACK FORMATTED
+		bool display();					//display for testing format
+		bool copy(member & copy_to); //copy current person into sent in person
+		bool validate_info(uint ID_number); // checks ID number with member directory and returns status
 
-    bool edit();
+    //bool edit();
 
   protected:
+	
+    bool current_member;
 };
 
+/*
 class provider: public person
 {
   public:
