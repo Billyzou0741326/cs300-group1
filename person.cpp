@@ -95,6 +95,25 @@ bool person::validate_info(uint ID_to_validate)
 		return true;
 }
 
+bool person::edit(person & edit_from)
+{
+
+		if(!edit_from.name.empty())
+			name = edit_from.name;
+		if(edit_from.ID_number)
+			ID_number = edit_from.ID_number;
+		if(!edit_from.street_address.empty())
+			street_address = edit_from.street_address;
+		if(!edit_from.city.empty())
+			city = edit_from.city;
+		if(!edit_from.state.empty())
+			state = edit_from.state;
+		if(edit_from.zipcode)
+			zipcode = edit_from.zipcode;
+
+		return true;
+}
+
 
 /*
 bool person::save(string file_name, bool start); 

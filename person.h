@@ -21,7 +21,8 @@ class person
     bool copy(person & copy_to);        // copy current person into sent in person
     bool compare(uint ID_to_compare);     // compare the ID of number passed in to current person
     bool validate_info(uint ID_number); // checks ID number with member directory and returns status
-   // virtual bool edit() = 0;          // edit the current member's information
+		bool edit(person & copy_from);      // edit the current member's information
+
 
 
    bool save(string file_name, bool start); // 
