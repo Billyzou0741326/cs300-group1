@@ -65,15 +65,50 @@ int member_list::validate_member(int member_id)
   return 2;
 }
 
-bool member_list::save_list(string filename)
+int member_list::save_list(string filename)
 {
+  ofstream write;
+  write.open(filename);
 
-  return false;
+  // Ensure Connection
+  if(write) { 
+    /*  
+    for(it = mlist.begin(); mit != mlist.end(); ++it) {
+      if(!it->save(write))
+        return false; // Fail - Write error
+    }
+    */
+
+    write.close();  // Close the file
+    write.clear();  // Recycle var
+
+    return true;  // Success  
+  } 
+  return false;  // Fail - File open error
 }
 
 bool member_list::load_list(string filename)
 {
-  return false;
+  ifstream read;
+  read.open(filename);
+  
+  // Ensure Connection
+  if(read) {
+    member temp;
+
+    /*
+    while(temp.load(read)) {
+      mlist.add_member(temp);
+    }
+    */
+
+    read.close();  // Close the file
+    read.clear();  // Recycle var
+    
+    return true;  //Success
+  }
+  
+  return false;  // Fail - File open error
 }
 
 bool generate_member_report(int member_id)
