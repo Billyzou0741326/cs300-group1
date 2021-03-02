@@ -196,6 +196,10 @@ int DataCenter::recordService(){
 
 
     //Create and populate service record object TODO
+    //I have a constructor that will accept all the necessary
+    //data in order to create a service record object. Here is the function prototype:
+    //ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees)
+    //I will populate the time of record creation in the contructor. BTW this is Bennett
 
 
     UI("Service Successfully Recorded!");

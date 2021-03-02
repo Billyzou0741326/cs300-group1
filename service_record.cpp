@@ -1,3 +1,6 @@
+//Service Record Implementation
+//Bennett Desmond
+
 #include "service_record.h"
 
 using namespace std;
@@ -16,8 +19,8 @@ ServiceRecord::ServiceRecord() {
     fees = 00.00;
 }
 
-ServiceRecord::ServiceRecord(string recordDateAndTime, string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees) {
-    this->recordDateAndTime = recordDateAndTime;
+ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees) {
+    //Figure out how to populate recordDateAndTime TODO
     this->dateOfService;
     this->providerNumber = providerNumber;
     this->memberNumber = memberNumber;
@@ -34,7 +37,7 @@ ServiceRecord::~ServiceRecord() {
 }
 
 bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsultations, double &totalFees) {
-    //Add functionality for checking the date so that only the last seven days are displayed
+    //Add functionality for checking the date so that only the last seven days are displayed TODO
     outputFile << endl;
     outputFile << "    " << dateOfService << endl;
     outputFile << "    " << recordDateAndTime << endl;
@@ -48,7 +51,7 @@ bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsu
 }
 
 bool ServiceRecord::generateMemberReport(ofstream &outputFile) {
-    //Add functionality to check the date
+    //Add functionality to check the date TODO
     outputFile << endl;
     outputFile << "    " << dateOfService << endl;
     outputFile << "    " << providerName << endl;
@@ -57,7 +60,16 @@ bool ServiceRecord::generateMemberReport(ofstream &outputFile) {
 }
 
 bool ServiceRecord::EFTReport(double &totalFees) {
-    //add date check
+    //add date check TODO
     totalFees += fees;
     return true;
+}
+
+bool ServiceRecord::weekVerification(string dateOfService) {
+    //Check date TODO
+    return true;
+}
+
+ServiceRecord *& ServiceRecord::goNext() {
+    return next;
 }
