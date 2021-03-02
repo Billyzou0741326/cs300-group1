@@ -8,21 +8,21 @@
 class ServiceRecord {
 	public:
         ServiceRecord();
-        ServiceRecord(string recordDateAndTime, string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string membername, string serviceName, double fees);
+        ServiceRecord(std::string recordDateAndTime, std::string dateOfService, int providerNumber, int memberNumber, int serviceCode, std::string comments, std::string providerName, std::string memberName, std::string serviceName, double fees);
         ~ServiceRecord();
-        void generateProviderReport(ofstream &OutputFile);
-        void generateMemberReport(ofstream &OutputFile);
-        int EFTReport();
+        bool generateProviderReport(std::ofstream &OutputFile, int &numOfConsultations, double &totalFees);
+        bool generateMemberReport(std::ofstream &OutputFile);
+        bool EFTReport(double &totalFees);
 	private:
-		string recordDateAndTime;
-        string dateOfService
+        std::string recordDateAndTime;
+        std::string dateOfService;
         int providerNumber;
         int memberNumber;
         int serviceCode;
-        string comments;
-        string providerName;
-        string memberName;
-        string serviceName;
+        std::string comments;
+        std::string providerName;
+        std::string memberName;
+        std::string serviceName;
         double fees;
         ServiceRecord * next;
 };
