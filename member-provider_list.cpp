@@ -4,6 +4,7 @@
 // =============================================================================
 
 #include "member-provider_list.h"
+#include "person.h"
 
 // Testing =====================================================================
 
@@ -26,44 +27,68 @@ member_list::~member_list()
 
 bool member_list::retrieve_member(int member_id, member &found)
 {
-  for (int i = 0; i <= mList.size(); ++i) {
-    if (i == member_id) {
-      // mList[i].copy(found);
-      return true;
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+    if(mptr->compare(member_id)) {
+      mptr->copy(found);
+      return true;  // Success
     }
   }
-  
-  return false;
+  return false;  // Fail
 }
 
 bool member_list::display_all()
 {
+  if(mList.empty())
+    return false;  // Fail - Empty list
 
-  return false;
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr)
+    //mptr->display_member_basic();
+
+  return true;
 }
 
 bool member_list::add_member(member &toadd)
 {
+  mList.push_front(toadd);
 
-  return false;
+  return true;
+  // Not sure this can fail...
 }
 bool member_list::edit_member(int member_id, member &toupdate)
 {
-
-  return false;
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+    if(mptr->compare(member_id)) {
+      mptr->edit(toupdate);
+      return true;  // Success
+    }
+  }
+  return false;  // Fail - Empty List / No Match
 }
 
 bool member_list::remove_member(int member_id)
 {
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+    if(mptr->compare(member_id)) {
+      //mList.erase(mptr);  // I think I need a previous ptr or reg list
+      return true;  // Success
+    } 
+  }
 
-  return false;
+  return false;  // Fail - Empty List / No Match
 }
 
 int member_list::validate_member(int member_id)
 {
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+    if(mptr->compare(member_id)) {
+      if(mptr->validate_info(0))  // Don't need to pass member_id
+        return 0;  // Validated
+      else 
+        return 1;  // Not Validated
+    }
+  }
 
-  return 2;
-}
+  return 2; // Fail - Empty List / No Match
 
 int member_list::save_list(string filename)
 {

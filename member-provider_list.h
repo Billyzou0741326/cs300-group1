@@ -30,7 +30,7 @@ public:
   bool retrieve_member(int id, member &found);
 
   // Displays the Names and IDs of all the members in the list
-  // Returns true for success, false for no match / empty list
+  // Returns true for success, false for empty list
   bool display_all();
 
   // Adds a member to the list
@@ -70,8 +70,8 @@ public:
   bool generate_member_report(int member_id);
 
 private:
-  forward_list <member> mList ();
-  forward_list <member> :: iterator mit;
+  forward_list <member> mList;
+  forward_list <member> :: iterator mptr;
 
 
 };
