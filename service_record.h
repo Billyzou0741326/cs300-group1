@@ -7,6 +7,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <ctime>
+#include <cstring>
 
 class ServiceRecord {
 	public:
