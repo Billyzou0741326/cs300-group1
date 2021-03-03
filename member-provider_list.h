@@ -138,7 +138,7 @@ public:
   bool generate_accounting_report();
 
 private:
-  forward_list <provider> pList ();
-  forward_list <provider> :: iterator pit;
+  forward_list <provider> pList;
+  forward_list <provider> :: iterator pptr;
 
 };
