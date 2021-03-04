@@ -53,18 +53,18 @@ person::person(const person & source)
 
 bool person::display()
 {
-    cout << "Name   : " << name << endl
-         << "ID #   : " << ID_number << endl
-         << "Address: " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
+    cout << "Name         : " << name << endl
+         << "ID #         : " << ID_number << endl
+         << "Address      : " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
     return true;
 }
 
 bool person::display_member()
 {
 
-    cout << "[1] Name   : " << name << endl
-         << "[2] ID #   : " << ID_number << endl
-         << "[3] Address: " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
+    cout << "[1] Name         : " << name << endl
+         << "[2] ID #         : " << ID_number << endl
+         << "[3] Address      : " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
 
 		return true;
 }
@@ -92,6 +92,7 @@ bool person::compare(uint ID_to_compare)
 bool person::validate_info(uint ID_to_validate)
 {
     //return (ID_to_validate == ID_number) && current_member;
+
 		return true;
 }
 
