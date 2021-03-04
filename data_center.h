@@ -31,6 +31,7 @@ class DataCenter{
         int generateReport();
         int createPerson(int type);
         int removePerson(int type);
+        int editPerson(int type);
 
         //UI helper functions
         void UIPrompt(std::string, int);

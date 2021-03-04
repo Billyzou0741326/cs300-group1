@@ -202,7 +202,7 @@ int DataCenter::manipulateMembers(){
                 break;
             //Remove Member
             case 2:
-                UI("Remove Member");
+                removePerson(1);
                 break;
             //Edit Member
             case 3:
@@ -241,7 +241,7 @@ int DataCenter::manipulateProviders(){
                 break;
             //Remove Provider 
             case 2:
-                UI("Remove Provider");
+                removePerson(0);
                 break;
             //Edit Provider
             case 3:
@@ -313,6 +313,12 @@ int DataCenter::removePerson(int type){
         //}
         //else UI("Member successfully removed.");
     }
+}
+
+//Prompt user for ID number and allow them to edit whatever
+//fields they like. For type: provider = 0, member = 1
+int DataCenter::editPerson(int type){
+
 }
 
 int DataCenter::recordService(){
