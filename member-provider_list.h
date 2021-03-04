@@ -3,8 +3,10 @@
 // Jeffrey Jernstrom
 // =============================================================================
 
-#include <vector>
+#include <forward_list>
 #include <string>
+#include <fstream>
+#include <iostream>
 //#include "person.h"
 using namespace std;
 
@@ -28,7 +30,7 @@ public:
   bool retrieve_member(int id, member &found);
 
   // Displays the Names and IDs of all the members in the list
-  // Returns true for success, false for no match / empty list
+  // Returns true for success, false for empty list
   bool display_all();
 
   // Adds a member to the list
@@ -55,8 +57,8 @@ public:
   int validate_member(int member_id);
 
   // Save the member list to file with the given filename
-  // Returns true for success, false for failure
-  bool save_list(string filename);
+  // Returns 0 for success, 1 for write error, 2 file error 
+  int save_list(string filename);
 
   // Load the member list from a file with the given filename
   // Returns true for success, false for bad filename
@@ -68,7 +70,9 @@ public:
   bool generate_member_report(int member_id);
 
 private:
-  vector <member> mList ();
+  forward_list <member> mList;
+  forward_list <member> :: iterator mptr;
+
 
 };
 
@@ -134,6 +138,7 @@ public:
   bool generate_accounting_report();
 
 private:
-  vector <provider> pList ();
+  forward_list <provider> pList;
+  forward_list <provider> :: iterator pptr;
 
 };

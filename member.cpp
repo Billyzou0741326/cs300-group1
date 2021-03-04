@@ -45,3 +45,16 @@ bool member::validate_info(uint ID_to_validate)
 {
   return (ID_to_validate == ID_number) && current_member;
 }
+
+bool member::member_report(ofstream &fstream) {
+    bool loopControl = true;
+    //Deal with the boolean return value TODO
+    person_report(fstream);
+    for(list<ServiceRecord>::iterator it = services.begin(); it != services.end(); ++it) {
+        loopControl = it->generateMemberReport(fstream);
+        if(loopControl == false) {
+            break;
+        }
+    }
+    return false;
+}
