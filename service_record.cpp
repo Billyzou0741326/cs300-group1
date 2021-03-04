@@ -6,11 +6,13 @@
 using namespace std;
 
 //int main() {
+    //ofstream fstream;
+    //fstream("providerRecord.txt");
     //ServiceRecord record;
     //string date = "03-01-2021";
     //record.weekVerification(date);
 
-
+    //ServiceRecord record("03-03-2021",789789789,789789789,789789,"This is a comment","Jeff Johnson","Bennett Desmond","Elbow Gris",5.00);
     //return 0;
 //}
 
@@ -29,7 +31,14 @@ ServiceRecord::ServiceRecord() {
 }
 
 ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees) {
-    //Figure out how to populate recordDateAndTime TODO
+    time_t rawTime;
+    struct tm * timeInfo;
+    char buffer[80];
+    time (&rawTime);
+    timeInfo = localtime(&rawTime);
+    strftime(buffer,sizeof(buffer),"%m-%d-%Y %H:%M:%S",timeInfo);
+    string recordDateAndTime(buffer);
+    //cout << "The time is: " << recordDateAndTime << endl;
     this->dateOfService;
     this->providerNumber = providerNumber;
     this->memberNumber = memberNumber;
@@ -45,7 +54,7 @@ ServiceRecord::~ServiceRecord() {
 
 }
 
-bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsultations, double &totalFees) {
+bool ServiceRecord::generateProviderReport(ofstream &outputFile, uint &numOfConsultations, float &totalFees) {
     if(weekVerification(dateOfService)) {
         outputFile << endl;
         outputFile << "    " << dateOfService << endl;
@@ -85,51 +94,19 @@ bool ServiceRecord::EFTReport(double &totalFees) {
 
 bool ServiceRecord::weekVerification(string dateOfService) {
     string month = dateOfService.substr(0,2);
-    //cout << "month " << month << endl;
     string day = dateOfService.substr(3,2);
-    //cout << "day " << day << endl;
     string year = dateOfService.substr(6,4);
-    //cout << "year " << year << endl;
-    //string convDateOfService = year + month + day;
     string convDateOfService = "20210301";
-    //const string format = "%Y-%m-%d";
     tm tmTime;
     memset(&tmTime, 0, sizeof(tmTime));
     strptime(convDateOfService.c_str(), "%Y%m%d", &tmTime);
     const time_t dateOfServiceTimeVar = mktime(&tmTime);
-    //cout << "Date of service: " << dateOfServiceTimeVar << endl;
-    
     const int monthDays[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
     string delimiter = "-";
-    //size_t pos = 0;
-    //stringstream monthString(month);
-    //stringstream dayString(day);
-    //stringstream yearString(year);
-    //int monthInt = 0;
-    //int dayInt = 0;
-    //int yearInt = 0;
-
-    //monthString >> monthInt;
-    //dayString >> dayInt;
-    //yearString >> yearInt;
-    //int monthDays;
-    //for(int i = 0; i < monthInt; i++) {
-        
-    //}
-
-    //int dateOfServiceFrom1970 = () + (dayInt * 24 * 60 * 60) + ((yearInt - 1 + 30) * 365 * 24 * 60 * 60);
-
     std::time_t current_time;
-
     current_time = time(NULL);
-    //cout << "The current time is: " << current_time << endl;
-    //cout << "The time differnece is: " << current_time - dateOfServiceTimeVar << endl;
     if((current_time - dateOfServiceTimeVar) <= 604800) {
         return true;
     }
     return false;
-}
-
-ServiceRecord *& ServiceRecord::goNext() {
-    return next;
 }

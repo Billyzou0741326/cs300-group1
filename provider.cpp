@@ -81,14 +81,15 @@ bool provider::provider_report(ofstream &fstream) {
     bool loopControl = true;
     //Deal with the boolean return value TODO
     person_report(fstream);
-    for(list<ServiceRecord>::iterator it = service.begin(); it != services.end(); ++it) {
-        loopControl = it->generateProviderReport(fstream, num_consultations, total_fee);
+    //The iterator that adds the provider information also changes the consults and fee numbers,
+    //this might need to change TODO
+    for(list<ServiceRecord>::iterator it = services.begin(); it != services.end(); ++it) {
+        loopControl = it->generateProviderReport(fstream, num_consults, total_fee);
         if(loopControl == false) {
             break;
         }
     }
-    //Call ServiceRecord functions for consulation nums and total fees TODO
-    fstream << "Total Number of Consulations: " << num_consultations << endl;
+    fstream << "Total Number of Consulations: " << num_consults << endl;
     fstream << "Total Fees: " << total_fee << endl;
     return true;
 }

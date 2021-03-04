@@ -28,7 +28,7 @@ class person
 
 
         bool save(string file_name, bool start); // 
-        bool add_service(service_record to_add); // Add services to the person's list of services
+        bool add_service(ServiceRecord to_add); // Add services to the person's list of services
         // bool load(string file_name);             // not sure need papa jergson
         // bool save(string file_name, bool start); // This one looks like a duplicate
         bool person_report(ofstream &fstream);

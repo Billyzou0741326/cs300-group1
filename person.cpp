@@ -132,7 +132,7 @@ bool person::save(string file_name, bool start);
 bool person::add_service(ServiceRecord to_add) {
     //Figure out return case for false TODO
     //if(to_add != nullptr) {
-        service.push_back(to_add);
+        services.push_back(to_add);
         return true;
     //} else {
         //return false;
