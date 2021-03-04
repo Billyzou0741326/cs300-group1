@@ -28,12 +28,14 @@ DataCenter::DataCenter(){
     providerOptions.append("\nEnter the number for your selection");
    
     managerOptions = "Menu Options:\n\n";
-    managerOptions.append("[1] Manipulate Member List\n");
-    managerOptions.append("[2] Manipulate Provider List\n");
-    managerOptions.append("[3] Generate Member Report\n");
-    managerOptions.append("[4] Generate Provider Report\n");
-    managerOptions.append("[5] Generate EFT Report\n");
-    managerOptions.append("[6] Generate Accounting Report\n");
+    managerOptions.append("[1] Display Members\n");
+    managerOptions.append("[2] Display Providers\n");
+    managerOptions.append("[3] Manipulate Member List\n");
+    managerOptions.append("[4] Manipulate Provider List\n");
+    managerOptions.append("[5] Generate Member Report\n");
+    managerOptions.append("[6] Generate Provider Report\n");
+    managerOptions.append("[7] Generate EFT Report\n");
+    managerOptions.append("[8] Generate Accounting Report\n");
     managerOptions.append("[9] Exit\n");
     managerOptions.append("\nEnter the number for your selection");
 
@@ -115,18 +117,28 @@ void DataCenter::managerMenu(){
         UI(choice, managerOptions);
         
         switch(choice){
-            //Manipulate Member List
+            //Display Members
             case 1:
+                UI("Members Display");
+                break;
+
+            //Display Providers
+            case 2:
+                UI("Providers Display");
+                break;
+
+            //Manipulate Member List
+            case 3:
                 manipulateMembers();
                 break;
 
             //Manipulate Provider List
-            case 2:
+            case 4:
                 manipulateProviders();
                 break;
 
             //Member Report
-            case 3:
+            case 5:
                 UI(var, "Enter member number");
                 //if(!memberList.generate_member_report(var))
                 //    UI("Report generation failure! Check input.");
@@ -134,19 +146,19 @@ void DataCenter::managerMenu(){
                 break;
 
             //Provider Report
-            case 4:
+            case 6:
                 UI("4");
                 break;
 
             //EFT Report
-            case 5:
+            case 7:
                 //if(!providerList.generate_ETF_report())
                 //    UI("Record generation failure! Check input.");
                 //else UI("EFT record successfully generated.");
                 break;
 
             //Accounting Report
-            case 6:
+            case 8:
                 //if(!providerList.generate_ETF_report())
                 //    UI("Report generation failure! Check input.");
                 //else UI("Accounting report successfully generated.");
