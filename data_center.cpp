@@ -318,7 +318,25 @@ int DataCenter::removePerson(int type){
 //Prompt user for ID number and allow them to edit whatever
 //fields they like. For type: provider = 0, member = 1
 int DataCenter::editPerson(int type){
+    int ID = 0;
+    provider prov;
+    member mem;
 
+    //Provider
+    if(type == 0){
+        UI(ID, "Enter Provider ID");
+        //if(!providerList.retrieve_provider(ID, prov)){
+        //    UI("No matching provider found.");
+        //}
+    }
+
+    //Member
+    if(type == 1){
+        UI(ID, "Enter Member ID");
+        //if(!memberList.retrieve_member(ID, mem)){
+        //    UI("No matching member found.");
+        //}
+    }
 }
 
 int DataCenter::recordService(){
