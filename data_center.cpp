@@ -7,8 +7,8 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    dataCenter.providerMenu();
-    //dataCenter.managerMenu();
+    //dataCenter.providerMenu();
+    dataCenter.managerMenu();
     return 0;
 }
 
@@ -37,6 +37,7 @@ DataCenter::DataCenter(){
     managerOptions.append("[9] Exit\n");
     managerOptions.append("\nEnter the number for your selection");
 
+    currentProviderNumber = -1;
 }
 
 
@@ -51,6 +52,11 @@ void DataCenter::providerMenu(){
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
 
+    UI(var, "Enter your provider number");
+    // Verify provider and reprompt if not
+    //providerList.verify_provider_number(var);
+    currentProviderNumber = var;
+
     do{
         UI(choice, providerOptions);
         
@@ -59,7 +65,7 @@ void DataCenter::providerMenu(){
             //Verify Member Number
             case 1:
                 UI(var, "Enter member number");
-                retval = memberList.validate_member(var);
+                //retval = memberList.validate_member(var);
                 if(retval == 0)
                     UI("Validated");
                 else{
@@ -111,20 +117,20 @@ void DataCenter::managerMenu(){
         switch(choice){
             //Manipulate Member List
             case 1:
-                UI("1");
+                manipulateMembers();
                 break;
 
             //Manipulate Provider List
             case 2:
-                UI("2");
+                manipulateProviders();
                 break;
 
             //Member Report
             case 3:
                 UI(var, "Enter member number");
-                if(!memberList.generate_member_report(var))
-                    UI("Report generation failure! Check input.");
-                else UI("Report successfully generated.");
+                //if(!memberList.generate_member_report(var))
+                //    UI("Report generation failure! Check input.");
+                //else UI("Report successfully generated.");
                 break;
 
             //Provider Report
@@ -134,16 +140,16 @@ void DataCenter::managerMenu(){
 
             //EFT Report
             case 5:
-                if(!providerList.generate_ETF_report())
-                    UI("Record generation failure! Check input.");
-                else UI("EFT record successfully generated.");
+                //if(!providerList.generate_ETF_report())
+                //    UI("Record generation failure! Check input.");
+                //else UI("EFT record successfully generated.");
                 break;
 
             //Accounting Report
             case 6:
-                if(!providerList.generate_ETF_report())
-                    UI("Report generation failure! Check input.");
-                else UI("Accounting report successfully generated.");
+                //if(!providerList.generate_ETF_report())
+                //    UI("Report generation failure! Check input.");
+                //else UI("Accounting report successfully generated.");
                 break;
 
             //Exit
@@ -164,7 +170,72 @@ void DataCenter::managerMenu(){
 
 
 //Internal Helpers
-int DataCenter::updateLists(){
+int DataCenter::manipulateMembers(){
+    string options = "Member List Manipulation Options:\n";
+    options.append("[1] Add Member\n");
+    options.append("[2] Remove Member\n");
+    options.append("[3] Edit Member\n");
+    options.append("[9] Back");
+
+    int choice = 9;
+    int again = 1;
+
+    do{
+        UI(choice, options);
+
+        switch(choice){
+            case 1:
+                UI("Add Member");
+                break;
+            case 2:
+                UI("Remove Member");
+                break;
+            case 3:
+                UI("Edit Member");
+                break;
+            case 9:
+                again = 0;
+                break;
+            default:
+                UI("Sorry, I didn't understand your input.");
+                break;
+        }
+    }while(again);
+
+    return 1;
+}
+
+int DataCenter::manipulateProviders(){
+    string options = "Provider List Manipulation Options:\n";
+    options.append("[1] Add Provider\n");
+    options.append("[2] Remove Provider\n");
+    options.append("[3] Edit Provider\n");
+    options.append("[9] Back");
+
+    int choice = 9;
+    int again = 1;
+
+    do{
+        UI(choice, options);
+
+        switch(choice){
+            case 1:
+                UI("Add Provider");
+                break;
+            case 2:
+                UI("Remove Provider");
+                break;
+            case 3:
+                UI("Edit Provider");
+                break;
+            case 9:
+                again = 0;
+                break;
+            default:
+                UI("Sorry, I didn't understand your input.");
+                break;
+        }
+    }while(again);
 
     return 1;
 }

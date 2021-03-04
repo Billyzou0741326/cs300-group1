@@ -16,15 +16,17 @@ class DataCenter{
 
     private:
         //Objects
-        member_list memberList;
-        provider_list providerList;
-//        ProviderDirectory providerDirectory;
+        //member_list memberList;
+        //provider_list providerList;
+        //ProviderDirectory providerDirectory;
         //Other things
         std::string providerOptions;
         std::string managerOptions;
+        int currentProviderNumber;
 
         //Internal helper functions
-        int updateLists();
+        int manipulateMembers();
+        int manipulateProviders();
         int recordService();
         int generateReport();
 
