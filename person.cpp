@@ -116,8 +116,7 @@ bool person::edit(person & edit_from)
 
 
 /*
-bool person::save(string file_name, bool start); 
-{
+bool person::save(string file_name, bool start) {
     ofstream outfile(file_name);
 
     if(start) // if start is true, then we are appending to the file
@@ -128,9 +127,59 @@ bool person::save(string file_name, bool start);
 }
 */
 
+bool person::add_service(ServiceRecord to_add) {
+    //Figure out return case for false TODO
+    //if(to_add != nullptr) {
+        services.push_back(to_add);
+        return true;
+    //} else {
+        //return false;
+    //}
+}
 
+bool person::person_report(ofstream &fstream) {
+    //Deal with the return value TODO
+    fstream << name << endl;
+    fstream << ID_number << endl;
+    fstream << street_address << endl;
+    fstream << city << endl;
+    fstream << state << endl;
+    fstream << zipcode << endl;
+    return true;
+}
 
+/* ------ Member Functions ------ */
 
+bool member::member_report(ofstream &fstream) {
+    bool loopControl = true;
+    //Deal with the boolean return value TODO
+    person_report(fstream);
+    for(list<ServiceRecord>::iterator it = services.begin(); it != services.end(); ++it) {
+        loopControl = it->generateMemberReport(fstream);
+        if (loopControl == false) {
+            break;
+        }
+    }
+    return true;
+}
+
+/* ------ Provider Functions ------ */
+
+bool provider::provider_report(ofstream &fstream) {
+    bool loopControl = true;
+    //Deal with the boolean return value TODO
+    person_report(fstream);
+    for(list<ServiceRecord>::iterator it = services.begin(); it != services.end(); ++it) {
+        loopControl = it->generateProviderReport(fstream, num_consultations, total_fee);
+        if(loopControl == false) {
+            break;
+        }
+    }
+    //Call ServiceRecord functions for consultation nums and total fees TODO
+    fstream << "Total Number of Consultations: " << num_consultations << endl;
+    fstream << "Total Fees: " << total_fee << endl;
+    return true;
+}
 
 
 

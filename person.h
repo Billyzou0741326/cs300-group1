@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <list>
+#include <iterator>
+#include "service_record.h"
 
 using namespace std;
 
@@ -26,9 +29,10 @@ class person
 
 
    bool save(string file_name, bool start); // 
-   // bool add_service(service_record to_add); // can't do this without Bennett 
+   bool add_service(ServiceRecord to_add); // Add services to the person's list of services
    // bool load(string file_name);             // not sure need papa jergson
-   // bool save(string file_name, bool start); // 
+   // bool save(string file_name, bool start); // I believe this is a duplicate
+   bool person_report(ofstream &fstream);
     
 
   protected:
@@ -38,6 +42,7 @@ class person
     string city;
     string state;
     uint zipcode;
+    list <ServiceRecord> services;
 };
 
 
@@ -54,6 +59,7 @@ class member: public person
 		bool display();					//display for testing format
 		bool copy(member & copy_to); //copy current person into sent in person
 		bool validate_info(uint ID_number); // checks ID number with member directory and returns status
+        bool member_report(ofstream &fstream);
 
     //bool edit();
 
@@ -62,7 +68,7 @@ class member: public person
     bool current_member;
 };
 
-/*
+
 class provider: public person
 {
   public:
@@ -70,10 +76,9 @@ class provider: public person
     ~provider();
 
     bool edit();
+    bool provider_report(ofstream &fstream);
 
   protected:
     uint num_consultations;
-    uint total_fee;
+    double total_fee;
 };
-
-*/

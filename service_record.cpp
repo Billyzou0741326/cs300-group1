@@ -5,14 +5,18 @@
 
 using namespace std;
 
-//int main() {
-    //ServiceRecord record;
-    //string date = "03-01-2021";
+int main() {
+    ofstream fstream;
+    //fstream("providerRecords.txt");
+    ServiceRecord record;
+    string date = "03-01-2021";
     //record.weekVerification(date);
+    
 
 
-    //return 0;
-//}
+
+    return 0;
+}
 
 
 ServiceRecord::ServiceRecord() {
@@ -29,7 +33,13 @@ ServiceRecord::ServiceRecord() {
 }
 
 ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees) {
-    //Figure out how to populate recordDateAndTime TODO
+    time_t rawTime;
+    struct tm * timeInfo;
+    char buffer[80];
+    time (&rawTime);
+    timeInfo = localtime(&rawTime);
+    strftime(buffer,sizeof(buffer),"%m-%d-%Y %H:%M:%S",timeInfo);
+    string recordDateAndTime(buffer);
     this->dateOfService;
     this->providerNumber = providerNumber;
     this->memberNumber = memberNumber;
@@ -45,7 +55,7 @@ ServiceRecord::~ServiceRecord() {
 
 }
 
-bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsultations, double &totalFees) {
+bool ServiceRecord::generateProviderReport(ofstream &outputFile, uint &numOfConsultations, double &totalFees) {
     if(weekVerification(dateOfService)) {
         outputFile << endl;
         outputFile << "    " << dateOfService << endl;

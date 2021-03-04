@@ -15,7 +15,7 @@ class ServiceRecord {
         ServiceRecord();
         ServiceRecord(std::string dateOfService, int providerNumber, int memberNumber, int serviceCode, std::string comments, std::string providerName, std::string memberName, std::string serviceName, double fees);
         ~ServiceRecord();
-        bool generateProviderReport(std::ofstream &OutputFile, int &numOfConsultations, double &totalFees);
+        bool generateProviderReport(std::ofstream &OutputFile, uint &numOfConsultations, double &totalFees);
         bool generateMemberReport(std::ofstream &OutputFile);
         bool EFTReport(double &totalFees);
         //This function verifies that the date passed to it
