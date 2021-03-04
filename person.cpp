@@ -129,6 +129,28 @@ bool person::save(string file_name, bool start);
 }
 */
 
+bool person::add_service(ServiceRecord to_add) {
+    //Figure out return case for false TODO
+    //if(to_add != nullptr) {
+        service.push_back(to_add);
+        return true;
+    //} else {
+        //return false;
+    //}
+}
+
+bool person::person_report(ofstream &fstream) {
+    //Deal with the return value TODO
+    fstream << name << endl;
+    fstream << ID_number << endl;
+    fstream << street_address << endl;
+    fstream << city << endl;
+    fstream << state << endl;
+    fstream << zipcode << endl;
+    return true;
+}
+
+
 
 
 
