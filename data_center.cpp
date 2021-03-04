@@ -196,15 +196,19 @@ int DataCenter::manipulateMembers(){
         UI(choice, options);
 
         switch(choice){
+            //Add Member
             case 1:
-                UI("Add Member");
+                createPerson(1);
                 break;
+            //Remove Member
             case 2:
                 UI("Remove Member");
                 break;
+            //Edit Member
             case 3:
                 UI("Edit Member");
                 break;
+            //Back
             case 9:
                 again = 0;
                 break;
@@ -231,15 +235,19 @@ int DataCenter::manipulateProviders(){
         UI(choice, options);
 
         switch(choice){
+            //Add Provider
             case 1:
-                UI("Add Provider");
+                createPerson(0);
                 break;
+            //Remove Provider 
             case 2:
                 UI("Remove Provider");
                 break;
+            //Edit Provider
             case 3:
                 UI("Edit Provider");
                 break;
+            //Back
             case 9:
                 again = 0;
                 break;
@@ -250,6 +258,61 @@ int DataCenter::manipulateProviders(){
     }while(again);
 
     return 1;
+}
+
+//Prompt user for information about a new person. Type refers
+//to member vs provider, provider = 0, member = 1
+int DataCenter::createPerson(int type){
+    string name;
+    int ID = 0;
+    string address;
+    string city;
+    string state;
+    int zip = 0;
+
+    UI(name, "Name");
+    //TODO verify that ID number doesn't already exist
+    UI(ID, "ChocAn ID Number");
+    UI(address, "Street Address");
+    UI(city, "City");
+    UI(state, "State");
+    UI(zip, "Zip Code");
+
+    //If member
+    if(type == 1){
+        //member thing(name, ID, address, city, state, zip, true);
+        //memberList.
+    }
+
+    //If provider
+    if(type == 0){
+        //provider thing(name, ID, address, city, state, zip, 0, 0);
+        //providerList.
+    }
+}
+
+//Prompt user for ID number and initiate removal from appropriate list
+//provider = 0, member = 1
+int DataCenter::removePerson(int type){
+    int ID = 0;
+
+    //Provider
+    if(type == 0){
+        UI(ID, "Enter Provider ID");
+        //if(!providerList.remove_provider(ID)){
+        //    UI("No matching provider found.");
+        //}
+        //else UI("Provider successfully removed.");
+    }
+
+    //Member
+    if(type == 1){
+        UI(ID, "Enter Member ID");
+        //if(!memberList.remove_member(ID)){
+        //    UI("No matching member found.");
+        //}
+        //else UI("Member successfully removed.");
+    }
 }
 
 int DataCenter::recordService(){

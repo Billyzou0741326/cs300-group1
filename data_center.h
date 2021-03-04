@@ -29,6 +29,8 @@ class DataCenter{
         int manipulateProviders();
         int recordService();
         int generateReport();
+        int createPerson(int type);
+        int removePerson(int type);
 
         //UI helper functions
         void UIPrompt(std::string, int);
