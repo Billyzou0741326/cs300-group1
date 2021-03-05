@@ -993,22 +993,23 @@ ProviderDirectory::~ProviderDirectory()
 }
 
 
-bool ProviderDirectory::load(std::istream& inFile)
+enum ProviderDirectory::LoadResult ProviderDirectory::load(std::istream& inFile)
 {
   Service* s = NULL;
   Service* old = NULL;
+  LoadResult res = Ok;
   int status = 0;
 
 
   while (!inFile.eof())
   {
     s = new Service;
-    status = readEntry(inFile, s);
+    res = readEntry(inFile, s);
 
-    if (0 != status)
+    if (Ok != res)
     {
       delete s;
-      return false;
+      return res;
     }
 
     status = serviceByCode.set(s->getCode(), s, &old);
@@ -1018,26 +1019,26 @@ bool ProviderDirectory::load(std::istream& inFile)
     }
   }
 
-  return true;
+  return Ok;
 }
 
 
-bool ProviderDirectory::loadFromFile(const std::string& filename)
+enum ProviderDirectory::LoadResult ProviderDirectory::loadFromFile(const std::string& filename)
 {
   std::ifstream inFile;
 
   inFile.open(filename.c_str());
   if (!inFile.is_open())
-    return false;
+    return ErrOpenFile;
 
   return load(inFile);
 }
 
 
-int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
+enum ProviderDirectory::LoadResult ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 {
   if (s == NULL)
-    return -1;
+    return ErrInternal;
 
   const char* const fields[] = 
     { "ServiceCode"
@@ -1045,7 +1046,6 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
     , "Fees"
     , "Description"
     };
-  int status = 0;
   char buffer[1024];
   char delimiter = ':';
   char entryDelimiter[] = "----";
@@ -1058,11 +1058,11 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 
     // I/O error
     if (!inFile.good())
-      return -1;
+      return ErrFormat;
 
     // Invalid format
     if (0 != strcmp(buffer, fields[i]))
-      return -1;
+      return ErrFieldName;
 
     whiteSpace = ':';
     while (whiteSpace == ' ' || whiteSpace == '\t')
@@ -1075,7 +1075,7 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 
     // I/O error
     if (!inFile.good())
-      return -1;
+      return ErrFormat;
 
     switch (i)
     {
@@ -1086,11 +1086,11 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
       }
       catch (std::invalid_argument& err)
       {
-        return -1;
+        return ErrDataType;
       }
       catch (std::out_of_range& err)
       {
-        return -1;
+        return ErrFormat;
       }
       break;
     case 1: // ServiceName
@@ -1103,18 +1103,18 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
       }
       catch (std::invalid_argument& err)
       {
-        return -1;
+        return ErrDataType;
       }
       catch (std::out_of_range& err)
       {
-        return -1;
+        return ErrFormat;
       }
       break;
     case 3: // Description
       s->setDescription(buffer);
       break;
     default:
-      return -1;
+      return ErrFieldName;
     }
   }
 
@@ -1122,11 +1122,11 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 
   // Invalid format
   if (0 != strcmp(buffer, entryDelimiter))
-    return -1;
+    return ErrFormat;
 
   inFile.peek();
 
-  return status;
+  return Ok;
 }
 
 

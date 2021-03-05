@@ -42,7 +42,7 @@ class ProviderDirectory
     ProviderDirectory(const ProviderDirectory&);
     ~ProviderDirectory();
 
-    /* // For more specific error reporting
+    // For more specific error reporting
     enum LoadResult
     {
       Ok             = 0,
@@ -51,26 +51,26 @@ class ProviderDirectory
       ErrFormat      = 3,
       ErrFieldName   = 4,
       ErrDataType    = 5,
+      ErrInternal    = 6,
     };
-    // */
 
     /** load reads service entries from arbitrary input streams
      *
-     *  @returns true on success, false on failure
+     *  @returns LoadResult
      *
      *  *Note: failure may happen due to invalid types, invalid
      *         field name, incomplete entries, invalid separator,
      *         etc.
      */
-    bool load(std::istream& inStream);
+    enum LoadResult load(std::istream& inStream);
 
     /** loadFromFile reads service entries from the specified file
      *
-     *  @returns true on success, false on failure
+     *  @returns LoadResult
      *
      *  See `bool load(std::istream& inStream)`.
      */
-    bool loadFromFile(const std::string& filename);
+    enum LoadResult loadFromFile(const std::string& filename);
 
     /** sendTo writes service entries to an arbitrary out stream.
      *
@@ -100,9 +100,9 @@ class ProviderDirectory
     /** readEntry reads one service entry from an arbitrary 
      *  input stream and stores it in `s`.
      *
-     *  @returns 0 on success, -1 on failure
+     *  @returns LoadResult
      */
-    int readEntry(std::istream& inFile, Service *s);
+    enum LoadResult readEntry(std::istream& inFile, Service *s);
 };
 
 #endif
