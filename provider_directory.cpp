@@ -8,6 +8,10 @@
 #include "provider_directory_internal.h"
 
 
+/** Callback functions */
+void freeService(Service*& s);
+void writeServiceEntry(Service*& s, void* outStream);
+
 /** # Pair */
 template <class K, class V>
 Pair<K,V>::Pair()
@@ -839,6 +843,26 @@ void TreeMap<K,V>::traverse(TreeNode<K,V>* node, void (*callback)(V& value)) con
 
 
 template <class K, class V>
+void TreeMap<K,V>::traverse(void (*callback)(V& value, void* any), void* any) const
+{
+  traverse(root, callback, any);
+}
+
+
+template <class K, class V>
+void TreeMap<K,V>::traverse(TreeNode<K,V>* node, void (*callback)(V& value, void* any), void* any) const
+{
+  TreeNode<K,V>* nil = this->nilNode;
+  if (node != NULL && node != nil)
+  {
+    traverse(node->getLeft(), callback, any);
+    callback(node->value(), any);
+    traverse(node->getRight(), callback, any);
+  }
+}
+
+
+template <class K, class V>
 void TreeMap<K,V>::clear()
 {
   freeTree(root);
@@ -1040,11 +1064,12 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
     if (0 != strcmp(buffer, fields[i]))
       return -1;
 
+    whiteSpace = ':';
     while (whiteSpace == ' ' || whiteSpace == '\t')
     {
         inFile.get();
         whiteSpace = inFile.peek();
-    } 
+    }
 
     inFile.getline(buffer, sizeof(buffer));
 
@@ -1107,8 +1132,33 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 
 bool ProviderDirectory::sendTo(const std::string& email) const
 {
-  // TODO: complete email delivery
+  std::ofstream outS(email.c_str(), std::ofstream::out);
+  if (!outS.is_open())
+  {
+    // Failed to open file
+    return false;
+  }
+
+  return sendTo(outS);
+}
+
+
+bool ProviderDirectory::sendTo(std::ostream& outStream) const
+{
+  serviceByCode.traverse(writeServiceEntry, (void*)&outStream);
   return true;
+}
+
+
+void writeServiceEntry(Service*& s, void* outStream)
+{
+  std::ostream& outS = *(std::ostream*) outStream;
+  outS << "Service Code: " << s->getName() << '\n'
+       << "Service Name: " << s->getCode() << '\n'
+       << "Service Fees: " << s->getFees() << '\n'
+       << "Service Description: " << s->getDescription() << '\n'
+       << '\n';
+  outS.flush();
 }
 
 
