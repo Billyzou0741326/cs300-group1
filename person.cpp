@@ -74,7 +74,7 @@ bool person::compare(uint ID_to_compare)
     return ID_number == ID_to_compare;
 }
 
-// Outdated function ?
+// Outdated function  - to be deleted?
 bool person::validate_info(uint ID_to_validate)
 {
     return true;
