@@ -7,14 +7,14 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-//#include "person.h"
+#include "person.h"
 using namespace std;
 
 // Testing Classes =============================================================
 
-class member {};
-class provider {};
-class service_record {};
+//class member {};
+//class provider {};
+//class service_record {};
 
 // Member List Class ===========================================================
 
