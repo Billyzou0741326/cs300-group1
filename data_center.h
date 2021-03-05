@@ -3,6 +3,7 @@
 
 #include <string>
 #include "member-provider_list.h"
+#include "person.h"
 //#include "provider_directory.h"
 
 
