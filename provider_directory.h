@@ -42,6 +42,18 @@ class ProviderDirectory
     ProviderDirectory(const ProviderDirectory&);
     ~ProviderDirectory();
 
+    /* // For more specific error reporting
+    enum LoadResult
+    {
+      Ok             = 0,
+      ErrOpenFile    = 1,
+      ErrIO          = 2,
+      ErrFormat      = 3,
+      ErrFieldName   = 4,
+      ErrDataType    = 5,
+    };
+    // */
+
     /** load reads service entries from arbitrary input streams
      *
      *  @returns true on success, false on failure
@@ -64,7 +76,7 @@ class ProviderDirectory
      *
      *  @returns true on success, false on failure
      */
-    bool sendTo(std::ostream& outStream);
+    bool sendTo(std::ostream& outStream) const;
 
     /** sendTo writes service entries to a file
      *
