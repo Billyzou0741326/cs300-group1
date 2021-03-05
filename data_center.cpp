@@ -56,7 +56,7 @@ void DataCenter::providerMenu(){
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
 
-    UI(var, "Enter your provider number");
+    UI(var, "Enter your provider number", 9, 9);
     // Verify provider and reprompt if not
     //providerList.verify_provider_number(var);
     currentProviderNumber = var;
@@ -68,7 +68,7 @@ void DataCenter::providerMenu(){
 
             //Verify Member Number
             case 1:
-                UI(var, "Enter member number");
+                UI(var, "Enter member number", 9, 9);
                 //retval = memberList.validate_member(var);
                 if(retval == 0)
                     UI("Validated");
@@ -141,7 +141,7 @@ void DataCenter::managerMenu(){
 
             //Member Report
             case 5:
-                UI(var, "Enter member number");
+                UI(var, "Enter member number", 9, 9);
                 //if(!memberList.generate_member_report(var))
                 //    UI("Report generation failure! Check input.");
                 //else UI("Report successfully generated.");
@@ -274,7 +274,7 @@ int DataCenter::createPerson(int type){
 
     UI(name, "Name");
     //TODO verify that ID number doesn't already exist
-    UI(ID, "ChocAn ID Number");
+    UI(ID, "ChocAn ID Number", 9, 9);
     UI(address, "Street Address");
     UI(city, "City");
     UI(state, "State");
@@ -291,6 +291,8 @@ int DataCenter::createPerson(int type){
         //provider thing(name, ID, address, city, state, zip, 0, 0);
         //providerList.
     }
+
+    return 1;
 }
 
 //Prompt user for ID number and initiate removal from appropriate list
@@ -300,7 +302,7 @@ int DataCenter::removePerson(int type){
 
     //Provider
     if(type == 0){
-        UI(ID, "Enter Provider ID");
+        UI(ID, "Enter Provider ID", 9, 9);
         //if(!providerList.remove_provider(ID)){
         //    UI("No matching provider found.");
         //}
@@ -309,12 +311,14 @@ int DataCenter::removePerson(int type){
 
     //Member
     if(type == 1){
-        UI(ID, "Enter Member ID");
+        UI(ID, "Enter Member ID", 9, 9);
         //if(!memberList.remove_member(ID)){
         //    UI("No matching member found.");
         //}
         //else UI("Member successfully removed.");
     }
+
+    return 1;
 }
 
 //Prompt user for ID number and allow them to edit whatever
@@ -323,7 +327,7 @@ int DataCenter::editProvider(){
     int oldID = 0;
     provider prov;
 
-    UI(oldID, "Enter Provider ID");
+    UI(oldID, "Enter Provider ID", 9, 9);
     //if(!providerList.retrieve_provider(oldID, prov)){
     //    UI("No matching provider found.");
     //    return 0;
@@ -351,7 +355,7 @@ int DataCenter::editProvider(){
             //Edit ID
             case 2:
                 //TODO make this check length
-                UI(ID, "Enter new ID");
+                UI(ID, "Enter new ID", 9, 9);
                 break;
             //Street Address
             case 3:
@@ -382,6 +386,8 @@ int DataCenter::editProvider(){
         
     //provider edited(name, ID, address, city, state, zip, 0, 0);
     //providerList.edit_provider(oldID, edited);
+    
+    return 1;
 }
 
 
@@ -391,11 +397,13 @@ int DataCenter::editMember(){
     int ID = 0;
     member mem;
 
-    UI(ID, "Enter Member ID");
+    UI(ID, "Enter Member ID", 9, 9);
     //if(!memberList.retrieve_member(ID, mem)){
     //    UI("No matching member found.");
     //    return 0;
     //}
+
+    return 1;
 }
 
 
@@ -407,13 +415,13 @@ int DataCenter::recordService(){
     char confirm = 'N';
     string comments;
     
-    UI(memberNumber, "Please enter member number");
+    UI(memberNumber, "Please enter member number", 9, 9);
     //validate number TODO
     UI(date, "Enter date of service (MM-DD-YYYY)");
     
     //input and verify service code by displaying name
     while(confirm != 'Y'){
-        UI(serviceCode, "Enter six digit service code");
+        UI(serviceCode, "Enter six digit service code", 6, 6);
         //special message for non-existent service TODO
         UI(confirm, "You provided: [service name]? (y/n)");
         confirm = toupper(confirm);
@@ -422,7 +430,7 @@ int DataCenter::recordService(){
     UI(confirm, "Would you like to enter comments? (y/n)");
     confirm = toupper(confirm);
     if(confirm == 'Y'){
-        UI(comments, "Enter comments (up to 100 characters)");
+        UI(comments, "Enter comments (up to 100 characters)", 100);
     }
 
 
