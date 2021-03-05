@@ -1,3 +1,6 @@
+// ProviderDirectory Implementation
+// Original author: Billy Zou
+
 #ifndef _PROVIDER_DIRECTORY_H
 #define _PROVIDER_DIRECTORY_H
 
@@ -39,15 +42,54 @@ class ProviderDirectory
     ProviderDirectory(const ProviderDirectory&);
     ~ProviderDirectory();
 
+    /** load reads service entries from arbitrary input streams
+     *
+     *  @returns true on success, false on failure
+     *
+     *  *Note: failure may happen due to invalid types, invalid
+     *         field name, incomplete entries, invalid separator,
+     *         etc.
+     */
     bool load(std::istream& inStream);
+
+    /** loadFromFile reads service entries from the specified file
+     *
+     *  @returns true on success, false on failure
+     *
+     *  See `bool load(std::istream& inStream)`.
+     */
     bool loadFromFile(const std::string& filename);
-    bool sendTo(const std::string& email) const;
+
+    /** sendTo writes service entries to an arbitrary out stream.
+     *
+     *  @returns true on success, false on failure
+     */
     bool sendTo(std::ostream& outStream);
+
+    /** sendTo writes service entries to a file
+     *
+     *  @returns true on success, false on failure
+     */
+    bool sendTo(const std::string& email) const;
+
+    /** validateServiceCode checks if a service code is present
+     *
+     *  @returns true on found, false on absent
+     */
     bool validateServiceCode(int serviceCode) const;
+
+    /** size returns the number of entries in the provider directory
+     */
+    int size() const;
 
   private:
     TreeMap<int, Service*> serviceByCode;
 
+    /** readEntry reads one service entry from an arbitrary 
+     *  input stream and stores it in `s`.
+     *
+     *  @returns 0 on success, -1 on failure
+     */
     int readEntry(std::istream& inFile, Service *s);
 };
 

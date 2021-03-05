@@ -1,3 +1,6 @@
+// ProviderDirectory Implementation
+// Original author: Billy Zou
+
 #include <fstream>
 #include <cstring>
 #include <stdexcept>
@@ -501,7 +504,7 @@ int TreeMap<K,V>::rotateRight(TreeNode<K,V>* parent)
 
 
 template <class K, class V>
-void TreeMap<K,V>::set(const K& key, const V& value)
+int TreeMap<K,V>::set(const K& key, const V& value, V* oldValue)
 {
   TreeNode<K,V> *nil = this->nilNode;
   TreeNode<K,V> *root, *current, *newNode, *parent = nil;
@@ -520,8 +523,10 @@ void TreeMap<K,V>::set(const K& key, const V& value)
     }
     else
     {
+      if (oldValue != NULL)
+        *oldValue = current->value();
       current->value(value);
-      return;
+      return 1;
     }
   }
 
@@ -548,12 +553,13 @@ void TreeMap<K,V>::set(const K& key, const V& value)
     else
     {
       delete newNode;
-      return;
+      return 1;
     }
   }
   ++count;
 
   insertFix(newNode);
+  return 0;
 }
 
 
@@ -966,6 +972,7 @@ ProviderDirectory::~ProviderDirectory()
 bool ProviderDirectory::load(std::istream& inFile)
 {
   Service* s = NULL;
+  Service* old = NULL;
   int status = 0;
 
 
@@ -980,7 +987,11 @@ bool ProviderDirectory::load(std::istream& inFile)
       return false;
     }
 
-    serviceByCode.set(s->getCode(), s);
+    status = serviceByCode.set(s->getCode(), s, &old);
+    if (1 == status)
+    {
+      delete old;
+    }
   }
 
   return true;
@@ -1112,4 +1123,10 @@ bool ProviderDirectory::validateServiceCode(int serviceCode) const
     found = true;
 
   return found;
+}
+
+
+int ProviderDirectory::size() const
+{
+  return serviceByCode.size();
 }

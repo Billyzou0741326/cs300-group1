@@ -1,3 +1,6 @@
+// ProviderDirectory Implementation
+// Original author: Billy Zou
+
 #ifndef _PROVIDER_DIRECTORY_INTERNAL_H
 #define _PROVIDER_DIRECTORY_INTERNAL_H
 
@@ -124,7 +127,7 @@ class TreeMap
 
     int size() const;
     void remove(const K& key);
-    void set(const K& key, const V& value);
+    int set(const K& key, const V& value, V* oldValue);
     int get(const K& key, V* value) const;
     void clear();
     void traverse(void (*callback)(V& value)) const;
