@@ -73,7 +73,6 @@ void DataCenter::providerMenu(){
                 if(retval == 0)
                     UI("Validated");
                 else{
-                //Could add a case for an invalid number i.e. >/< 9 digits
                     if(retval == 2)
                         UI("Member not found");
                     if(retval == 1)
