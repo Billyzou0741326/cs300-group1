@@ -3,47 +3,76 @@
 member::member()
 			:current_member(true)
 {
+
+}
+
+member::member(string set_name, 
+               uint set_ID,
+               string set_street, 
+               string set_city,
+               string set_state,
+               uint set_zip,
+               bool set_current_member)
+    : person(set_name,
+             set_ID,
+             set_street,
+             set_city,
+             set_state,
+             set_zip),
+      current_member(set_current_member)
+{
+
 }
 
 member::member(bool set_current_member)
 			:current_member(set_current_member)
 {
+
 }
 
 member::~member()
 {
 }
 
+// Display the derived member information in a formatted view - Used for general display purposes
+// Calls base class display then outputs inhereted class information
 bool member::display_member()
 {
-	person::display_member();
-	cout<< "[4] Valid  : ";
+
+	person::display_person();
+	cout<< "Valid Member : ";
     
 	(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
 	return true;
 }
 
-bool member::display()
+// Display enumerated derived member information - Used by Mack for editing purposes
+// Calls base class display_person_edit before outputting inhereted class information
+bool member::display_member_edit()
 {
-
-	person::display();
-	cout<< "Valid  : ";
+	person::display_person_edit();
+	cout<< "[4] Valid Member : ";
     
 	(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
+
 	return true;
 }
 
+
+// Copy current member information into the passed in member object
+// Calls base class edit, then edits the derived class information
 bool member::copy(member & copy_to)
 {
-	person::copy(copy_to);
-  copy_to.current_member = current_member;
+    person::copy(copy_to);
+    copy_to.current_member = current_member;
 
 	return true;
 }
 
-bool member::validate_info(uint ID_to_validate)
+// Checks if the member status. Returns true if current
+bool member::validate()
 {
-  return (ID_to_validate == ID_number) && current_member;
+  return current_member;
 }
 
 bool member::member_report(ofstream &fstream) {
