@@ -54,7 +54,7 @@ ServiceRecord::~ServiceRecord() {
 
 }
 
-bool ServiceRecord::generateProviderReport(ofstream &outputFile, uint &numOfConsultations, float &totalFees) {
+bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsultations, float &totalFees) {
     if(weekVerification(dateOfService)) {
         outputFile << endl;
         outputFile << "    " << dateOfService << endl;
