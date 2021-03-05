@@ -115,6 +115,7 @@ class TreeMap
     int rotateRight(TreeNode<K,V>* parent);
     int insertFix(TreeNode<K,V>* node);
     int removeFix(TreeNode<K,V>* node);
+    void traverse(TreeNode<K,V>* node, void (*callback)(V& value)) const;
 
   public:
     TreeMap();
@@ -126,6 +127,7 @@ class TreeMap
     void set(const K& key, const V& value);
     int get(const K& key, V* value) const;
     void clear();
+    void traverse(void (*callback)(V& value)) const;
 };
 
 /** Forward declaration of Service */

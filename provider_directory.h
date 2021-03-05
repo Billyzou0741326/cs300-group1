@@ -39,14 +39,16 @@ class ProviderDirectory
     ProviderDirectory(const ProviderDirectory&);
     ~ProviderDirectory();
 
+    bool load(std::istream& inStream);
     bool loadFromFile(const std::string& filename);
     bool sendTo(const std::string& email) const;
+    bool sendTo(std::ostream& outStream);
     bool validateServiceCode(int serviceCode) const;
 
   private:
     TreeMap<int, Service*> serviceByCode;
 
-    int readEntry(std::ifstream& inFile, Service *s);
+    int readEntry(std::istream& inFile, Service *s);
 };
 
 #endif

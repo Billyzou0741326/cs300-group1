@@ -813,6 +813,26 @@ int TreeMap<K,V>::get(const K& key, V* value) const
 
 
 template <class K, class V>
+void TreeMap<K,V>::traverse(void (*callback)(V& value)) const
+{
+  traverse(root, callback);
+}
+
+
+template <class K, class V>
+void TreeMap<K,V>::traverse(TreeNode<K,V>* node, void (*callback)(V& value)) const
+{
+  TreeNode<K,V>* nil = this->nilNode;
+  if (node != NULL && node != nil)
+  {
+    traverse(node->getLeft(), callback);
+    callback(node->value());
+    traverse(node->getRight(), callback);
+  }
+}
+
+
+template <class K, class V>
 void TreeMap<K,V>::clear()
 {
   freeTree(root);
@@ -916,6 +936,13 @@ void Service::setDescription(const std::string& desc)
 }
 
 
+void freeService(Service*& s)
+{
+  delete s;
+  s = NULL;
+}
+
+
 
 /** # ProviderDirectory */
 ProviderDirectory::ProviderDirectory()
@@ -932,17 +959,12 @@ ProviderDirectory::ProviderDirectory(const ProviderDirectory& another)
 
 ProviderDirectory::~ProviderDirectory()
 {
+  serviceByCode.traverse(freeService);
 }
 
 
-bool ProviderDirectory::loadFromFile(const std::string& filename)
+bool ProviderDirectory::load(std::istream& inFile)
 {
-  std::ifstream inFile;
-
-  inFile.open(filename.c_str());
-  if (!inFile.is_open())
-    return false;
-
   Service* s = NULL;
   int status = 0;
 
@@ -965,7 +987,19 @@ bool ProviderDirectory::loadFromFile(const std::string& filename)
 }
 
 
-int ProviderDirectory::readEntry(std::ifstream& inFile, Service *s)
+bool ProviderDirectory::loadFromFile(const std::string& filename)
+{
+  std::ifstream inFile;
+
+  inFile.open(filename.c_str());
+  if (!inFile.is_open())
+    return false;
+
+  return load(inFile);
+}
+
+
+int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 {
   if (s == NULL)
     return -1;
@@ -980,6 +1014,7 @@ int ProviderDirectory::readEntry(std::ifstream& inFile, Service *s)
   char buffer[1024];
   char delimiter = ':';
   char entryDelimiter[] = "----";
+  char whiteSpace = ':';
 
 
   for (int i = 0; i < int(sizeof(fields)/sizeof(fields[0])); ++i)
@@ -993,6 +1028,12 @@ int ProviderDirectory::readEntry(std::ifstream& inFile, Service *s)
     // Invalid format
     if (0 != strcmp(buffer, fields[i]))
       return -1;
+
+    while (whiteSpace == ' ' || whiteSpace == '\t')
+    {
+        inFile.get();
+        whiteSpace = inFile.peek();
+    } 
 
     inFile.getline(buffer, sizeof(buffer));
 

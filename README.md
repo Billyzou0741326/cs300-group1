@@ -26,3 +26,15 @@ git add .
 git commit -m <commit_message>
 git push origin main
 ```
+
+
+## Testing
+
+Tests are written with the [googletest](https://github.com/google/googletest) framework.
+
+To compile tests, run `make test`. Tests for each module are compiled separately and linked to the googletest framework.
+
+
+## Compilation
+
+To produce .o object files, run `make all` or simply `make`. 
