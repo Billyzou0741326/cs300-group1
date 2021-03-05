@@ -7,8 +7,10 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    //dataCenter.providerMenu();
-    dataCenter.managerMenu();
+    dataCenter.providerMenu();
+    //dataCenter.managerMenu();
+
+
     return 0;
 }
 
@@ -450,12 +452,19 @@ void DataCenter::UIPrompt(string prompt, int flag = 1){
     if(flag) cout << " > ";
 }
 
-void DataCenter::UI(string & str, string prompt){
+void DataCenter::UI(string & str, string prompt, int max){
     UIPrompt(prompt);
     getline(cin, str);
+    if(max){
+        while(str.length() > max){
+            cout << "Input too large, max acceptable: " << max << endl;
+            cout << "Please try again: ";
+            getline(cin, str);
+        }
+    }
 }
 
-void DataCenter::UI(int & num, string prompt){
+void DataCenter::UI(int & num, string prompt, int max, int min){
     UIPrompt(prompt);
     cin >> num;
     while(cin.fail()){
@@ -465,6 +474,31 @@ void DataCenter::UI(int & num, string prompt){
         cin >> num;
     }
     cin.ignore(100, '\n');
+
+    if(min || max){
+        string test = to_string(num);
+        do{
+            if(min){
+                if(test.length() < min)
+                    cout << "Input to short, minimum acceptable: " << min << endl;
+            }
+            if(max){
+                if(test.length() > max)
+                    cout << "Input too long, max acceptable: " << max << endl;
+            }
+            cout << "Please try again: ";
+            cin >> num;
+            while(cin.fail()){
+                cin.clear();
+                cin.ignore(100, '\n');
+                cout << "Input error, please try again: ";
+                cin >> num;
+            }
+            cin.ignore(100, '\n');
+            test = to_string(num);
+        }while((min && test.length() < min) || (max && test.length() > max));
+    }
+
 }
 
 void DataCenter::UI(char & value, string prompt){
