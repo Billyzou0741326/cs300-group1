@@ -38,7 +38,7 @@ bool person::display_person()
 {
     cout << "Name         : " << name << endl
          << "ID #         : " << ID_number << endl
-         << "Address      : " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
+         << "Address      : " << street_address << ", " << city << ", " << state << ". " << zipcode << endl;
     return true;
 }
 
@@ -47,10 +47,10 @@ bool person::display_person_edit()
 {
     cout << "[1] Name         : " << name << endl
          << "[2] ID #         : " << ID_number << endl
-         << "[3] Address      : " << street_address << ", " 
-                                  << city << ", " 
-                                  << state << " " 
-                                  << zipcode << endl;
+         << "[3] Street       : " << street_address << endl
+         << "[4] City         : " << city << endl
+         << "[5] State        : " << state << endl
+         << "[6] Zip          : " << zipcode << endl;
 
 		return true;
 }
@@ -74,7 +74,7 @@ bool person::compare(uint ID_to_compare)
     return ID_number == ID_to_compare;
 }
 
-// Outdated function ?
+// Outdated function  - to be deleted?
 bool person::validate_info(uint ID_to_validate)
 {
     return true;

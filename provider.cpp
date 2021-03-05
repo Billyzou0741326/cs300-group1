@@ -47,8 +47,8 @@ bool provider::display_provider_edit()
 {
     if(person::display_person_edit())
     {
-        cout << "[4] # of Consult : " << num_consults << endl
-             << "[5] Total Fee    : " << total_fee << endl << endl;
+        cout << "[7] # of Consult : " << num_consults << endl
+             << "[8] Total Fee    : " << total_fee << endl << endl;
 
         return true;
     }
