@@ -7,11 +7,11 @@ member::member()
 }
 
 member::member(string set_name, 
-               uint set_ID,
+               int set_ID,
                string set_street, 
                string set_city,
                string set_state,
-               uint set_zip,
+               int set_zip,
                bool set_current_member)
     : person(set_name,
              set_ID,

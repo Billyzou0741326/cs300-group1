@@ -16,11 +16,11 @@ person::person()
 
 // Constructor with all Args
 person::person(string set_name, 
-               uint set_ID,
+               int set_ID,
                string set_street, 
                string set_city,
                string set_state,
-               uint set_zip)
+               int set_zip)
     : name(set_name),
       ID_number(set_ID),
       street_address(set_street),
@@ -69,13 +69,13 @@ bool person::copy(person & copy_to)
 }
 
 // Compare person ID to passed in ID_to_compare. Return true if match.
-bool person::compare(uint ID_to_compare)
+bool person::compare(int ID_to_compare)
 {
     return ID_number == ID_to_compare;
 }
 
 // Outdated function  - to be deleted?
-bool person::validate_info(uint ID_to_validate)
+bool person::validate_info(int ID_to_validate)
 {
     return true;
 }

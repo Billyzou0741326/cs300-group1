@@ -12,12 +12,12 @@ provider::provider()
 
 // Constructor with Args
 provider::provider(string set_name, 
-                   uint set_ID,
+                   int set_ID,
                    string set_street, 
                    string set_city,
                    string set_state,
-                   uint set_zip,
-                   uint set_num_consults,
+                   int set_zip,
+                   int set_num_consults,
                    float set_total_fee)
     : person(set_name,
              set_ID,
