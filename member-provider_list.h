@@ -3,6 +3,9 @@
 // Jeffrey Jernstrom
 // =============================================================================
 
+#ifndef LIST_H
+#define LIST_H
+
 #include <forward_list>
 #include <string>
 #include <fstream>
@@ -142,3 +145,5 @@ private:
   forward_list <provider> :: iterator pptr;
 
 };
+
+#endif
