@@ -51,7 +51,7 @@ bool member::display_member()
 bool member::display_member_edit()
 {
 	person::display_person_edit();
-	cout<< "[4] Valid Member : ";
+	cout<< "[7] Valid Member : ";
     
 	(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
 
