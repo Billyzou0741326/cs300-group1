@@ -1,3 +1,6 @@
+// ProviderDirectory Implementation
+// Original author: Billy Zou
+
 #ifndef _PROVIDER_DIRECTORY_H
 #define _PROVIDER_DIRECTORY_H
 
@@ -44,6 +47,7 @@ class ProviderDirectory
     bool sendTo(const std::string& email) const;
     bool sendTo(std::ostream& outStream);
     bool validateServiceCode(int serviceCode) const;
+    int size() const;
 
   private:
     TreeMap<int, Service*> serviceByCode;
