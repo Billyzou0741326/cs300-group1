@@ -31,13 +31,14 @@ class DataCenter{
         int generateReport();
         int createPerson(int type);
         int removePerson(int type);
-        int editPerson(int type);
+        int editProvider();
+        int editMember();
 
         //UI helper functions
-        void UIPrompt(std::string, int);
+        void UIPrompt(std::string, int flag);
         void UI(std::string);
-        void UI(std::string &, std::string);
-        void UI(int &, std::string);
+        void UI(std::string &, std::string, int max = 0);
+        void UI(int &, std::string, int max = 0, int min = 0);
         void UI(char &, std::string);
 };
 

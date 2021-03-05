@@ -7,8 +7,10 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    //dataCenter.providerMenu();
-    dataCenter.managerMenu();
+    dataCenter.providerMenu();
+    //dataCenter.managerMenu();
+
+
     return 0;
 }
 
@@ -316,28 +318,87 @@ int DataCenter::removePerson(int type){
 }
 
 //Prompt user for ID number and allow them to edit whatever
-//fields they like. For type: provider = 0, member = 1
-int DataCenter::editPerson(int type){
-    int ID = 0;
+//fields they like. For providers. 
+int DataCenter::editProvider(){
+    int oldID = 0;
     provider prov;
+
+    UI(oldID, "Enter Provider ID");
+    //if(!providerList.retrieve_provider(oldID, prov)){
+    //    UI("No matching provider found.");
+    //    return 0;
+    //}
+
+    string name;
+    int ID;
+    string address;
+    string city;
+    string state;
+    int zip = 0;
+
+    int choice = 0;
+    int again = 1;
+    do{
+        //prov.display_provider_edit();
+        cout << "[9] Save and close" << endl;
+        UI(choice, "Enter the number of the field you'd like to edit");
+        
+        switch(choice){
+            //Edit name
+            case 1:
+                UI(name, "Enter new name");
+                break;
+            //Edit ID
+            case 2:
+                //TODO make this check length
+                UI(ID, "Enter new ID");
+                break;
+            //Street Address
+            case 3:
+                UI(address, "Enter new address");
+                break;
+            //City
+            case 4:
+                UI(city, "Enter new city");
+                break;
+            //State
+            case 5:
+                UI(state, "Enter new state");
+                break;
+            //Zip
+            case 6:
+                UI(zip, "Enter new zip");
+                break;
+            //Save and close
+            case 9:
+                again = 0;
+                break;
+
+            default:
+                UI("Sorry, I didn't understand that");
+                break;
+        }
+    }while(again);
+        
+    //provider edited(name, ID, address, city, state, zip, 0, 0);
+    //providerList.edit_provider(oldID, edited);
+}
+
+
+//Prompt user for ID number and allow them to edit whatever
+//fields they like. For members.
+int DataCenter::editMember(){
+    int ID = 0;
     member mem;
 
-    //Provider
-    if(type == 0){
-        UI(ID, "Enter Provider ID");
-        //if(!providerList.retrieve_provider(ID, prov)){
-        //    UI("No matching provider found.");
-        //}
-    }
-
-    //Member
-    if(type == 1){
-        UI(ID, "Enter Member ID");
-        //if(!memberList.retrieve_member(ID, mem)){
-        //    UI("No matching member found.");
-        //}
-    }
+    UI(ID, "Enter Member ID");
+    //if(!memberList.retrieve_member(ID, mem)){
+    //    UI("No matching member found.");
+    //    return 0;
+    //}
 }
+
+
 
 int DataCenter::recordService(){
     int memberNumber = 0;
@@ -391,12 +452,19 @@ void DataCenter::UIPrompt(string prompt, int flag = 1){
     if(flag) cout << " > ";
 }
 
-void DataCenter::UI(string & str, string prompt){
+void DataCenter::UI(string & str, string prompt, int max){
     UIPrompt(prompt);
     getline(cin, str);
+    if(max){
+        while(str.length() > max){
+            cout << "Input too large, max acceptable: " << max << endl;
+            cout << "Please try again: ";
+            getline(cin, str);
+        }
+    }
 }
 
-void DataCenter::UI(int & num, string prompt){
+void DataCenter::UI(int & num, string prompt, int max, int min){
     UIPrompt(prompt);
     cin >> num;
     while(cin.fail()){
@@ -406,6 +474,31 @@ void DataCenter::UI(int & num, string prompt){
         cin >> num;
     }
     cin.ignore(100, '\n');
+
+    if(min || max){
+        string test = to_string(num);
+        do{
+            if(min){
+                if(test.length() < min)
+                    cout << "Input to short, minimum acceptable: " << min << endl;
+            }
+            if(max){
+                if(test.length() > max)
+                    cout << "Input too long, max acceptable: " << max << endl;
+            }
+            cout << "Please try again: ";
+            cin >> num;
+            while(cin.fail()){
+                cin.clear();
+                cin.ignore(100, '\n');
+                cout << "Input error, please try again: ";
+                cin >> num;
+            }
+            cin.ignore(100, '\n');
+            test = to_string(num);
+        }while((min && test.length() < min) || (max && test.length() > max));
+    }
+
 }
 
 void DataCenter::UI(char & value, string prompt){
