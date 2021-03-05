@@ -14,7 +14,8 @@
 TEST(ProviderDirectoryLoadTest, HandleCorrentInput)
 {
   ProviderDirectory dir;
-  bool status = false;
+  ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
+  bool res = false;
   std::istringstream input(
       "ServiceCode: 12345\n"
       "ServiceName: Sample Service\n"
@@ -29,13 +30,13 @@ TEST(ProviderDirectoryLoadTest, HandleCorrentInput)
   );
 
   status = dir.load(input);
-  EXPECT_EQ(status, true);
+  EXPECT_EQ(status, ProviderDirectory::Ok);
 
-  status = dir.validateServiceCode(12345);
-  EXPECT_EQ(status, true);
+  res = dir.validateServiceCode(12345);
+  EXPECT_EQ(res, true);
 
-  status = dir.validateServiceCode(12347);
-  EXPECT_EQ(status, true);
+  res = dir.validateServiceCode(12347);
+  EXPECT_EQ(res, true);
 
   EXPECT_EQ(2, dir.size());
 }
@@ -48,7 +49,7 @@ TEST(ProviderDirectoryLoadTest, HandleCorrentInput)
 TEST(ProviderDirectoryLoadTest, HandleIncompleteInput)
 {
   ProviderDirectory dir;
-  bool status = false;
+  ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
   std::istringstream input(
       "ServiceCode: 12345\n"
       "ServiceName: SampleService\n"
@@ -56,7 +57,7 @@ TEST(ProviderDirectoryLoadTest, HandleIncompleteInput)
   );
 
   status = dir.load(input);
-  EXPECT_EQ(status, false);
+  EXPECT_EQ(status, ProviderDirectory::ErrFormat);
 
   EXPECT_EQ(0, dir.size());
 }
@@ -69,7 +70,7 @@ TEST(ProviderDirectoryLoadTest, HandleIncompleteInput)
 TEST(ProviderDirectoryLoadTest, HandleInvalidFieldName)
 {
   ProviderDirectory dir;
-  bool status = false;
+  ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
   std::istringstream input(
       "ServiceCode: 12345\n"
       "servicename: invalid field name\n"
@@ -79,7 +80,7 @@ TEST(ProviderDirectoryLoadTest, HandleInvalidFieldName)
   );
 
   status = dir.load(input);
-  EXPECT_EQ(status, false);
+  EXPECT_EQ(status, ProviderDirectory::ErrFieldName);
   EXPECT_EQ(0, dir.size());
 }
 
@@ -91,9 +92,9 @@ TEST(ProviderDirectoryLoadTest, HandleInvalidFieldName)
 TEST(ProviderDirectoryLoadTest, HandleInvalidType)
 {
   ProviderDirectory dir;
-  bool status = false;
+  ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
   std::istringstream input(
-      "ServiecCode: invalid\n"
+      "ServiceCode: invalid\n"
       "ServiceName: Sample Service\n"
       "Fees: invalid\n"
       "Description: Sample Service Description\n"
@@ -101,7 +102,7 @@ TEST(ProviderDirectoryLoadTest, HandleInvalidType)
   );
 
   status = dir.load(input);
-  EXPECT_EQ(status, false);
+  EXPECT_EQ(status, ProviderDirectory::ErrDataType);
   EXPECT_EQ(0, dir.size());
 }
 
@@ -113,7 +114,8 @@ TEST(ProviderDirectoryLoadTest, HandleInvalidType)
 TEST(ProviderDirectoryLoadTest, HandleDuplicateServiceCode)
 {
   ProviderDirectory dir;
-  bool status = false;
+  ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
+  bool res = false;
   std::istringstream input(
       "ServiceCode: 123123\n"
       "ServiceName: name\n"
@@ -128,11 +130,11 @@ TEST(ProviderDirectoryLoadTest, HandleDuplicateServiceCode)
   );
 
   status = dir.load(input);
-  EXPECT_EQ(status, true);
+  EXPECT_EQ(status, ProviderDirectory::Ok);
   EXPECT_EQ(1, dir.size());
 
-  status = dir.validateServiceCode(123123);
-  EXPECT_EQ(status, true);
+  res = dir.validateServiceCode(123123);
+  EXPECT_EQ(res, true);
 }
 
 

@@ -1,3 +1,6 @@
+#ifndef PERSON_H
+#define PERSON_H
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -12,17 +15,17 @@ class person
     public:
         person();                                   // Default Constructor
         person(string set_name,                     // Constructor w/ Args
-                uint set_ID,
+                int set_ID,
                 string set_street, 
                 string set_city,
                 string set_state,
-                uint set_zip);
+                int set_zip);
 
         bool display_person();                      // General formatted display
         bool display_person_edit();			        // Display formatted for Mack
         bool copy(person & copy_to);                // Copy current person into sent in person
-        bool compare(uint ID_to_compare);           // Compare the ID of number passed in to current person
-        bool validate_info(uint ID_number);         // Checks ID number with member directory and returns status
+        bool compare(int ID_to_compare);            // Compare the ID of number passed in to current person
+        bool validate_info(int ID_number);          // Checks ID number with member directory and returns status
         bool edit(person & copy_from);              // Edit the current member's information
 
 
@@ -33,11 +36,11 @@ class person
 
     protected:
         string name;
-        uint ID_number;
+        int ID_number;
         string street_address;
         string city;
         string state;
-        uint zipcode;
+        int zipcode;
         list <ServiceRecord> services;
 };
 
@@ -46,11 +49,11 @@ class member: public person
     public:
         member();                                   // Default Constructor
         member(string set_name,                     // Constructor w/ Args
-               uint set_ID,
+               int set_ID,
                string set_street, 
                string set_city,
                string set_state,
-               uint set_zip,
+               int set_zip,
                bool set_current_member);
         member(bool set_current_member);            
         ~member();
@@ -71,12 +74,12 @@ class provider: public person
     public:
         provider();                                  // Default Constructor
         provider(string set_name,                    // Constructor w/ Args
-                uint set_ID,
+                int set_ID,
                 string set_street, 
                 string set_city,
                 string set_state,
-                uint set_zip,
-                uint set_num_consults,
+                int set_zip,
+                int set_num_consults,
                 float set_total_fee);
 
         bool display_provider();                     // General formatted display
@@ -86,8 +89,8 @@ class provider: public person
         bool provider_report(ofstream &fstream);     
 
     protected:
-        uint num_consults;
+        int num_consults;
         float total_fee;
 };
 
-
+#endif 

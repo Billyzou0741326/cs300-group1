@@ -3,11 +3,15 @@
 // Jeffrey Jernstrom
 // =============================================================================
 
+#ifndef LIST_H
+#define LIST_H
+
 #include <forward_list>
 #include <string>
 #include <fstream>
 #include <iostream>
 #include "person.h"
+#include "service_record.h"
 using namespace std;
 
 // Testing Classes =============================================================
@@ -41,7 +45,7 @@ public:
   // Adds a service record to a member in the list with the given ID
   // Returns 0 for success, 1 for no match / empty list, 2 if a service record
   // with the same ID exist - nothing is added
-  bool add_service(int member_id, service_record &toadd);
+  bool add_service(int member_id, ServiceRecord &toadd);
 
   // Replaces a member from the list
   // Returns true for success, false for no match / empty list
@@ -101,7 +105,7 @@ public:
   // Adds a service record to a provider in the list with the given ID
   // Returns 0 for success, 1 for no match / empty list, 2 if a service record
   // of the same ID exist - nothing is added
-  bool add_service(int provider_id, service_record &toadd);
+  bool add_service(int provider_id, ServiceRecord &toadd);
 
   // Replaces a provider from the list
   // Returns true for success, false for no match / empty list
@@ -142,3 +146,5 @@ private:
   forward_list <provider> :: iterator pptr;
 
 };
+
+#endif
