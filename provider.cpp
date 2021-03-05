@@ -32,20 +32,22 @@ provider::provider(string set_name,
 }
 
 /* ------ Provider Functions ------ */
+
+
 bool provider::display_provider()
 {
     person::display_person();
     cout << "# of Consults: " << num_consults << endl
-         << "Total Fee    :$" << total_fee << endl << endl;
+         << "Total Fee    : " << total_fee << endl << endl;
 
     return true;
 }
 
 bool provider::display_provider_edit()
 {
-    if(person::display_member_edit())
+    if(person::display_person_edit())
     {
-        cout << "[4] # of Consults: " << num_consults << endl
+        cout << "[4] # of Consult : " << num_consults << endl
              << "[5] Total Fee    : " << total_fee << endl << endl;
 
         return true;

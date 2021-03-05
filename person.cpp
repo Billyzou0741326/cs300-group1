@@ -31,27 +31,10 @@ person::person(string set_name,
 
 }
 
-/* copy constructor
-person::person(const person & source) 
-{
-    if(source.name)
-    {
-        name = source.name;
-        ID_number = source.ID_number;
-        street_address = source.street_address;
-        city = source.city;
-        state = source.state;
-        zipcode = source.zipcode;
-        current_member = source.current_member;
-    }
-}
-*/
-
-
 /* ------ Person Functions ------ */
 
-
-bool person::display()
+// Display the base class information in a formatted view - Used for general display purposes
+bool person::display_person()
 {
     cout << "Name         : " << name << endl
          << "ID #         : " << ID_number << endl
@@ -59,17 +42,20 @@ bool person::display()
     return true;
 }
 
-bool person::display_member()
+// Display enumerated base class information - Used by Mack for editing purposes
+bool person::display_person_edit()
 {
-
     cout << "[1] Name         : " << name << endl
          << "[2] ID #         : " << ID_number << endl
-         << "[3] Address      : " << street_address << ", " << city << ", " << state << " " << zipcode << endl;
+         << "[3] Address      : " << street_address << ", " 
+                                  << city << ", " 
+                                  << state << " " 
+                                  << zipcode << endl;
 
 		return true;
 }
 
-// Copy to the passed in person 
+// Copy current member information into the passed in person object
 bool person::copy(person & copy_to)
 {
     copy_to.name = name;
@@ -78,27 +64,26 @@ bool person::copy(person & copy_to)
     copy_to.city = city;
     copy_to.state = state;
     copy_to.zipcode = zipcode;
-    //copy_to.current_member = current_member;
     
     return true;
 }
 
+// Compare person ID to passed in ID_to_compare. Return true if match.
 bool person::compare(uint ID_to_compare)
 {
     return ID_number == ID_to_compare;
 }
 
-
+// Outdated function ?
 bool person::validate_info(uint ID_to_validate)
 {
-    //return (ID_to_validate == ID_number) && current_member;
-
-		return true;
+    return true;
 }
 
+// Edit function: Any fields that aren't default values in the passed in 
+// person object overwrite the calling person object values
 bool person::edit(person & edit_from)
 {
-
 		if(!edit_from.name.empty())
 			name = edit_from.name;
 		if(edit_from.ID_number)
@@ -128,6 +113,8 @@ bool person::save(string file_name, bool start);
             outfile << 
 }
 */
+
+
 
 bool person::add_service(ServiceRecord to_add) {
     //Figure out return case for false TODO
