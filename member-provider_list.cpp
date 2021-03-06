@@ -57,7 +57,7 @@ bool member_list::edit_member(int member_id, member &toupdate)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      mptr->edit(toupdate);
+      //mptr->edit(toupdate);
       return true;  // Success
     }
   }
