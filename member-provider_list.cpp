@@ -4,7 +4,6 @@
 // =============================================================================
 
 #include "member-provider_list.h"
-#include "person.h"
 
 // Testing =====================================================================
 
@@ -81,7 +80,7 @@ int member_list::validate_member(int member_id)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      if(mptr->validate_info(0))  // Don't need to pass member_id
+      if(mptr->validate())  // Don't need to pass member_id
         return 0;  // Validated
       else 
         return 1;  // Not Validated

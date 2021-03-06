@@ -19,6 +19,7 @@ using namespace std;
 //class member {};
 //class provider {};
 //class service_record {};
+//class ServiceRecord {};
 
 // Member List Class ===========================================================
 
