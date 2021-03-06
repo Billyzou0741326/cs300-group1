@@ -382,7 +382,7 @@ bool provider_list::generate_ETF_report()
 
 
 
-bool generate_accounting_report()
+bool provider_list::generate_accounting_report()
 {
 
   return false;
