@@ -33,6 +33,13 @@ person::person(string set_name,
 
 /* ------ Person Functions ------ */
 
+bool person::display_person_basic()
+{
+    cout << name << ", " << ID_number << endl;
+    return true;
+
+}
+
 // Display the base class information in a formatted view - Used for general display purposes
 bool person::display_person()
 {
@@ -74,12 +81,6 @@ bool person::compare(int ID_to_compare)
     return ID_number == ID_to_compare;
 }
 
-// Outdated function  - to be deleted?
-bool person::validate_info(int ID_to_validate)
-{
-    return true;
-}
-
 // Edit function: Any fields that aren't default values in the passed in 
 // person object overwrite the calling person object values
 bool person::edit(person & edit_from)
@@ -101,16 +102,37 @@ bool person::edit(person & edit_from)
 }
 
 
-/*
-bool person::save(string file_name, bool start); 
+// TODO *** in progress *** 
+bool person::save_info(ofstream & write)
 {
-    ofstream outfile(file_name);
+    write << name << ":"
+          << ID_number << ":"
+          << street_address << ":"
+          << city << ":"
+          << state << ":"
+          << zipcode << ":";
 
-    if(start) // if start is true, then we are appending to the file
-    {
-        if(outfile.open(file_name, ios::app))
-        {
-            outfile << 
+    return true;
+}
+
+bool person::save_records(ofstream & write)
+{
+    // while(auto: list)
+    //     list.save(write)
+
+    return true;
+}
+
+// TODO *** end of save ***
+
+
+/*
+bool person::load_info(ifstream & read)
+{
+
+    read >> name;
+
+    return true;
 }
 */
 
