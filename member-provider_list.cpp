@@ -130,7 +130,7 @@ int member_list::save_list(string filename)
 
 
 
-bool member_list::load_list(string filename)
+int member_list::load_list(string filename)
 {
   ifstream read;
   read.open(filename);
@@ -314,7 +314,7 @@ bool provider_list::save_list(string filename)
 
 
 
-bool provider_list::load_list(string filename)
+int provider_list::load_list(string filename)
 {
   ifstream read;
   read.open(filename);
@@ -341,7 +341,7 @@ bool provider_list::load_list(string filename)
 
 
 
-bool provider_list::generate_provider_report(int provider_id)
+int provider_list::generate_provider_report(int provider_id)
 {
   // Find Provider 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {

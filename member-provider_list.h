@@ -79,8 +79,8 @@ public:
   int save_list(string filename);
 
   // Load the member list from a file with the given filename
-  // Returns true for success, false for bad filename
-  bool load_list(string filename);
+  // Returns true for success, false for bad filename... update
+  int load_list(string filename);
 
   // Member service report - List of a member's service record for the past 
   // seven days. Creates a text file in Member_Reports directory.
@@ -139,13 +139,13 @@ public:
   bool save_list(string filename);
 
   // Load the provider list from a file with the given filename
-  // Returns true for success, false for bad filename
-  bool load_list(string filename);
+  // Returns true for success, false for bad filename... update
+  int load_list(string filename);
 
   // Provider Service Report - List of a providers's service record for the past 
   // seven days. Creates a text file in Provider_Reports directory.
   // Returns true for success, false otherwise.
-  bool generate_provider_report(int provider_id);
+  int generate_provider_report(int provider_id);
 
   // EFT Report - List of provider names, ID Numbers, Total Amout Charged for
   // the past seven days 
