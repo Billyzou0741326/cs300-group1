@@ -79,6 +79,23 @@ bool provider::edit(provider & edit_from)
     return true;
 }
 
+bool provider::save_info(ofstream & write)
+{
+    if(person::save_info(write))
+    {
+        write << num_consults << ":"
+              << total_fee << "\n";
+
+        // all service records could start with \t
+        // while(auto : list)
+        //     list.save(write)
+
+        return true;
+    }
+    return false;
+}
+
+/*
 bool provider::provider_report(ofstream &fstream) {
     bool loopControl = true;
     //Deal with the boolean return value TODO
@@ -95,4 +112,5 @@ bool provider::provider_report(ofstream &fstream) {
     fstream << "Total Fees: " << total_fee << endl;
     return true;
 }
+*/
 

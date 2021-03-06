@@ -8,6 +8,10 @@
 #include "provider_directory_internal.h"
 
 
+/** Callback functions */
+void freeService(Service*& s);
+void writeServiceEntry(Service*& s, void* outStream);
+
 /** # Pair */
 template <class K, class V>
 Pair<K,V>::Pair()
@@ -839,6 +843,26 @@ void TreeMap<K,V>::traverse(TreeNode<K,V>* node, void (*callback)(V& value)) con
 
 
 template <class K, class V>
+void TreeMap<K,V>::traverse(void (*callback)(V& value, void* any), void* any) const
+{
+  traverse(root, callback, any);
+}
+
+
+template <class K, class V>
+void TreeMap<K,V>::traverse(TreeNode<K,V>* node, void (*callback)(V& value, void* any), void* any) const
+{
+  TreeNode<K,V>* nil = this->nilNode;
+  if (node != NULL && node != nil)
+  {
+    traverse(node->getLeft(), callback, any);
+    callback(node->value(), any);
+    traverse(node->getRight(), callback, any);
+  }
+}
+
+
+template <class K, class V>
 void TreeMap<K,V>::clear()
 {
   freeTree(root);
@@ -969,22 +993,23 @@ ProviderDirectory::~ProviderDirectory()
 }
 
 
-bool ProviderDirectory::load(std::istream& inFile)
+enum ProviderDirectory::LoadResult ProviderDirectory::load(std::istream& inFile)
 {
   Service* s = NULL;
   Service* old = NULL;
+  LoadResult res = Ok;
   int status = 0;
 
 
   while (!inFile.eof())
   {
     s = new Service;
-    status = readEntry(inFile, s);
+    res = readEntry(inFile, s);
 
-    if (0 != status)
+    if (Ok != res)
     {
       delete s;
-      return false;
+      return res;
     }
 
     status = serviceByCode.set(s->getCode(), s, &old);
@@ -994,26 +1019,26 @@ bool ProviderDirectory::load(std::istream& inFile)
     }
   }
 
-  return true;
+  return Ok;
 }
 
 
-bool ProviderDirectory::loadFromFile(const std::string& filename)
+enum ProviderDirectory::LoadResult ProviderDirectory::loadFromFile(const std::string& filename)
 {
   std::ifstream inFile;
 
   inFile.open(filename.c_str());
   if (!inFile.is_open())
-    return false;
+    return ErrOpenFile;
 
   return load(inFile);
 }
 
 
-int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
+enum ProviderDirectory::LoadResult ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 {
   if (s == NULL)
-    return -1;
+    return ErrInternal;
 
   const char* const fields[] = 
     { "ServiceCode"
@@ -1021,7 +1046,6 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
     , "Fees"
     , "Description"
     };
-  int status = 0;
   char buffer[1024];
   char delimiter = ':';
   char entryDelimiter[] = "----";
@@ -1034,23 +1058,24 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 
     // I/O error
     if (!inFile.good())
-      return -1;
+      return ErrFormat;
 
     // Invalid format
     if (0 != strcmp(buffer, fields[i]))
-      return -1;
+      return ErrFieldName;
 
+    whiteSpace = ':';
     while (whiteSpace == ' ' || whiteSpace == '\t')
     {
         inFile.get();
         whiteSpace = inFile.peek();
-    } 
+    }
 
     inFile.getline(buffer, sizeof(buffer));
 
     // I/O error
     if (!inFile.good())
-      return -1;
+      return ErrFormat;
 
     switch (i)
     {
@@ -1061,11 +1086,11 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
       }
       catch (std::invalid_argument& err)
       {
-        return -1;
+        return ErrDataType;
       }
       catch (std::out_of_range& err)
       {
-        return -1;
+        return ErrFormat;
       }
       break;
     case 1: // ServiceName
@@ -1078,18 +1103,18 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
       }
       catch (std::invalid_argument& err)
       {
-        return -1;
+        return ErrDataType;
       }
       catch (std::out_of_range& err)
       {
-        return -1;
+        return ErrFormat;
       }
       break;
     case 3: // Description
       s->setDescription(buffer);
       break;
     default:
-      return -1;
+      return ErrFieldName;
     }
   }
 
@@ -1097,18 +1122,43 @@ int ProviderDirectory::readEntry(std::istream& inFile, Service *s)
 
   // Invalid format
   if (0 != strcmp(buffer, entryDelimiter))
-    return -1;
+    return ErrFormat;
 
   inFile.peek();
 
-  return status;
+  return Ok;
 }
 
 
 bool ProviderDirectory::sendTo(const std::string& email) const
 {
-  // TODO: complete email delivery
+  std::ofstream outS(email.c_str(), std::ofstream::out);
+  if (!outS.is_open())
+  {
+    // Failed to open file
+    return false;
+  }
+
+  return sendTo(outS);
+}
+
+
+bool ProviderDirectory::sendTo(std::ostream& outStream) const
+{
+  serviceByCode.traverse(writeServiceEntry, (void*)&outStream);
   return true;
+}
+
+
+void writeServiceEntry(Service*& s, void* outStream)
+{
+  std::ostream& outS = *(std::ostream*) outStream;
+  outS << "Service Code: " << s->getName() << '\n'
+       << "Service Name: " << s->getCode() << '\n'
+       << "Service Fees: " << s->getFees() << '\n'
+       << "Service Description: " << s->getDescription() << '\n'
+       << '\n';
+  outS.flush();
 }
 
 

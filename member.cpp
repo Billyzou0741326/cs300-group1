@@ -27,12 +27,8 @@ member::member(string set_name,
 member::member(bool set_current_member)
 			:current_member(set_current_member)
 {
-
 }
 
-member::~member()
-{
-}
 
 // Display the derived member information in a formatted view - Used for general display purposes
 // Calls base class display then outputs inhereted class information
@@ -74,6 +70,21 @@ bool member::validate()
 {
   return current_member;
 }
+
+bool member::save_info(ofstream & write)
+{
+   if(person::save_info(write))
+   {
+       write << current_member << "\n";
+
+       // for(auto : list)
+       //     list.save_info(write)
+       return true;
+   }
+
+   return false;
+}
+
 
 bool member::member_report(ofstream &fstream) {
     bool loopControl = true;

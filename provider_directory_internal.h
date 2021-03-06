@@ -4,6 +4,8 @@
 #ifndef _PROVIDER_DIRECTORY_INTERNAL_H
 #define _PROVIDER_DIRECTORY_INTERNAL_H
 
+#include <functional>
+
 /* Pair: Forward declaration for template friend functions */
 template <class K, class V> class Pair;
 template <class K, class V> bool operator== (const K& key, const Pair<K,V>& c);
@@ -119,6 +121,7 @@ class TreeMap
     int insertFix(TreeNode<K,V>* node);
     int removeFix(TreeNode<K,V>* node);
     void traverse(TreeNode<K,V>* node, void (*callback)(V& value)) const;
+    void traverse(TreeNode<K,V>* node, void (*callback)(V& value, void* any), void* any) const;
 
   public:
     TreeMap();
@@ -131,6 +134,7 @@ class TreeMap
     int get(const K& key, V* value) const;
     void clear();
     void traverse(void (*callback)(V& value)) const;
+    void traverse(void (*callback)(V& value, void* any), void* any) const;
 };
 
 /** Forward declaration of Service */
