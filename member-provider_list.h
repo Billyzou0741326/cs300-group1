@@ -13,6 +13,8 @@
 #include "person.h"
 #include "service_record.h"
 using namespace std;
+ 
+
 
 // Testing Classes =============================================================
 
@@ -21,13 +23,24 @@ using namespace std;
 //class service_record {};
 //class ServiceRecord {};
 
+
+
+// Improvement Ideas ===========================================================
+
+// 1. Write private helper functions to reduce duplicate code
+// 2. Write and abstract base class "agent_list" to reduce duplicate code
+// 3. Use a forward_list template to make things more effecient (would need
+//    previous ptr)
+
+
+
 // Member List Class ===========================================================
 
 class member_list
 {
 public:
+  // Constructor - Initializes the Member List
   member_list();
-  ~member_list();
 
   // Searches for a member with the given ID and if found populates the
   // member object passed to the function
@@ -71,23 +84,23 @@ public:
 
   // Member service report - List of a member's service record for the past 
   // seven days. Creates a text file in Member_Reports directory.
-  // Returns true for success, false otherwise.
-  bool generate_member_report(int member_id);
+  // Returns 0 for success, 1 for file open error, 2 for no match / empty list
+  int generate_member_report(int member_id);
 
 private:
   list <member> mList;
   list <member> :: iterator mptr;
-
-
 };
+
+
 
 // Provider List Class =========================================================
 
 class provider_list
 {
 public:
+  // Constructor - Initializes the Provider List
   provider_list();
-  ~provider_list();
 
   // Searches for a provider with the given ID and if found populates the
   // provider object passed to the function

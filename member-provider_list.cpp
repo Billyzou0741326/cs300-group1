@@ -16,13 +16,13 @@ int main()
 
 member_list::member_list()
 {
-
+  // I don't think these steps are nessesarry, but I'm in the habit of
+  // initializing class data members in the constructor.
+  mList.clear();
+  mptr = mList.begin();
 }
 
-member_list::~member_list()
-{
 
-}
 
 bool member_list::retrieve_member(int member_id, member &found)
 {
@@ -35,6 +35,8 @@ bool member_list::retrieve_member(int member_id, member &found)
   return false;  // Fail
 }
 
+
+
 bool member_list::display_all()
 {
   if(mList.empty())
@@ -46,6 +48,8 @@ bool member_list::display_all()
   return true;
 }
 
+
+
 bool member_list::add_member(member &toadd)
 {
   mList.push_front(toadd);
@@ -53,6 +57,9 @@ bool member_list::add_member(member &toadd)
   return true;
   // Not sure this can fail...
 }
+
+
+
 bool member_list::edit_member(int member_id, member &toupdate)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
@@ -63,6 +70,8 @@ bool member_list::edit_member(int member_id, member &toupdate)
   }
   return false;  // Fail - Empty List / No Match
 }
+
+
 
 bool member_list::remove_member(int member_id)
 {
@@ -76,11 +85,17 @@ bool member_list::remove_member(int member_id)
   return false;  // Fail - Empty List / No Match
 }
 
+
+
 int member_list::validate_member(int member_id)
 {
+  // Check member_id bounds
+  if (member_id < 0 || member_id > 999999999)
+    return 3;  // Fail - member_id out of range
+    
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      if(mptr->validate())  // Don't need to pass member_id
+      if(mptr->validate()) 
         return 0;  // Validated
       else 
         return 1;  // Not Validated
@@ -89,6 +104,8 @@ int member_list::validate_member(int member_id)
 
   return 2; // Fail - Empty List / No Match
 }
+
+
 
 int member_list::save_list(string filename)
 {
@@ -110,6 +127,8 @@ int member_list::save_list(string filename)
   } 
   return false;  // Fail - File open error
 }
+
+
 
 bool member_list::load_list(string filename)
 {
@@ -136,22 +155,52 @@ bool member_list::load_list(string filename)
   return false;  // Fail - File open error
 }
 
-bool generate_member_report(int member_id)
+
+
+int member_list::generate_member_report(int member_id)
 {
-  return false;
+  // Find Member
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+    if(mptr->compare(member_id)) {  // Match!
+
+      //TODO: generate filename
+      // Generate filename and open file
+      string filename = "addFileName";
+      ofstream write;
+      write.open(filename);
+
+      // Ensure Connection and write report 
+      if(write) { 
+      //TODO: generate header info
+      write << "Header Info";
+      mptr->member_report(write);
+      }
+
+      write.close();  // Close the file
+      write.clear();  // Recycle var
+
+      return 0;  // Success  
+    } 
+
+    return 1;  // Fail - File open error
+  }
+
+  return 2;  // Fail - No match
 }
+
+ 
 
 // Provider List Implementation ==================================================
 
 provider_list::provider_list()
 {
-
+  // I don't think these steps are nessesarry, but I'm in the habit of
+  // initializing class data members in the constructor.
+  pList.clear();
+  pptr = pList.begin();
 }
 
-provider_list::~provider_list()
-{
 
-}
 
 bool provider_list::retrieve_provider(int provider_id, provider &found)
 {
@@ -164,6 +213,8 @@ bool provider_list::retrieve_provider(int provider_id, provider &found)
   return false;  // Fail
 }
 
+
+
 bool provider_list::display_all()
 {
   if(pList.empty())
@@ -175,6 +226,8 @@ bool provider_list::display_all()
   return true;
 }
 
+
+
 bool provider_list::add_provider(provider &toadd)
 {
   pList.push_front(toadd);
@@ -183,10 +236,14 @@ bool provider_list::add_provider(provider &toadd)
   // Not sure this can fail...
 }
 
+
+
 bool provider_list::edit_provider(int provider_id, provider &toupdate)
 {
+  // Find provider
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-    if(pptr->compare(provider_id)) {
+    if(pptr->compare(provider_id)) {  // Found!
+      // Edit provider
       pptr->edit(toupdate);
       return true;  // Success
     }
@@ -194,10 +251,14 @@ bool provider_list::edit_provider(int provider_id, provider &toupdate)
   return false;  // Fail - Empty List / No Match
 }
 
+
+
 bool provider_list::remove_provider(int provider_id)
-{
+{ 
+  // Find provider  
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-    if(pptr->compare(provider_id)) {
+    if(pptr->compare(provider_id)) {  // Found!
+      // Remove provider
       pList.erase(pptr);
       return true;  // Success
     } 
@@ -205,6 +266,30 @@ bool provider_list::remove_provider(int provider_id)
 
   return false;  // Fail - Empty List / No Match
 }
+ 
+
+
+int provider_list::validate_provider(int provider_id)
+{
+  // Check provider_id bounds
+  if (provider_id < 0 || provider_id > 999999999)
+    return 3;  // Fail - provider_id out of range
+
+  for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+    if(pptr->compare(provider_id)) {
+      // Tell Kevin/Nicki to add this
+      //if(pptr->validate())
+      if(true)
+        return 0;  // Validated
+      else 
+        return 1;  // Not Validated
+    }
+  }
+
+  return 2; // Fail - Empty List / No Match
+}
+
+
 
 bool provider_list::save_list(string filename)
 {
@@ -226,6 +311,8 @@ bool provider_list::save_list(string filename)
   } 
   return false;  // Fail - File open error
 }
+
+
 
 bool provider_list::load_list(string filename)
 {
@@ -252,17 +339,48 @@ bool provider_list::load_list(string filename)
   return false;  // Fail - File open error
 }
 
+
+
 bool provider_list::generate_provider_report(int provider_id)
 {
+  // Find Provider 
+  for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+    if(pptr->compare(provider_id)) {  // Match!
 
-  return false;
+      //TODO: generate filename
+      // Generate filename and open file
+      string filename = "addFileName";
+      ofstream write;
+      write.open(filename);
+
+      // Ensure Connection and write report 
+      if(write) { 
+      //TODO: generate header info
+      write << "Header Info";
+      // pptr->provider_report(write);
+      }
+
+      write.close();  // Close the file
+      write.clear();  // Recycle var
+
+      return 0;  // Success  
+    } 
+
+    return 1;  // Fail - File open error
+  }
+
+  return 2;  // Fail - No match / empty list
 }
+
+
 
 bool provider_list::generate_ETF_report() 
 {
 
   return false;
 }
+
+
 
 bool generate_accounting_report()
 {
