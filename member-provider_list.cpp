@@ -41,7 +41,7 @@ bool member_list::display_all()
     return false;  // Fail - Empty list
 
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr)
-    ;//mptr->display_member_basic()
+    mptr->display_person_basic();  // maybe just display_basic?
 
   return true;
 }
@@ -97,12 +97,11 @@ int member_list::save_list(string filename)
 
   // Ensure Connection
   if(write) { 
-    /*  
-    for(it = mlist.begin(); mit != mlist.end(); ++it) {
-      if(!it->save(write))
+      
+    for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+      if(!mptr->save_info(write))
         return false; // Fail - Write error
     }
-    */
 
     write.close();  // Close the file
     write.clear();  // Recycle var
@@ -171,7 +170,7 @@ bool provider_list::display_all()
     return false;  // Fail - Empty list
 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr)
-    ;//mptr->display_member_basic();
+    pptr->display_person_basic();
 
   return true;
 }
@@ -199,7 +198,7 @@ bool provider_list::remove_provider(int provider_id)
 {
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
     if(pptr->compare(provider_id)) {
-      //mList.erase(mptr);  // I think I need a previous ptr or reg list
+      pList.erase(pptr);
       return true;  // Success
     } 
   }
@@ -214,12 +213,11 @@ bool provider_list::save_list(string filename)
 
   // Ensure Connection
   if(write) { 
-    /*  
-    for(it = mlist.begin(); mit != mlist.end(); ++it) {
-      if(!it->save(write))
+      
+    for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+      if(!pptr->save_info(write))
         return false; // Fail - Write error
     }
-    */
 
     write.close();  // Close the file
     write.clear();  // Recycle var
