@@ -125,17 +125,29 @@ bool person::save_records(ofstream & write)
 
 // TODO *** end of save ***
 
-
-/*
-bool person::load_info(ifstream & read)
+bool person::load_info(ifstream & load)
 {
+    char temp[100]; 
+    load.getline(temp, 100, ':');
+    name = temp;
 
-    read >> name;
+    load >> ID_number;
+    load.get(); // clear buff
 
+    load.getline(temp, 100, ':');
+    street_address = temp;
+
+    load.getline(temp, 100, ':');
+    city = temp;
+
+    load.getline(temp, 100, ':');
+    state = temp;
+
+    load >> zipcode;
+    load.get();
+    
     return true;
 }
-*/
-
 
 
 bool person::add_service(ServiceRecord to_add) {
