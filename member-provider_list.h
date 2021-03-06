@@ -6,7 +6,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <forward_list>
+#include <list>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -74,8 +74,8 @@ public:
   bool generate_member_report(int member_id);
 
 private:
-  forward_list <member> mList;
-  forward_list <member> :: iterator mptr;
+  list <member> mList;
+  list <member> :: iterator mptr;
 
 
 };
@@ -115,6 +115,11 @@ public:
   // Returns true for success, false for no match / empty list
   bool remove_provider(int provider_id);
 
+  // Determines if a provider in the list is valid given an ID
+  // Returns 0 if valid, 1 for invalid, 2 for no match / empty list, 3 for 
+  // invalid input < 0 or > 999999999
+  int validate_provider(int provider_id);
+
   // Save the provider list to file with the given filename
   // Returns true for success, false for failure
   bool save_list(string filename);
@@ -126,7 +131,7 @@ public:
   // Provider Service Report - List of a providers's service record for the past 
   // seven days. Creates a text file in Provider_Reports directory.
   // Returns true for success, false otherwise.
-  bool generate_provider_report(int member_id);
+  bool generate_provider_report(int provider_id);
 
   // EFT Report - List of provider names, ID Numbers, Total Amout Charged for
   // the past seven days 
@@ -142,8 +147,8 @@ public:
   bool generate_accounting_report();
 
 private:
-  forward_list <provider> pList;
-  forward_list <provider> :: iterator pptr;
+  list <provider> pList;
+  list <provider> :: iterator pptr;
 
 };
 

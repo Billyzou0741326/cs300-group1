@@ -69,7 +69,7 @@ bool member_list::remove_member(int member_id)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      //mList.erase(mptr);  // I think I need a previous ptr or reg list
+      mList.erase(mptr); // Delete
       return true;  // Success
     } 
   }
@@ -89,6 +89,7 @@ int member_list::validate_member(int member_id)
   }
 
   return 2; // Fail - Empty List / No Match
+}
 
 int member_list::save_list(string filename)
 {
