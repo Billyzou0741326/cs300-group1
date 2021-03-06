@@ -42,7 +42,7 @@ bool member_list::display_all()
     return false;  // Fail - Empty list
 
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr)
-    //mptr->display_member_basic();
+    ;//mptr->display_member_basic()
 
   return true;
 }
@@ -172,7 +172,7 @@ bool provider_list::display_all()
     return false;  // Fail - Empty list
 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr)
-    //mptr->display_member_basic();
+    ;//mptr->display_member_basic();
 
   return true;
 }
