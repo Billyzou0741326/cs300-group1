@@ -34,6 +34,8 @@ provider::provider(string set_name,
 /* ------ Provider Functions ------ */
 
 
+// Displays the provider information in a general format.
+// Should always return true as of current.
 bool provider::display_provider()
 {
     person::display_person();
@@ -43,6 +45,9 @@ bool provider::display_provider()
     return true;
 }
 
+// Displays the provider information in an enumerated format, 
+// used during editing of a provider. Returns true if the display
+// of it's superclass is successful, otherwise returns false.
 bool provider::display_provider_edit()
 {
     if(person::display_person_edit())
@@ -55,6 +60,9 @@ bool provider::display_provider_edit()
     return false;
 }
 
+// Copies the passed in provider info into the current provider info.
+// Returns true if the copy of the superclass and provider inhereted class
+// is successful, otherwise returns false.
 bool provider::copy(provider & copy_to)
 {
     if(person::copy(copy_to))
@@ -67,6 +75,8 @@ bool provider::copy(provider & copy_to)
     return false;
 }
 
+// Alters any found non-zero values from the edit_from object into
+// the current provider. Currently always returns true.
 bool provider::edit(provider & edit_from)
 {
     person::edit(edit_from);
@@ -79,7 +89,11 @@ bool provider::edit(provider & edit_from)
     return true;
 }
 
-bool provider::save_info(ofstream & write)
+// Saves the provider information to the ofstream 'write' variable.
+// Returns true if the superclass save_info is successful, the provider
+// information is written, and the provider list is written. Otherwise
+// returns false
+bool provider::save_provider(ofstream & write)
 {
     if(person::save_info(write))
     {
@@ -90,6 +104,29 @@ bool provider::save_info(ofstream & write)
         // while(auto : list)
         //     list.save(write)
 
+        return true;
+    }
+    return false;
+}
+
+// Loads the provider information from the file 'load' into the current
+// provider. It first calls the superclass load_info, then copies the data
+// from 'load' into its own members, then needs to call the load_person_
+// service_record function to finish the copy. Returns true if successful, 
+// false if something went wrong.
+bool provider::load_provider(ifstream & load)
+{
+    char temp[100];
+
+    if(person::load_info(load))
+    {
+        load >> num_consults;
+        load.get();
+        load >> total_fee;
+        load.get();
+
+        // while(auto : list)
+        //     list.load(load) <- while loop iterate over all service records
         return true;
     }
     return false;

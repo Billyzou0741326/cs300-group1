@@ -1,11 +1,16 @@
 #include "person.h"
 
+
+/* ------ Constructors ------ */
+
+// Default Constructor
 member::member()
 			:current_member(true)
 {
 
 }
 
+// Constructor with Args
 member::member(string set_name, 
                int set_ID,
                string set_street, 
@@ -24,14 +29,11 @@ member::member(string set_name,
 
 }
 
-member::member(bool set_current_member)
-			:current_member(set_current_member)
-{
-}
+/* ------ Member Functions ------ */
 
 
-// Display the derived member information in a formatted view - Used for general display purposes
-// Calls base class display then outputs inhereted class information
+// Display the derived member information in a formatted view - 
+// Used for general display purposes. Should always return true as of current.
 bool member::display_member()
 {
 
@@ -43,7 +45,8 @@ bool member::display_member()
 }
 
 // Display enumerated derived member information - Used by Mack for editing purposes
-// Calls base class display_person_edit before outputting inhereted class information
+// Calls base class display_person_edit before outputting inhereted class information.
+// Should always return true as of current.
 bool member::display_member_edit()
 {
 	person::display_person_edit();
@@ -54,9 +57,9 @@ bool member::display_member_edit()
 	return true;
 }
 
-
 // Copy current member information into the passed in member object
-// Calls base class edit, then edits the derived class information
+// Calls base class edit, then edits the derived class information. Returns
+// true always as of current.
 bool member::copy(member & copy_to)
 {
     person::copy(copy_to);
@@ -65,13 +68,28 @@ bool member::copy(member & copy_to)
 	return true;
 }
 
-// Checks if the member status. Returns true if current
+// Alters any found non-zero values from the edit_from object into
+// the current member. Currently always returns true
+bool member::edit(member & edit_from)
+{
+    person::edit(edit_from);
+
+    current_member = edit_from.current_member;
+
+    return true;
+}
+
+// Checks if the member status. Returns true if current.
 bool member::validate()
 {
   return current_member;
 }
 
-bool member::save_info(ofstream & write)
+// Saves the member information to the ofstream 'write' variable. 
+// Returns true if the superclass save_info is successful, the member
+// information is written, and the provider list is written. Otherwise
+// returns false.
+bool member::save_member(ofstream & write)
 {
    if(person::save_info(write))
    {
@@ -84,6 +102,29 @@ bool member::save_info(ofstream & write)
 
    return false;
 }
+
+// Loads the member information from the file 'load' into the current
+// member. First calls the superclass load_info, then copies data from 
+// 'load' into its own members, then needs to call load_person_service_
+// record function to finish the load. Returns true if successful, false
+// if something went wrong.
+bool member::load_member(ifstream & load)
+{
+    char temp[100];
+
+    if(person::load_info(load))
+    {
+        load >> current_member;
+        load.getline(temp, 100, '\n');
+
+        // while(auto:list)
+        //     list.load(load);
+        return true;
+    }
+    return false;
+}
+
+
 
 
 bool member::member_report(ofstream &fstream) {
