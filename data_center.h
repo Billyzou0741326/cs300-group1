@@ -2,6 +2,8 @@
 #define DATA_CENTER_H
 
 #include <string>
+#include <iostream>
+#include <fstream>
 #include "member-provider_list.h"
 #include "person.h"
 //#include "provider_directory.h"
@@ -17,8 +19,8 @@ class DataCenter{
 
     private:
         //Objects
-        //member_list memberList;
-        //provider_list providerList;
+        member_list memberList;
+        provider_list providerList;
         //ProviderDirectory providerDirectory;
         //Other things
         std::string providerOptions;
@@ -29,7 +31,6 @@ class DataCenter{
         int manipulateMembers();
         int manipulateProviders();
         int recordService();
-        int generateReport();
         int createPerson(int type);
         int removePerson(int type);
         int editProvider();

@@ -1,7 +1,4 @@
 #include "data_center.h"
-#include <string>
-#include <iostream>
-#include <fstream>
 using namespace std;
 
 
@@ -69,7 +66,7 @@ void DataCenter::providerMenu(){
             //Verify Member Number
             case 1:
                 UI(var, "Enter member number", 9, 9);
-                //retval = memberList.validate_member(var);
+                retval = memberList.validate_member(var);
                 if(retval == 0)
                     UI("Validated");
                 else{
@@ -120,12 +117,12 @@ void DataCenter::managerMenu(){
         switch(choice){
             //Display Members
             case 1:
-                UI("Members Display");
+                memberList.display_all();
                 break;
 
             //Display Providers
             case 2:
-                UI("Providers Display");
+                providerList.display_all();
                 break;
 
             //Manipulate Member List
@@ -148,7 +145,10 @@ void DataCenter::managerMenu(){
 
             //Provider Report
             case 6:
-                UI("4");
+                UI(var, "Enter provider number", 9, 9);
+                //if(!memberList.generate_provider_report(var))
+                //    UI("Report generation failure! Check input.");
+                //else UI("Report successfully generated.");
                 break;
 
             //EFT Report
@@ -160,7 +160,7 @@ void DataCenter::managerMenu(){
 
             //Accounting Report
             case 8:
-                //if(!providerList.generate_ETF_report())
+                //if(!providerList.generate_accounting_report())
                 //    UI("Report generation failure! Check input.");
                 //else UI("Accounting report successfully generated.");
                 break;
@@ -302,19 +302,19 @@ int DataCenter::removePerson(int type){
     //Provider
     if(type == 0){
         UI(ID, "Enter Provider ID", 9, 9);
-        //if(!providerList.remove_provider(ID)){
-        //    UI("No matching provider found.");
-        //}
-        //else UI("Provider successfully removed.");
+        if(!providerList.remove_provider(ID)){
+            UI("No matching provider found.");
+        }
+        else UI("Provider successfully removed.");
     }
 
     //Member
     if(type == 1){
         UI(ID, "Enter Member ID", 9, 9);
-        //if(!memberList.remove_member(ID)){
-        //    UI("No matching member found.");
-        //}
-        //else UI("Member successfully removed.");
+        if(!memberList.remove_member(ID)){
+            UI("No matching member found.");
+        }
+        else UI("Member successfully removed.");
     }
 
     return 1;
@@ -327,10 +327,10 @@ int DataCenter::editProvider(){
     provider prov;
 
     UI(oldID, "Enter Provider ID", 9, 9);
-    //if(!providerList.retrieve_provider(oldID, prov)){
-    //    UI("No matching provider found.");
-    //    return 0;
-    //}
+    if(!providerList.retrieve_provider(oldID, prov)){
+        UI("No matching provider found.");
+        return 0;
+    }
 
     string name;
     int ID;
@@ -342,36 +342,42 @@ int DataCenter::editProvider(){
     int choice = 0;
     int again = 1;
     do{
-        //prov.display_provider_edit();
+        prov.display_provider_edit();
         cout << "[9] Save and close" << endl;
         UI(choice, "Enter the number of the field you'd like to edit");
         
         switch(choice){
+
             //Edit name
             case 1:
                 UI(name, "Enter new name");
                 break;
+
             //Edit ID
             case 2:
-                //TODO make this check length
                 UI(ID, "Enter new ID", 9, 9);
                 break;
+
             //Street Address
             case 3:
                 UI(address, "Enter new address");
                 break;
+
             //City
             case 4:
                 UI(city, "Enter new city");
                 break;
+
             //State
             case 5:
                 UI(state, "Enter new state");
                 break;
+
             //Zip
             case 6:
                 UI(zip, "Enter new zip");
                 break;
+
             //Save and close
             case 9:
                 again = 0;
@@ -383,8 +389,8 @@ int DataCenter::editProvider(){
         }
     }while(again);
         
-    //provider edited(name, ID, address, city, state, zip, 0, 0);
-    //providerList.edit_provider(oldID, edited);
+    provider edited(name, ID, address, city, state, zip, 0, 0);
+    providerList.edit_provider(oldID, edited);
     
     return 1;
 }
@@ -445,10 +451,6 @@ int DataCenter::recordService(){
     return 1;
 }
 
-int DataCenter::generateReport(){
-
-    return 1;
-}
 
 
 
