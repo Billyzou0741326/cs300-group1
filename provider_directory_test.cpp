@@ -168,11 +168,41 @@ void setupProviderDirectory(ProviderDirectory& dir)
 
 TEST(ProviderDirectoryCodeValidateTest, HandleCorrectCode)
 {
+  ProviderDirectory dir;
+  bool res = false;
+  setupProviderDirectory(dir);
+
+  res = dir.validateServiceCode(123123);
+  EXPECT_EQ(res, true);
+
+  res = dir.validateServiceCode(123456);
+  EXPECT_EQ(res, true);
+
+  res = dir.validateServiceCode(123321);
+  EXPECT_EQ(res, true);
+
+  res = dir.validateServiceCode(654321);
+  EXPECT_EQ(res, true);
 }
 
 
 TEST(ProviderDirectoryCodeValidateTest, HandleInvalidCode)
 {
+  ProviderDirectory dir;
+  bool res = false;
+  setupProviderDirectory(dir);
+
+  res = dir.validateServiceCode(23498212);
+  EXPECT_EQ(res, false);
+
+  res = dir.validateServiceCode(123455);
+  EXPECT_EQ(res, false);
+
+  res = dir.validateServiceCode(123311);
+  EXPECT_EQ(res, false);
+
+  res = dir.validateServiceCode(754321);
+  EXPECT_EQ(res, false);
 }
 
 
