@@ -1064,7 +1064,7 @@ enum ProviderDirectory::LoadResult ProviderDirectory::readEntry(std::istream& in
     if (0 != strcmp(buffer, fields[i]))
       return ErrFieldName;
 
-    whiteSpace = ':';
+    whiteSpace = inFile.peek();
     while (whiteSpace == ' ' || whiteSpace == '\t')
     {
         inFile.get();
@@ -1153,8 +1153,8 @@ bool ProviderDirectory::sendTo(std::ostream& outStream) const
 void writeServiceEntry(Service*& s, void* outStream)
 {
   std::ostream& outS = *(std::ostream*) outStream;
-  outS << "Service Code: " << s->getName() << '\n'
-       << "Service Name: " << s->getCode() << '\n'
+  outS << "Service Code: " << s->getCode() << '\n'
+       << "Service Name: " << s->getName() << '\n'
        << "Service Fees: " << s->getFees() << '\n'
        << "Service Description: " << s->getDescription() << '\n'
        << '\n';

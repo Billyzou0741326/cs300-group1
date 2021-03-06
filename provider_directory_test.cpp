@@ -138,6 +138,34 @@ TEST(ProviderDirectoryLoadTest, HandleDuplicateServiceCode)
 }
 
 
+void setupProviderDirectory(ProviderDirectory& dir)
+{
+  std::istringstream input(
+      "ServiceCode: 123123\n"
+      "ServiceName: 1 name\n"
+      "Fees: 70\n"
+      "Description: 1 description\n"
+      "----\n"
+      "ServiceCode: 123456\n"
+      "ServiceName: 2 name\n"
+      "Fees: 80\n"
+      "Description: 2 description\n"
+      "----\n"
+      "ServiceCode: 123321\n"
+      "ServiceName: 3 name\n"
+      "Fees: 90\n"
+      "Description: 3 description\n"
+      "----\n"
+      "ServiceCode: 654321\n"
+      "ServiceName: 4 name\n"
+      "Fees: 100\n"
+      "Description: 4 description\n"
+      "----\n"
+  );
+  dir.load(input);
+}
+
+
 TEST(ProviderDirectoryCodeValidateTest, HandleCorrectCode)
 {
 }
@@ -150,4 +178,33 @@ TEST(ProviderDirectoryCodeValidateTest, HandleInvalidCode)
 
 TEST(ProviderDirectorySendToTest, HandleNormal)
 {
+  ProviderDirectory dir;
+  setupProviderDirectory(dir);
+  std::ostringstream outStream;
+  std::string expected(
+      "Service Code: 123123\n"
+      "Service Name: 1 name\n"
+      "Service Fees: 70\n"
+      "Service Description: 1 description\n"
+      "\n"
+      "Service Code: 123321\n"
+      "Service Name: 3 name\n"
+      "Service Fees: 90\n"
+      "Service Description: 3 description\n"
+      "\n"
+      "Service Code: 123456\n"
+      "Service Name: 2 name\n"
+      "Service Fees: 80\n"
+      "Service Description: 2 description\n"
+      "\n"
+      "Service Code: 654321\n"
+      "Service Name: 4 name\n"
+      "Service Fees: 100\n"
+      "Service Description: 4 description\n"
+      "\n"
+  );
+
+  dir.sendTo(outStream);
+
+  EXPECT_EQ(outStream.str(), expected);
 }
