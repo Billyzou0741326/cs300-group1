@@ -547,13 +547,25 @@ int DataCenter::editMember(){
 
 int DataCenter::recordService(){
     int memberNumber = 0;
+    int retval = 0;
     string date;
     int serviceCode = 0;
     char confirm = 'N';
     string comments;
     
     UI(memberNumber, "Please enter member number", 9, 9);
-    //validate number TODO
+    retval = memberList.validate_member(memberNumber);
+    while(retval == 1 || retval == 2){
+        if(retval == 2){
+            UI(memberNumber, "No matching member found.\nPlease try again", 9, 9);
+        }
+        if(retval == 1){
+            UI("That member is currently suspended");
+            return 0;
+        }
+        retval = memberList.validate_member(memberNumber);
+    }
+
     UI(date, "Enter date of service (MM-DD-YYYY)");
     
     //input and verify service code by displaying name
