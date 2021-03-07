@@ -58,15 +58,6 @@ bool provider::display_provider()
 // of it's superclass is successful, otherwise returns false.
 bool provider::display_provider_edit()
 {
-<<<<<<< HEAD
-  if(person::display_person_edit())
-  {  
-    cout << “[7] Valid Prov. : “;
-    (current_provider) ? cout << “Yes\n\n”: cout << “No\n\n” << endl;
-    return true;
-  }  
-  return false;
-=======
     if(person::display_person_edit())
     {
         cout << "[7] Valid Prov.  : ";
@@ -75,7 +66,6 @@ bool provider::display_provider_edit()
         return true;
     }
     return false;
->>>>>>> f66d8e2dddeb4bc42acb9c2a37db2f1e7171fc45
 }
 
 
@@ -188,15 +178,16 @@ bool provider::provider_report(ofstream & write){
 		}		
 	}
 	*/
+	return true;
 }
 
 bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
 	for(it = services.begin(); it != services.end(); ++it){
 		if(true/*it->verify_date()*/){
-			file>> "Name: " >> name >>"\n";
-			file.get();
-			file >>"ID: " >> ID_number >>"\n";
-			file.get();
+			file<< "Name: " << person::name <<"\n";
+			//file.get();
+			file <<"ID: " << person::ID_number <<"\n";
+			//file.get();
 			total_amount += /*it->get_fee()*/ 0;
 			++consult_total;
 		}
@@ -207,18 +198,19 @@ bool provider:: accounting_report(ofstream & file, int & consult_total, float & 
 }
 
 
-bool EFT_report(ofstream & file){
+bool provider::EFT_report(ofstream & file){
+	int total_amount = 0;
 	
-			file>> "Name: " >> name >>"\n";
-			file.get();
-			file >>"ID: " >> ID_number >>"\n";
-			file.get();
+			file << "Name: " << person::name <<"\n";
+			//file.get();
+			file <<"ID: " << person::ID_number << "\n";
+			//file.get();
 	for(it = services.begin(); it != services.end(); ++it){
 		if(/*it->verify_date()*/true){
 			total_amount += /*it->get_fee()*/ 0;
 		}
 	}
-		file >> "Total Fee: " << total_amount << "\n";
-		file.get();
+		file << "Total Fee: " << total_amount << "\n";
+		//file.get();
 		return 1;
 }
