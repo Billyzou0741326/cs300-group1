@@ -146,31 +146,31 @@ void DataCenter::managerMenu(){
             //Member Report
             case 5:
                 UI(var, "Enter member number", 9, 9);
-                //if(!memberList.generate_member_report(var))
-                //    UI("Report generation failure! Check input.");
-                //else UI("Report successfully generated.");
+                if(!memberList.generate_member_report(var))
+                    UI("Report generation failure! Check input.");
+                else UI("Report successfully generated.");
                 break;
 
             //Provider Report
             case 6:
                 UI(var, "Enter provider number", 9, 9);
-                //if(!memberList.generate_provider_report(var))
-                //    UI("Report generation failure! Check input.");
-                //else UI("Report successfully generated.");
+                if(!providerList.generate_provider_report(var))
+                    UI("Report generation failure! Check input.");
+                else UI("Report successfully generated.");
                 break;
 
             //EFT Report
             case 7:
-                //if(!providerList.generate_ETF_report())
-                //    UI("Record generation failure! Check input.");
-                //else UI("EFT record successfully generated.");
+                if(!providerList.generate_ETF_report())
+                    UI("Record generation failure! Check input.");
+                else UI("EFT record successfully generated.");
                 break;
 
             //Accounting Report
             case 8:
-                //if(!providerList.generate_accounting_report())
-                //    UI("Report generation failure! Check input.");
-                //else UI("Accounting report successfully generated.");
+                if(!providerList.generate_accounting_report())
+                    UI("Report generation failure! Check input.");
+                else UI("Accounting report successfully generated.");
                 break;
 
             //Exit
@@ -308,7 +308,7 @@ int DataCenter::createPerson(int type){
 
 
 
-//TODO catch failures
+    //TODO catch failures
     //If member
     if(type == 1){
         member thing(name, ID, address, city, state, zip, true);
@@ -370,6 +370,7 @@ int DataCenter::editProvider(){
     int zip = 0;
 
     int choice = 0;
+    int check = 0;
     int again = 1;
     do{
         prov.display_provider_edit();
@@ -386,7 +387,6 @@ int DataCenter::editProvider(){
             //Edit ID
             case 2:
                 UI(ID, "Enter new ID", 9, 9);
-                int check = 0;
                 check = providerList.validate_provider(ID);
                 while(check == 0 || check == 1){
                     UI(ID, "That ID is already taken, enter another", 9, 9);
@@ -453,6 +453,7 @@ int DataCenter::editMember(){
     bool status = true;
 
     int choice = 0;
+    int check = 0;
     int again = 1;
     char statusChoice = 'Y';
     do{
@@ -470,7 +471,6 @@ int DataCenter::editMember(){
             //Edit ID
             case 2:
                 UI(ID, "Enter new ID", 9, 9);
-                int check = 0;
                 check = memberList.validate_member(ID);
                 while(check == 0 || check == 1){
                     UI(ID, "That ID is already taken, enter another", 9, 9);
