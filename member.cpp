@@ -49,10 +49,11 @@ bool member::display_member()
 // Should always return true as of current.
 bool member::display_member_edit()
 {
-	person::display_person_edit();
-	cout<< "[7] Valid Member : ";
+	if(	person::display_person_edit()){
+		cout<< "[7] Valid Member : ";
     
-	(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
+		(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
+	}
 
 	return true;
 }
@@ -130,6 +131,7 @@ bool member::load_member(ifstream & load)
 bool member::member_report(ofstream &fstream) {
     bool loopControl = true;
     //Deal with the boolean return value TODO
+		/*
     person_report(fstream);
     for(list<ServiceRecord>::iterator it = services.begin(); it != services.end(); ++it) {
         loopControl = it->generateMemberReport(fstream);
@@ -137,5 +139,6 @@ bool member::member_report(ofstream &fstream) {
             break;
         }
     }
+		*/
     return false;
 }

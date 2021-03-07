@@ -33,7 +33,7 @@ person::person(string set_name,
 
 /* ------ Person Functions ------ */
 
-bool person::display_person_basic()
+bool person::display_basic()
 {
     cout << name << ", " << ID_number << endl;
     return true;

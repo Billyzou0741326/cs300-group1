@@ -5,7 +5,8 @@
 // Default Constructor
 provider::provider()
     : num_consults(0),
-      total_fee(0)
+      total_fee(0),
+			current_provider(0)
 {
 
 }
@@ -18,7 +19,8 @@ provider::provider(string set_name,
                    string set_state,
                    int set_zip,
                    int set_num_consults,
-                   float set_total_fee)
+                   float set_total_fee,
+									 bool set_current_provider)
     : person(set_name,
              set_ID,
              set_street,
@@ -26,7 +28,8 @@ provider::provider(string set_name,
              set_state,
              set_zip),
       num_consults(set_num_consults),
-      total_fee(set_total_fee)
+      total_fee(set_total_fee),
+			current_provider(set_current_provider)
 {
 
 }
@@ -40,7 +43,12 @@ bool provider::display_provider()
 {
     person::display_person();
     cout << "# of Consults: " << num_consults << endl
-         << "Total Fee    : " << total_fee << endl << endl;
+         << "Total Fee    : " << total_fee << endl;
+
+		cout<< "Valid Provider : ";
+    
+		(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
+		cout << endl;
 
     return true;
 }
@@ -53,8 +61,12 @@ bool provider::display_provider_edit()
     if(person::display_person_edit())
     {
         cout << "[7] # of Consult : " << num_consults << endl
-             << "[8] Total Fee    : " << total_fee << endl << endl;
+             << "[8] Total Fee    : " << total_fee << endl;
 
+				cout<< "[7] Valid Provider : ";
+    
+				(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
+				cout << endl;
         return true;
     }
     return false;
@@ -69,6 +81,7 @@ bool provider::copy(provider & copy_to)
     {
         copy_to.num_consults = num_consults;
         copy_to.total_fee = total_fee;
+				copy_to.current_provider = current_provider;
 
         return true;
     }
@@ -85,10 +98,14 @@ bool provider::edit(provider & edit_from)
         num_consults = edit_from.num_consults;
     if(edit_from.total_fee != 0)
         total_fee = edit_from.num_consults;
+		current_provider = edit_from.current_provider;
 
     return true;
 }
 
+bool provider::validate(){
+	return current_provider;
+};
 // Saves the provider information to the ofstream 'write' variable.
 // Returns true if the superclass save_info is successful, the provider
 // information is written, and the provider list is written. Otherwise
@@ -98,7 +115,8 @@ bool provider::save_provider(ofstream & write)
     if(person::save_info(write))
     {
         write << num_consults << ":"
-              << total_fee << "\n";
+              << total_fee << ":" 
+							<< current_provider <<"\n";
 
         // all service records could start with \t
         // while(auto : list)
@@ -124,6 +142,8 @@ bool provider::load_provider(ifstream & load)
         load.get();
         load >> total_fee;
         load.get();
+				load >>current_provider;
+				load.get();
 
         // while(auto : list)
         //     list.load(load) <- while loop iterate over all service records
