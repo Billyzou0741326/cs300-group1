@@ -21,7 +21,7 @@ class person
                 string set_state,
                 int set_zip);
 
-        bool display_basic();                 // Displays name & ID_number
+        bool display_basic();                        // Displays name & ID_number
         bool display_person();                       // General formatted display
         bool display_person_edit();			         // Display formatted for Mack
         bool copy(person & copy_to);                 // Copy current person into sent in person
@@ -30,6 +30,7 @@ class person
         bool save_info(ofstream & write);            // Write out all person info to file 'write'
         bool save_records(ofstream & write);         // Write out all service records to file 'write' 
         bool load_info(ifstream & load);             // Load info into current member from file 'read'
+        string & get_name();                         // Return the name as a string by ref
 
         // Need to be looked at
         // bool load_records(ofstream & load)        // Load info into current member services list
@@ -86,7 +87,7 @@ class provider: public person
                 int set_zip,
                 int set_num_consults,
                 float set_total_fee,
-								bool set_current_provider);
+                bool set_current_provider);
 
         bool display_provider();                     // General formatted display
         bool display_provider_edit();                // Display formatted for Mack
@@ -104,7 +105,7 @@ class provider: public person
     protected:
         int num_consults;
         float total_fee;
-				bool current_provider;
+        bool current_provider;
 };
 
 #endif 

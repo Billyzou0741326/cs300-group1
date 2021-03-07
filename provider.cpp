@@ -60,13 +60,9 @@ bool provider::display_provider_edit()
 {
     if(person::display_person_edit())
     {
-        cout << "[7] # of Consult : " << num_consults << endl
-             << "[8] Total Fee    : " << total_fee << endl;
-
-				cout<< "[7] Valid Provider : ";
+        cout << "[7] Valid Prov.  : ";
     
-				(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
-				cout << endl;
+        (current_provider) ? cout << "Yes\n\n": cout << "No\n\n" << endl;
         return true;
     }
     return false;
