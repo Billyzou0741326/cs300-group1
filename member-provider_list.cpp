@@ -403,7 +403,7 @@ bool provider_list::generate_accounting_report()
        pptr->accounting_report(write, consult_total, total_amout, total_providers);
     }
 
-    write << "Summery Inteview"; 
+    write << "Summery"; 
   }
   return false;
 }
