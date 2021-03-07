@@ -4,9 +4,24 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    //dataCenter.providerMenu();
-    dataCenter.managerMenu();
 
+    cout << "What would you like to act as?" << endl
+         << "[1] ChocAn Manager" << endl
+         << "[2] ChocAn Provider" << endl
+         << endl << " >";
+
+    int num;
+    cin >> num;
+    while(cin.fail()){
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << "Input error, please try again: ";
+        cin >> num;
+    }
+    cin.ignore(100, '\n');
+
+    if(num == 1) dataCenter.managerMenu();
+    else dataCenter.providerMenu();
 
     return 0;
 }
