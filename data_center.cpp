@@ -287,8 +287,8 @@ int DataCenter::createPerson(int type){
 
     //If provider
     if(type == 0){
-        //provider thing(name, ID, address, city, state, zip, 0, 0);
-        //providerList.
+        provider thing(name, ID, address, city, state, zip, 0, 0, true);
+        providerList.add_provider(thing);
     }
 
     return 1;
@@ -389,7 +389,7 @@ int DataCenter::editProvider(){
         }
     }while(again);
         
-    provider edited(name, ID, address, city, state, zip, 0, 0);
+    provider edited(name, ID, address, city, state, zip, 0, 0, true);
     providerList.edit_provider(oldID, edited);
     
     return 1;
