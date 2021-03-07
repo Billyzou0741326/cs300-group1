@@ -4,8 +4,8 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    dataCenter.providerMenu();
-    //dataCenter.managerMenu();
+    //dataCenter.providerMenu();
+    dataCenter.managerMenu();
 
 
     return 0;
@@ -282,6 +282,8 @@ int DataCenter::manipulateProviders(){
 //Prompt user for information about a new person. Type refers
 //to member vs provider, provider = 0, member = 1
 int DataCenter::createPerson(int type){
+    int check = 0;
+
     string name;
     int ID = 0;
     string address;
@@ -290,13 +292,23 @@ int DataCenter::createPerson(int type){
     int zip = 0;
 
     UI(name, "Name");
-    //TODO verify that ID number doesn't already exist
+
+    //Prompt for number and verify it isn't taken
     UI(ID, "ChocAn ID Number", 9, 9);
+    check = memberList.validate_member(ID);
+    while(check == 0 || check == 1){
+        UI(ID, "That ID is already taken, enter another", 9, 9);
+        check = memberList.validate_member(ID);
+    }
+
     UI(address, "Street Address");
     UI(city, "City");
     UI(state, "State");
-    UI(zip, "Zip Code");
+    UI(zip, "Zip Code", 5, 5);
 
+
+
+//TODO catch failures
     //If member
     if(type == 1){
         member thing(name, ID, address, city, state, zip, true);
@@ -374,6 +386,12 @@ int DataCenter::editProvider(){
             //Edit ID
             case 2:
                 UI(ID, "Enter new ID", 9, 9);
+                int check = 0;
+                check = providerList.validate_provider(ID);
+                while(check == 0 || check == 1){
+                    UI(ID, "That ID is already taken, enter another", 9, 9);
+                    check = providerList.validate_provider(ID);
+                }
                 break;
 
             //Street Address
@@ -393,7 +411,7 @@ int DataCenter::editProvider(){
 
             //Zip
             case 6:
-                UI(zip, "Enter new zip");
+                UI(zip, "Enter new zip", 5, 5);
                 break;
 
             //Save and close
@@ -452,6 +470,12 @@ int DataCenter::editMember(){
             //Edit ID
             case 2:
                 UI(ID, "Enter new ID", 9, 9);
+                int check = 0;
+                check = memberList.validate_member(ID);
+                while(check == 0 || check == 1){
+                    UI(ID, "That ID is already taken, enter another", 9, 9);
+                    check = memberList.validate_member(ID);
+                }
                 break;
 
             //Street Address
