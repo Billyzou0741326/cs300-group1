@@ -178,7 +178,6 @@ bool provider:: accounting_report(ofstream & file, int & consult_total, float & 
 			save_provider(file);
 			total_amount += /*it->get_fee()*/ 0;
 			++consult_total;
-			continue;
 		}
 		++total_providers;
 		return 1;
