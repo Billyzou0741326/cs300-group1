@@ -43,7 +43,7 @@ bool member_list::display_all()
     return false;  // Fail - Empty list
 
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr)
-    mptr->display_basic();  // maybe just display_basic?
+    mptr->display_basic(); 
 
   return true;
 }
@@ -64,7 +64,7 @@ bool member_list::edit_member(int member_id, member &toupdate)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      //mptr->edit(toupdate);
+      mptr->edit(toupdate);
       return true;  // Success
     }
   }
@@ -139,12 +139,11 @@ int member_list::load_list(string filename)
   if(read) {
     member temp;
 
-    /*
-    while(temp.load(read)) {
-      mlist.add_member(temp);
+    while(temp.load_member(read)) {
+      add_member(temp);
     }
-    */
-    // 3 fail modes
+    
+    // 3 fail modes?
 
     read.close();  // Close the file
     read.clear();  // Recycle var
@@ -277,8 +276,7 @@ int provider_list::validate_provider(int provider_id)
 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
     if(pptr->compare(provider_id)) {
-      // Tell Kevin/Nicki to add this
-      //if(pptr->validate())
+      if(pptr->validate())
       if(true)
         return 0;  // Validated
       else 
@@ -321,22 +319,21 @@ int provider_list::load_list(string filename)
   
   // Ensure Connection
   if(read) {
-    member temp;
+    provider temp;
 
-    /*
-    while(temp.load(read)) {
-      mlist.add_member(temp);
+    while(temp.load_provider(read)) {
+      add_provider(temp);
     }
-    */
-    // 3 fail modes
+    
+    // 3 fail modes?
 
     read.close();  // Close the file
     read.clear();  // Recycle var
     
-    return true;  //Success
+    return 0;  //Success
   }
   
-  return false;  // Fail - File open error
+  return 1;  // Fail - File open error
 }
 
 
@@ -375,7 +372,7 @@ int provider_list::generate_provider_report(int provider_id)
 
 
 
-bool provider_list::generate_ETF_report() 
+int provider_list::generate_ETF_report() 
 {
 
   return false;
@@ -383,13 +380,13 @@ bool provider_list::generate_ETF_report()
 
 
 
-bool provider_list::generate_accounting_report()
+int provider_list::generate_accounting_report()
 {
-  int consult_total = 0;
-  float total_amout = 0;
+  int total_consult = 0;
+  float total_amount = 0;
   int total_providers = 0;
 
-  //TODO: generate filename
+  //TODO: Generate filename
   // Generate filename and open file
   string directory = "Accounting_Reports/";
   string filename = "addFilename";
@@ -397,13 +394,26 @@ bool provider_list::generate_accounting_report()
   write.open(directory + filename);
 
   if(write) {
-    write << "Header Info";
+    // Write Header Info
+    write << "Accounting Report"
+          << "Date: ";  // TODO: Add Date and newlines
     
+    // Write Provider Data and update summary info
     for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-       pptr->accounting_report(write, consult_total, total_amout, total_providers);
+       if(!pptr->accounting_report(write, total_consult, total_amount, 
+                                   total_providers))
+         return 2;  // Fail - File write error
     }
 
-    write << "Summery"; 
+    // Write Summary Info
+    write << "Summary:"   // TODO: Add newline
+          << "Total number of Providers: " << total_providers << endl
+          << "Total number of Consultaions: " << total_consult << endl
+          << "Total dollar amout of all Services Provided: $" << total_amount;
+
+    write.close();  // Close the file
+    write.clear();  // Recycle var
+
   }
-  return false;
+  return 1;  // Fail - File open error
 }

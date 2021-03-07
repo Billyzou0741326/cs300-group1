@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <ctime>
 #include "person.h"
 #include "service_record.h"
 using namespace std;
@@ -151,14 +152,14 @@ public:
   // the past seven days 
   // Creates a text file in ETF_Reports directory.
   // Returns true for success, false otherwise.
-  bool generate_ETF_report();
+  int generate_ETF_report();
   
   // Accounting Report - List of providers having provided services in the past
   // seven days plus the number of providers in this list, the total number
   // of consultations, and the total dollar amount for all services provided.
   // Creates a text file in Accounting_Reports directory 
   // Returns true for success, false otherwise
-  bool generate_accounting_report();
+  int generate_accounting_report();
 
 private:
   list <provider> pList;
