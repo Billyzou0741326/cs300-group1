@@ -4,8 +4,8 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    dataCenter.providerMenu();
-    //dataCenter.managerMenu();
+    //dataCenter.providerMenu();
+    dataCenter.managerMenu();
 
 
     return 0;
@@ -49,7 +49,7 @@ void DataCenter::providerMenu(){
     int choice = 0;
     int again = 1;
     int retval = 0;
-    long var = 0;
+    int var = 0;
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
 
@@ -188,6 +188,7 @@ int DataCenter::manipulateMembers(){
     options.append("[1] Add Member\n");
     options.append("[2] Remove Member\n");
     options.append("[3] Edit Member\n");
+    options.append("[4] Display Members\n");
     options.append("[9] Back");
 
     int choice = 9;
@@ -207,7 +208,11 @@ int DataCenter::manipulateMembers(){
                 break;
             //Edit Member
             case 3:
-                UI("Edit Member");
+                editMember();
+                break;
+            //Display Members
+            case 4:
+                memberList.display_all();
                 break;
             //Back
             case 9:
@@ -227,6 +232,7 @@ int DataCenter::manipulateProviders(){
     options.append("[1] Add Provider\n");
     options.append("[2] Remove Provider\n");
     options.append("[3] Edit Provider\n");
+    options.append("[4] Display Providers\n");
     options.append("[9] Back");
 
     int choice = 9;
@@ -247,6 +253,10 @@ int DataCenter::manipulateProviders(){
             //Edit Provider
             case 3:
                 editProvider();
+                break;
+            //Display Provider
+            case 4:
+                providerList.display_all();
                 break;
             //Back
             case 9:
@@ -281,8 +291,8 @@ int DataCenter::createPerson(int type){
 
     //If member
     if(type == 1){
-        //member thing(name, ID, address, city, state, zip, true);
-        //memberList.
+        member thing(name, ID, address, city, state, zip, true);
+        memberList.add_member(thing);
     }
 
     //If provider
@@ -333,7 +343,7 @@ int DataCenter::editProvider(){
     }
 
     string name;
-    int ID;
+    int ID = 0;
     string address;
     string city;
     string state;
@@ -399,16 +409,83 @@ int DataCenter::editProvider(){
 //Prompt user for ID number and allow them to edit whatever
 //fields they like. For members.
 int DataCenter::editMember(){
+    int oldID = 0;
+    member memb;
+
+    UI(oldID, "Enter Member ID", 9, 9);
+    if(!memberList.retrieve_member(oldID, memb)){
+        UI("No matching member found.");
+        return 0;
+    }
+
+    string name;
     int ID = 0;
-    member mem;
+    string address;
+    string city;
+    string state;
+    int zip = 0;
+    bool status = true;
 
-    UI(ID, "Enter Member ID", 9, 9);
-    //if(!memberList.retrieve_member(ID, mem)){
-    //    UI("No matching member found.");
-    //    return 0;
-    //}
+    int choice = 0;
+    int again = 1;
+    char statusChoice = "Y";
+    do{
+        memb.display_member_edit();
+        cout << "[9] Save and close" << endl;
+        UI(choice, "Enter the number of the field you'd like to edit");
+        
+        switch(choice){
 
-    return 1;
+            //Edit name
+            case 1:
+                UI(name, "Enter new name");
+                break;
+
+            //Edit ID
+            case 2:
+                UI(ID, "Enter new ID", 9, 9);
+                break;
+
+            //Street Address
+            case 3:
+                UI(address, "Enter new address");
+                break;
+
+            //City
+            case 4:
+                UI(city, "Enter new city");
+                break;
+
+            //State
+            case 5:
+                UI(state, "Enter new state");
+                break;
+
+            //Zip
+            case 6:
+                UI(zip, "Enter new zip");
+                break;
+
+            //Membership Status
+            case 6:
+                UI(statusChoice, "Are they a current member? (y\n)");
+                statusChoice = toupper(statusChoice);
+                if(statusChoice == 'N') status = false;
+                break;
+
+            //Save and close
+            case 9:
+                again = 0;
+                break;
+
+            default:
+                UI("Sorry, I didn't understand that");
+                break;
+        }
+    }while(again);
+        
+    member edited(name, ID, address, city, state, zip, 0, 0, false);
+    memberList.edit_member(oldID, edited);
 }
 
 

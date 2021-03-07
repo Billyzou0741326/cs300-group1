@@ -6,11 +6,11 @@
 #include "member-provider_list.h"
 
 // Testing =====================================================================
-
+/*
 int main()
 {
   return 0;
-}
+}*/
 
 // Member List Implementation ==================================================
 
