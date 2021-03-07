@@ -41,6 +41,7 @@ class DataCenter{
         void UI(std::string);
         void UI(std::string &, std::string, int max = 0);
         void UI(int &, std::string, int max = 0, int min = 0);
+        void UI(long &, std::string, long max = 0, long min = 0);
         void UI(char &, std::string);
 };
 

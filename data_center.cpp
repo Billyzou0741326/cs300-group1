@@ -246,7 +246,7 @@ int DataCenter::manipulateProviders(){
                 break;
             //Edit Provider
             case 3:
-                UI("Edit Provider");
+                editProvider();
                 break;
             //Back
             case 9:
@@ -474,6 +474,43 @@ void DataCenter::UI(string & str, string prompt, int max){
 }
 
 void DataCenter::UI(int & num, string prompt, int max, int min){
+    UIPrompt(prompt);
+    cin >> num;
+    while(cin.fail()){
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << "Input error, please try again: ";
+        cin >> num;
+    }
+    cin.ignore(100, '\n');
+
+    if(min || max){
+        string test = to_string(num);
+        do{
+            if(min){
+                if(test.length() < min)
+                    cout << "Input to short, minimum acceptable: " << min << endl;
+            }
+            if(max){
+                if(test.length() > max)
+                    cout << "Input too long, max acceptable: " << max << endl;
+            }
+            cout << "Please try again: ";
+            cin >> num;
+            while(cin.fail()){
+                cin.clear();
+                cin.ignore(100, '\n');
+                cout << "Input error, please try again: ";
+                cin >> num;
+            }
+            cin.ignore(100, '\n');
+            test = to_string(num);
+        }while((min && test.length() < min) || (max && test.length() > max));
+    }
+
+}
+
+void DataCenter::UI(long & num, string prompt, long max, long min){
     UIPrompt(prompt);
     cin >> num;
     while(cin.fail()){
