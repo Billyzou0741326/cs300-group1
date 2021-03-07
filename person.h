@@ -45,7 +45,7 @@ class person
         string state;
         int zipcode;
         list <ServiceRecord> services;
-				list <ServiceRecord>::iterator it;
+		list <ServiceRecord>::iterator it;
 };
 
 class member: public person

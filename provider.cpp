@@ -200,17 +200,17 @@ bool provider:: accounting_report(ofstream & file, int & consult_total, float & 
 
 bool provider::EFT_report(ofstream & file){
 	int total_amount = 0;
-	
-			file << "Name: " << person::name <<"\n";
-			//file.get();
-			file <<"ID: " << person::ID_number << "\n";
-			//file.get();
+
+	file << "Name: " << person::name <<"\n";
+	//file.get();
+	file <<"ID: " << person::ID_number << "\n";
+	//file.get();
 	for(it = services.begin(); it != services.end(); ++it){
 		if(/*it->verify_date()*/true){
 			total_amount += /*it->get_fee()*/ 0;
 		}
 	}
-		file << "Total Fee: " << total_amount << "\n";
-		//file.get();
-		return 1;
+	file << "Total Fee: " << total_amount << "\n";
+	//file.get();
+	return 1;
 }
