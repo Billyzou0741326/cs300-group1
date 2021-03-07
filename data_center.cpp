@@ -4,9 +4,30 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    dataCenter.providerMenu();
-    //dataCenter.managerMenu();
+    int again = 1;
 
+    while(again){
+        cout << "What would you like to act as?" << endl
+            << "[1] ChocAn Manager" << endl
+            << "[2] ChocAn Provider" << endl
+            << "[9] Save and close" << endl
+            << endl << " > ";
+
+        int num;
+        cin >> num;
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(100, '\n');
+            cout << "Input error, please try again: ";
+            cin >> num;
+        }
+        cin.ignore(100, '\n');
+
+        if(num == 1) dataCenter.managerMenu();
+        if(num == 2) dataCenter.providerMenu();
+        if(num == 9) again = 0;
+        else cout << "I didn't understand that." << endl;
+    }
 
     return 0;
 }
@@ -52,12 +73,20 @@ void DataCenter::providerMenu(){
     int var = 0;
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
-
+    
     UI(var, "Enter your provider number", 9, 9);
-    // Verify provider and reprompt if not
-    //providerList.verify_provider_number(var);
+/*    do{
+        if(!providerList.validate_provider(var)){
+            again = 0;
+            UI("Successfully validated");
+        }
+        else{
+            UI(var, "Number could not be validated, please try again", 9, 9);
+        }
+    }while(again);*/
     currentProviderNumber = var;
 
+    again = 1;
     do{
         UI(choice, providerOptions);
         
@@ -138,31 +167,31 @@ void DataCenter::managerMenu(){
             //Member Report
             case 5:
                 UI(var, "Enter member number", 9, 9);
-                //if(!memberList.generate_member_report(var))
-                //    UI("Report generation failure! Check input.");
-                //else UI("Report successfully generated.");
+                if(!memberList.generate_member_report(var))
+                    UI("Report generation failure! Check input.");
+                else UI("Report successfully generated.");
                 break;
 
             //Provider Report
             case 6:
                 UI(var, "Enter provider number", 9, 9);
-                //if(!memberList.generate_provider_report(var))
-                //    UI("Report generation failure! Check input.");
-                //else UI("Report successfully generated.");
+                if(!providerList.generate_provider_report(var))
+                    UI("Report generation failure! Check input.");
+                else UI("Report successfully generated.");
                 break;
 
             //EFT Report
             case 7:
-                //if(!providerList.generate_ETF_report())
-                //    UI("Record generation failure! Check input.");
-                //else UI("EFT record successfully generated.");
+                if(!providerList.generate_ETF_report())
+                    UI("Record generation failure! Check input.");
+                else UI("EFT record successfully generated.");
                 break;
 
             //Accounting Report
             case 8:
-                //if(!providerList.generate_accounting_report())
-                //    UI("Report generation failure! Check input.");
-                //else UI("Accounting report successfully generated.");
+                if(!providerList.generate_accounting_report())
+                    UI("Report generation failure! Check input.");
+                else UI("Accounting report successfully generated.");
                 break;
 
             //Exit
@@ -188,6 +217,7 @@ int DataCenter::manipulateMembers(){
     options.append("[1] Add Member\n");
     options.append("[2] Remove Member\n");
     options.append("[3] Edit Member\n");
+    options.append("[4] Display Members\n");
     options.append("[9] Back");
 
     int choice = 9;
@@ -207,7 +237,11 @@ int DataCenter::manipulateMembers(){
                 break;
             //Edit Member
             case 3:
-                UI("Edit Member");
+                editMember();
+                break;
+            //Display Members
+            case 4:
+                memberList.display_all();
                 break;
             //Back
             case 9:
@@ -227,6 +261,7 @@ int DataCenter::manipulateProviders(){
     options.append("[1] Add Provider\n");
     options.append("[2] Remove Provider\n");
     options.append("[3] Edit Provider\n");
+    options.append("[4] Display Providers\n");
     options.append("[9] Back");
 
     int choice = 9;
@@ -246,7 +281,11 @@ int DataCenter::manipulateProviders(){
                 break;
             //Edit Provider
             case 3:
-                UI("Edit Provider");
+                editProvider();
+                break;
+            //Display Provider
+            case 4:
+                providerList.display_all();
                 break;
             //Back
             case 9:
@@ -264,6 +303,8 @@ int DataCenter::manipulateProviders(){
 //Prompt user for information about a new person. Type refers
 //to member vs provider, provider = 0, member = 1
 int DataCenter::createPerson(int type){
+    int check = 0;
+
     string name;
     int ID = 0;
     string address;
@@ -272,17 +313,27 @@ int DataCenter::createPerson(int type){
     int zip = 0;
 
     UI(name, "Name");
-    //TODO verify that ID number doesn't already exist
+
+    //Prompt for number and verify it isn't taken
     UI(ID, "ChocAn ID Number", 9, 9);
+    check = memberList.validate_member(ID);
+    while(check == 0 || check == 1){
+        UI(ID, "That ID is already taken, enter another", 9, 9);
+        check = memberList.validate_member(ID);
+    }
+
     UI(address, "Street Address");
     UI(city, "City");
     UI(state, "State");
-    UI(zip, "Zip Code");
+    UI(zip, "Zip Code", 5, 5);
 
+
+
+    //TODO catch failures
     //If member
     if(type == 1){
-        //member thing(name, ID, address, city, state, zip, true);
-        //memberList.
+        member thing(name, ID, address, city, state, zip, true);
+        memberList.add_member(thing);
     }
 
     //If provider
@@ -333,13 +384,14 @@ int DataCenter::editProvider(){
     }
 
     string name;
-    int ID;
+    int ID = 0;
     string address;
     string city;
     string state;
     int zip = 0;
 
     int choice = 0;
+    int check = 0;
     int again = 1;
     do{
         prov.display_provider_edit();
@@ -356,6 +408,11 @@ int DataCenter::editProvider(){
             //Edit ID
             case 2:
                 UI(ID, "Enter new ID", 9, 9);
+                check = providerList.validate_provider(ID);
+                while(check == 0 || check == 1){
+                    UI(ID, "That ID is already taken, enter another", 9, 9);
+                    check = providerList.validate_provider(ID);
+                }
                 break;
 
             //Street Address
@@ -375,7 +432,7 @@ int DataCenter::editProvider(){
 
             //Zip
             case 6:
-                UI(zip, "Enter new zip");
+                UI(zip, "Enter new zip", 5, 5);
                 break;
 
             //Save and close
@@ -399,14 +456,89 @@ int DataCenter::editProvider(){
 //Prompt user for ID number and allow them to edit whatever
 //fields they like. For members.
 int DataCenter::editMember(){
-    int ID = 0;
-    member mem;
+    int oldID = 0;
+    member memb;
 
-    UI(ID, "Enter Member ID", 9, 9);
-    //if(!memberList.retrieve_member(ID, mem)){
-    //    UI("No matching member found.");
-    //    return 0;
-    //}
+    UI(oldID, "Enter Member ID", 9, 9);
+    if(!memberList.retrieve_member(oldID, memb)){
+        UI("No matching member found.");
+        return 0;
+    }
+
+    string name;
+    int ID = 0;
+    string address;
+    string city;
+    string state;
+    int zip = 0;
+    bool status = true;
+
+    int choice = 0;
+    int check = 0;
+    int again = 1;
+    char statusChoice = 'Y';
+    do{
+        memb.display_member_edit();
+        cout << "[9] Save and close" << endl;
+        UI(choice, "Enter the number of the field you'd like to edit");
+        
+        switch(choice){
+
+            //Edit name
+            case 1:
+                UI(name, "Enter new name");
+                break;
+
+            //Edit ID
+            case 2:
+                UI(ID, "Enter new ID", 9, 9);
+                check = memberList.validate_member(ID);
+                while(check == 0 || check == 1){
+                    UI(ID, "That ID is already taken, enter another", 9, 9);
+                    check = memberList.validate_member(ID);
+                }
+                break;
+
+            //Street Address
+            case 3:
+                UI(address, "Enter new address");
+                break;
+
+            //City
+            case 4:
+                UI(city, "Enter new city");
+                break;
+
+            //State
+            case 5:
+                UI(state, "Enter new state");
+                break;
+
+            //Zip
+            case 6:
+                UI(zip, "Enter new zip");
+                break;
+
+            //Membership Status
+            case 7:
+                UI(statusChoice, "Are they a current member? (y\n)");
+                statusChoice = toupper(statusChoice);
+                if(statusChoice == 'N') status = false;
+                break;
+
+            //Save and close
+            case 9:
+                again = 0;
+                break;
+
+            default:
+                UI("Sorry, I didn't understand that");
+                break;
+        }
+    }while(again);
+        
+    member edited(name, ID, address, city, state, zip, status);
+    memberList.edit_member(oldID, edited);
 
     return 1;
 }
@@ -415,13 +547,25 @@ int DataCenter::editMember(){
 
 int DataCenter::recordService(){
     int memberNumber = 0;
+    int retval = 0;
     string date;
     int serviceCode = 0;
     char confirm = 'N';
     string comments;
     
     UI(memberNumber, "Please enter member number", 9, 9);
-    //validate number TODO
+    retval = memberList.validate_member(memberNumber);
+    while(retval == 1 || retval == 2){
+        if(retval == 2){
+            UI(memberNumber, "No matching member found.\nPlease try again", 9, 9);
+        }
+        if(retval == 1){
+            UI("That member is currently suspended");
+            return 0;
+        }
+        retval = memberList.validate_member(memberNumber);
+    }
+
     UI(date, "Enter date of service (MM-DD-YYYY)");
     
     //input and verify service code by displaying name
@@ -486,7 +630,7 @@ void DataCenter::UI(int & num, string prompt, int max, int min){
 
     if(min || max){
         string test = to_string(num);
-        do{
+        while((min && test.length() < min) || (max && test.length() > max)){
             if(min){
                 if(test.length() < min)
                     cout << "Input to short, minimum acceptable: " << min << endl;
@@ -505,7 +649,7 @@ void DataCenter::UI(int & num, string prompt, int max, int min){
             }
             cin.ignore(100, '\n');
             test = to_string(num);
-        }while((min && test.length() < min) || (max && test.length() > max));
+        }
     }
 
 }

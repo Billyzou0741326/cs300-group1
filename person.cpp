@@ -174,10 +174,15 @@ bool person::person_report(ofstream &fstream) {
 
 string & person::get_name()
 {
+<<<<<<< HEAD
   return name;
 }
 
 
+=======
+    return name;
+}
+>>>>>>> f66d8e2dddeb4bc42acb9c2a37db2f1e7171fc45
 
 
 

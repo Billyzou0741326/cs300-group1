@@ -58,6 +58,7 @@ bool provider::display_provider()
 // of it's superclass is successful, otherwise returns false.
 bool provider::display_provider_edit()
 {
+<<<<<<< HEAD
   if(person::display_person_edit())
   {  
     cout << “[7] Valid Prov. : “;
@@ -65,6 +66,16 @@ bool provider::display_provider_edit()
     return true;
   }  
   return false;
+=======
+    if(person::display_person_edit())
+    {
+        cout << "[7] Valid Prov.  : ";
+    
+        (current_provider) ? cout << "Yes\n\n": cout << "No\n\n" << endl;
+        return true;
+    }
+    return false;
+>>>>>>> f66d8e2dddeb4bc42acb9c2a37db2f1e7171fc45
 }
 
 
