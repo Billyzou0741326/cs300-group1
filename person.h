@@ -98,7 +98,7 @@ class provider: public person
 
         // Need to be looked at
         bool provider_report(ofstream &fstream);    
-        bool accounting_report(ifstream & file, int & consult_total, float & total_amount, int & total_providers);  // note for us
+        bool accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers);  // note for us
 
     protected:
         int num_consults;
