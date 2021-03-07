@@ -5,7 +5,8 @@
 // Default Constructor
 provider::provider()
     : num_consults(0),
-      total_fee(0)
+      total_fee(0),
+			current_provider(0)
 {
 
 }
@@ -18,7 +19,8 @@ provider::provider(string set_name,
                    string set_state,
                    int set_zip,
                    int set_num_consults,
-                   float set_total_fee)
+                   float set_total_fee,
+									 bool set_current_provider)
     : person(set_name,
              set_ID,
              set_street,
@@ -26,7 +28,8 @@ provider::provider(string set_name,
              set_state,
              set_zip),
       num_consults(set_num_consults),
-      total_fee(set_total_fee)
+      total_fee(set_total_fee),
+			current_provider(set_current_provider)
 {
 
 }
@@ -34,39 +37,59 @@ provider::provider(string set_name,
 /* ------ Provider Functions ------ */
 
 
+// Displays the provider information in a general format.
+// Should always return true as of current.
 bool provider::display_provider()
 {
     person::display_person();
     cout << "# of Consults: " << num_consults << endl
-         << "Total Fee    : " << total_fee << endl << endl;
+         << "Total Fee    : " << total_fee << endl;
+
+		cout<< "Valid Provider : ";
+    
+		(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
+		cout << endl;
 
     return true;
 }
 
+// Displays the provider information in an enumerated format, 
+// used during editing of a provider. Returns true if the display
+// of it's superclass is successful, otherwise returns false.
 bool provider::display_provider_edit()
 {
     if(person::display_person_edit())
     {
         cout << "[7] # of Consult : " << num_consults << endl
-             << "[8] Total Fee    : " << total_fee << endl << endl;
+             << "[8] Total Fee    : " << total_fee << endl;
 
+				cout<< "[7] Valid Provider : ";
+    
+				(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
+				cout << endl;
         return true;
     }
     return false;
 }
 
+// Copies the passed in provider info into the current provider info.
+// Returns true if the copy of the superclass and provider inhereted class
+// is successful, otherwise returns false.
 bool provider::copy(provider & copy_to)
 {
     if(person::copy(copy_to))
     {
         copy_to.num_consults = num_consults;
         copy_to.total_fee = total_fee;
+				copy_to.current_provider = current_provider;
 
         return true;
     }
     return false;
 }
 
+// Alters any found non-zero values from the edit_from object into
+// the current provider. Currently always returns true.
 bool provider::edit(provider & edit_from)
 {
     person::edit(edit_from);
@@ -75,21 +98,55 @@ bool provider::edit(provider & edit_from)
         num_consults = edit_from.num_consults;
     if(edit_from.total_fee != 0)
         total_fee = edit_from.num_consults;
+		current_provider = edit_from.current_provider;
 
     return true;
 }
 
-bool provider::save_info(ofstream & write)
+bool provider::validate(){
+	return current_provider;
+};
+// Saves the provider information to the ofstream 'write' variable.
+// Returns true if the superclass save_info is successful, the provider
+// information is written, and the provider list is written. Otherwise
+// returns false
+bool provider::save_provider(ofstream & write)
 {
     if(person::save_info(write))
     {
         write << num_consults << ":"
-              << total_fee << "\n";
+              << total_fee << ":" 
+							<< current_provider <<"\n";
 
         // all service records could start with \t
         // while(auto : list)
         //     list.save(write)
 
+        return true;
+    }
+    return false;
+}
+
+// Loads the provider information from the file 'load' into the current
+// provider. It first calls the superclass load_info, then copies the data
+// from 'load' into its own members, then needs to call the load_person_
+// service_record function to finish the copy. Returns true if successful, 
+// false if something went wrong.
+bool provider::load_provider(ifstream & load)
+{
+    char temp[100];
+
+    if(person::load_info(load))
+    {
+        load >> num_consults;
+        load.get();
+        load >> total_fee;
+        load.get();
+				load >>current_provider;
+				load.get();
+
+        // while(auto : list)
+        //     list.load(load) <- while loop iterate over all service records
         return true;
     }
     return false;
@@ -114,3 +171,16 @@ bool provider::provider_report(ofstream &fstream) {
 }
 */
 
+
+bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
+	for(it = services.begin(); it != services.end(); ++it){
+		if(true/*it->verify_date()*/){
+			save_provider(file);
+			total_amount += /*it->get_fee()*/ 0;
+			++consult_total;
+		}
+		++total_providers;
+		return 1;
+	}
+	return 1;
+}

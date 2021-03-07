@@ -16,13 +16,13 @@ int main()
 
 member_list::member_list()
 {
-
+  // I don't think these steps are nessesarry, but I'm in the habit of
+  // initializing class data members in the constructor.
+  mList.clear();
+  mptr = mList.begin();
 }
 
-member_list::~member_list()
-{
 
-}
 
 bool member_list::retrieve_member(int member_id, member &found)
 {
@@ -35,16 +35,20 @@ bool member_list::retrieve_member(int member_id, member &found)
   return false;  // Fail
 }
 
+
+
 bool member_list::display_all()
 {
   if(mList.empty())
     return false;  // Fail - Empty list
 
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr)
-    mptr->display_person_basic();  // maybe just display_basic?
+    mptr->display_basic(); 
 
   return true;
 }
+
+
 
 bool member_list::add_member(member &toadd)
 {
@@ -53,16 +57,21 @@ bool member_list::add_member(member &toadd)
   return true;
   // Not sure this can fail...
 }
+
+
+
 bool member_list::edit_member(int member_id, member &toupdate)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      //mptr->edit(toupdate);
+      mptr->edit(toupdate);
       return true;  // Success
     }
   }
   return false;  // Fail - Empty List / No Match
 }
+
+
 
 bool member_list::remove_member(int member_id)
 {
@@ -76,11 +85,17 @@ bool member_list::remove_member(int member_id)
   return false;  // Fail - Empty List / No Match
 }
 
+
+
 int member_list::validate_member(int member_id)
 {
+  // Check member_id bounds
+  if (member_id < 0 || member_id > 999999999)
+    return 3;  // Fail - member_id out of range
+    
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {
-      if(mptr->validate())  // Don't need to pass member_id
+      if(mptr->validate()) 
         return 0;  // Validated
       else 
         return 1;  // Not Validated
@@ -89,6 +104,8 @@ int member_list::validate_member(int member_id)
 
   return 2; // Fail - Empty List / No Match
 }
+
+
 
 int member_list::save_list(string filename)
 {
@@ -111,7 +128,9 @@ int member_list::save_list(string filename)
   return false;  // Fail - File open error
 }
 
-bool member_list::load_list(string filename)
+
+
+int member_list::load_list(string filename)
 {
   ifstream read;
   read.open(filename);
@@ -120,12 +139,11 @@ bool member_list::load_list(string filename)
   if(read) {
     member temp;
 
-    /*
-    while(temp.load(read)) {
-      mlist.add_member(temp);
+    while(temp.load_member(read)) {
+      add_member(temp);
     }
-    */
-    // 3 fail modes
+    
+    // 3 fail modes?
 
     read.close();  // Close the file
     read.clear();  // Recycle var
@@ -136,22 +154,52 @@ bool member_list::load_list(string filename)
   return false;  // Fail - File open error
 }
 
-bool generate_member_report(int member_id)
+
+
+int member_list::generate_member_report(int member_id)
 {
-  return false;
+  // Find Member
+  for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
+    if(mptr->compare(member_id)) {  // Match!
+
+      //TODO: generate filename
+      // Generate filename and open file
+      string filename = "addFileName";
+      ofstream write;
+      write.open(filename);
+
+      // Ensure Connection and write report 
+      if(write) { 
+      //TODO: generate header info
+      write << "Header Info";
+      mptr->member_report(write);
+      }
+
+      write.close();  // Close the file
+      write.clear();  // Recycle var
+
+      return 0;  // Success  
+    } 
+
+    return 1;  // Fail - File open error
+  }
+
+  return 2;  // Fail - No match
 }
+
+ 
 
 // Provider List Implementation ==================================================
 
 provider_list::provider_list()
 {
-
+  // I don't think these steps are nessesarry, but I'm in the habit of
+  // initializing class data members in the constructor.
+  pList.clear();
+  pptr = pList.begin();
 }
 
-provider_list::~provider_list()
-{
 
-}
 
 bool provider_list::retrieve_provider(int provider_id, provider &found)
 {
@@ -164,16 +212,20 @@ bool provider_list::retrieve_provider(int provider_id, provider &found)
   return false;  // Fail
 }
 
+
+
 bool provider_list::display_all()
 {
   if(pList.empty())
     return false;  // Fail - Empty list
 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr)
-    pptr->display_person_basic();
+    pptr->display_basic();
 
   return true;
 }
+
+
 
 bool provider_list::add_provider(provider &toadd)
 {
@@ -183,10 +235,14 @@ bool provider_list::add_provider(provider &toadd)
   // Not sure this can fail...
 }
 
+
+
 bool provider_list::edit_provider(int provider_id, provider &toupdate)
 {
+  // Find provider
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-    if(pptr->compare(provider_id)) {
+    if(pptr->compare(provider_id)) {  // Found!
+      // Edit provider
       pptr->edit(toupdate);
       return true;  // Success
     }
@@ -194,10 +250,14 @@ bool provider_list::edit_provider(int provider_id, provider &toupdate)
   return false;  // Fail - Empty List / No Match
 }
 
+
+
 bool provider_list::remove_provider(int provider_id)
-{
+{ 
+  // Find provider  
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-    if(pptr->compare(provider_id)) {
+    if(pptr->compare(provider_id)) {  // Found!
+      // Remove provider
       pList.erase(pptr);
       return true;  // Success
     } 
@@ -205,6 +265,29 @@ bool provider_list::remove_provider(int provider_id)
 
   return false;  // Fail - Empty List / No Match
 }
+ 
+
+
+int provider_list::validate_provider(int provider_id)
+{
+  // Check provider_id bounds
+  if (provider_id < 0 || provider_id > 999999999)
+    return 3;  // Fail - provider_id out of range
+
+  for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+    if(pptr->compare(provider_id)) {
+      if(pptr->validate())
+      if(true)
+        return 0;  // Validated
+      else 
+        return 1;  // Not Validated
+    }
+  }
+
+  return 2; // Fail - Empty List / No Match
+}
+
+
 
 bool provider_list::save_list(string filename)
 {
@@ -227,45 +310,110 @@ bool provider_list::save_list(string filename)
   return false;  // Fail - File open error
 }
 
-bool provider_list::load_list(string filename)
+
+
+int provider_list::load_list(string filename)
 {
   ifstream read;
   read.open(filename);
   
   // Ensure Connection
   if(read) {
-    member temp;
+    provider temp;
 
-    /*
-    while(temp.load(read)) {
-      mlist.add_member(temp);
+    while(temp.load_provider(read)) {
+      add_provider(temp);
     }
-    */
-    // 3 fail modes
+    
+    // 3 fail modes?
 
     read.close();  // Close the file
     read.clear();  // Recycle var
     
-    return true;  //Success
+    return 0;  //Success
   }
   
-  return false;  // Fail - File open error
+  return 1;  // Fail - File open error
 }
 
-bool provider_list::generate_provider_report(int provider_id)
+
+
+int provider_list::generate_provider_report(int provider_id)
+{
+  // Find Provider 
+  for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+    if(pptr->compare(provider_id)) {  // Match!
+
+      //TODO: generate filename
+      // Generate filename and open file
+      string directory = "Provider_Reports/";
+      string filename = "addFilename";
+      ofstream write;
+      write.open(directory + filename);
+
+      // Ensure Connection and write report 
+      if(write) { 
+      //TODO: generate header info
+      write << "Header Info";
+      // pptr->provider_report(write);
+      }
+
+      write.close();  // Close the file
+      write.clear();  // Recycle var
+
+      return 0;  // Success  
+    } 
+
+    return 1;  // Fail - File open error
+  }
+
+  return 2;  // Fail - No match / empty list
+}
+
+
+
+int provider_list::generate_ETF_report() 
 {
 
   return false;
 }
 
-bool provider_list::generate_ETF_report() 
+
+
+int provider_list::generate_accounting_report()
 {
+  int total_consult = 0;
+  float total_amount = 0;
+  int total_providers = 0;
 
-  return false;
-}
+  //TODO: Generate filename
+  // Generate filename and open file
+  string directory = "Accounting_Reports/";
+  string filename = "addFilename";
+  ofstream write;
+  write.open(directory + filename);
 
-bool generate_accounting_report()
-{
+  if(write) {
+    // Write Header Info
+    write << "Accounting Report"
+          << "Date: ";  // TODO: Add Date and newlines
+    
+    // Write Provider Data and update summary info
+    for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+       if(!pptr->accounting_report(write, total_consult, total_amount, 
+                                   total_providers))
+         return 2;  // Fail - File write error
+    }
 
-  return false;
+    // Write Summary Info
+    write << "Summary:"   // TODO: Add newline
+          << "Total number of Providers: " << total_providers << endl
+          << "Total number of Consultaions: " << total_consult << endl
+          << "Total dollar amout of all Services Provided: $" << total_amount;
+
+    write.close();  // Close the file
+    write.clear();  // Recycle var
+
+  }
+  return 1;  // Fail - File open error
 }

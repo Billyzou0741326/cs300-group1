@@ -10,9 +10,12 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <ctime>
 #include "person.h"
 #include "service_record.h"
 using namespace std;
+ 
+
 
 // Testing Classes =============================================================
 
@@ -21,13 +24,24 @@ using namespace std;
 //class service_record {};
 //class ServiceRecord {};
 
+
+
+// Improvement Ideas ===========================================================
+
+// 1. Write private helper functions to reduce duplicate code
+// 2. Write and abstract base class "agent_list" to reduce duplicate code
+// 3. Use a forward_list template to make things more effecient (would need
+//    previous ptr)
+
+
+
 // Member List Class ===========================================================
 
 class member_list
 {
 public:
+  // Constructor - Initializes the Member List
   member_list();
-  ~member_list();
 
   // Searches for a member with the given ID and if found populates the
   // member object passed to the function
@@ -66,28 +80,28 @@ public:
   int save_list(string filename);
 
   // Load the member list from a file with the given filename
-  // Returns true for success, false for bad filename
-  bool load_list(string filename);
+  // Returns true for success, false for bad filename... update
+  int load_list(string filename);
 
   // Member service report - List of a member's service record for the past 
   // seven days. Creates a text file in Member_Reports directory.
-  // Returns true for success, false otherwise.
-  bool generate_member_report(int member_id);
+  // Returns 0 for success, 1 for file open error, 2 for no match / empty list
+  int generate_member_report(int member_id);
 
 private:
   list <member> mList;
   list <member> :: iterator mptr;
-
-
 };
+
+
 
 // Provider List Class =========================================================
 
 class provider_list
 {
 public:
+  // Constructor - Initializes the Provider List
   provider_list();
-  ~provider_list();
 
   // Searches for a provider with the given ID and if found populates the
   // provider object passed to the function
@@ -126,26 +140,26 @@ public:
   bool save_list(string filename);
 
   // Load the provider list from a file with the given filename
-  // Returns true for success, false for bad filename
-  bool load_list(string filename);
+  // Returns true for success, false for bad filename... update
+  int load_list(string filename);
 
   // Provider Service Report - List of a providers's service record for the past 
   // seven days. Creates a text file in Provider_Reports directory.
   // Returns true for success, false otherwise.
-  bool generate_provider_report(int provider_id);
+  int generate_provider_report(int provider_id);
 
   // EFT Report - List of provider names, ID Numbers, Total Amout Charged for
   // the past seven days 
   // Creates a text file in ETF_Reports directory.
   // Returns true for success, false otherwise.
-  bool generate_ETF_report();
+  int generate_ETF_report();
   
   // Accounting Report - List of providers having provided services in the past
   // seven days plus the number of providers in this list, the total number
   // of consultations, and the total dollar amount for all services provided.
   // Creates a text file in Accounting_Reports directory 
   // Returns true for success, false otherwise
-  bool generate_accounting_report();
+  int generate_accounting_report();
 
 private:
   list <provider> pList;
