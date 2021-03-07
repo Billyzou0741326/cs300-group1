@@ -43,7 +43,7 @@ bool member_list::display_all()
     return false;  // Fail - Empty list
 
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr)
-    mptr->display_person_basic();  // maybe just display_basic?
+    mptr->display_basic();  // maybe just display_basic?
 
   return true;
 }
@@ -221,7 +221,7 @@ bool provider_list::display_all()
     return false;  // Fail - Empty list
 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr)
-    pptr->display_person_basic();
+    pptr->display_basic();
 
   return true;
 }
@@ -349,9 +349,10 @@ int provider_list::generate_provider_report(int provider_id)
 
       //TODO: generate filename
       // Generate filename and open file
-      string filename = "addFileName";
+      string directory = "Provider_Reports/";
+      string filename = "addFilename";
       ofstream write;
-      write.open(filename);
+      write.open(directory + filename);
 
       // Ensure Connection and write report 
       if(write) { 
@@ -384,6 +385,25 @@ bool provider_list::generate_ETF_report()
 
 bool provider_list::generate_accounting_report()
 {
+  int consult_total = 0;
+  float total_amout = 0;
+  int total_providers = 0;
 
+  //TODO: generate filename
+  // Generate filename and open file
+  string directory = "Accounting_Reports/";
+  string filename = "addFilename";
+  ofstream write;
+  write.open(directory + filename);
+
+  if(write) {
+    write << "Header Info";
+    
+    for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+       pptr->accounting_report(write, consult_total, total_amout, total_providers);
+    }
+
+    write << "Summery Inteview"; 
+  }
   return false;
 }
