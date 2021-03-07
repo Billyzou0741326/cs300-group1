@@ -4,8 +4,8 @@ using namespace std;
 
 int main(){
     DataCenter dataCenter;
-    //dataCenter.providerMenu();
-    dataCenter.managerMenu();
+    dataCenter.providerMenu();
+    //dataCenter.managerMenu();
 
 
     return 0;
@@ -52,12 +52,20 @@ void DataCenter::providerMenu(){
     int var = 0;
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
-
+    
     UI(var, "Enter your provider number", 9, 9);
-    // Verify provider and reprompt if not
-    //providerList.verify_provider_number(var);
+/*    do{
+        if(!providerList.validate_provider(var)){
+            again = 0;
+            UI("Successfully validated");
+        }
+        else{
+            UI(var, "Number could not be validated, please try again", 9, 9);
+        }
+    }while(again);*/
     currentProviderNumber = var;
 
+    again = 1;
     do{
         UI(choice, providerOptions);
         
@@ -428,7 +436,7 @@ int DataCenter::editMember(){
 
     int choice = 0;
     int again = 1;
-    char statusChoice = "Y";
+    char statusChoice = 'Y';
     do{
         memb.display_member_edit();
         cout << "[9] Save and close" << endl;
@@ -467,7 +475,7 @@ int DataCenter::editMember(){
                 break;
 
             //Membership Status
-            case 6:
+            case 7:
                 UI(statusChoice, "Are they a current member? (y\n)");
                 statusChoice = toupper(statusChoice);
                 if(statusChoice == 'N') status = false;
@@ -484,8 +492,10 @@ int DataCenter::editMember(){
         }
     }while(again);
         
-    member edited(name, ID, address, city, state, zip, 0, 0, false);
+    member edited(name, ID, address, city, state, zip, status);
     memberList.edit_member(oldID, edited);
+
+    return 1;
 }
 
 
