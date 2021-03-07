@@ -171,3 +171,17 @@ bool provider::provider_report(ofstream &fstream) {
 }
 */
 
+
+bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
+	for(it = services.begin(); it != services.end(); ++it){
+		if(true/*it->verify_date()*/){
+			save_provider(file);
+			total_amount += /*it->get_fee()*/ 0;
+			++consult_total;
+			continue;
+		}
+		++total_providers;
+		return 1;
+	}
+	return 1;
+}

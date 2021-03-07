@@ -11,7 +11,8 @@ person::person()
       state(),
       zipcode(0)
 {
-
+	services.clear();
+	it = services.begin();
 }
 
 // Constructor with all Args
