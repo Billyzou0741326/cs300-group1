@@ -172,6 +172,12 @@ bool person::person_report(ofstream &fstream) {
     return true;
 }
 
+string & person::get_name()
+{
+  return name;
+}
+
+
 
 
 

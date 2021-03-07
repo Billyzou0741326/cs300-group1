@@ -58,19 +58,15 @@ bool provider::display_provider()
 // of it's superclass is successful, otherwise returns false.
 bool provider::display_provider_edit()
 {
-    if(person::display_person_edit())
-    {
-        cout << "[7] # of Consult : " << num_consults << endl
-             << "[8] Total Fee    : " << total_fee << endl;
-
-				cout<< "[7] Valid Provider : ";
-    
-				(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
-				cout << endl;
-        return true;
-    }
-    return false;
+  if(person::display_person_edit())
+  {  
+    cout << “[7] Valid Prov. : “;
+    (current_provider) ? cout << “Yes\n\n”: cout << “No\n\n” << endl;
+    return true;
+  }  
+  return false;
 }
+
 
 // Copies the passed in provider info into the current provider info.
 // Returns true if the copy of the superclass and provider inhereted class
@@ -171,11 +167,25 @@ bool provider::provider_report(ofstream &fstream) {
 }
 */
 
+bool provider::provider_report(ofstream & write){
+	//TODO "No services available for this week" message 
+/*
+	for(it = services.begin(); it != services.end; ++it){
+		if(it->verify_date()){
+			save_provider(write);
+			it->generate_service_report(write);
+		}		
+	}
+	*/
+}
 
 bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
 	for(it = services.begin(); it != services.end(); ++it){
 		if(true/*it->verify_date()*/){
-			save_provider(file);
+			file>> "Name: " >> name >>"\n";
+			file.get();
+			file >>"ID: " >> ID_number >>"\n";
+			file.get();
 			total_amount += /*it->get_fee()*/ 0;
 			++consult_total;
 		}
@@ -183,4 +193,21 @@ bool provider:: accounting_report(ofstream & file, int & consult_total, float & 
 		return 1;
 	}
 	return 1;
+}
+
+
+bool EFT_report(ofstream & file){
+	
+			file>> "Name: " >> name >>"\n";
+			file.get();
+			file >>"ID: " >> ID_number >>"\n";
+			file.get();
+	for(it = services.begin(); it != services.end(); ++it){
+		if(/*it->verify_date()*/true){
+			total_amount += /*it->get_fee()*/ 0;
+		}
+	}
+		file >> "Total Fee: " << total_amount << "\n";
+		file.get();
+		return 1;
 }
