@@ -6,11 +6,32 @@
 #include "member-provider_list.h"
 
 // Testing =====================================================================
-/*
+
 int main()
 {
   return 0;
-}*/
+}
+
+
+// General Helper Functions ====================================================
+
+// Return the current date mm-dd-yyyy in string form
+//string get_date();
+string get_date()
+{
+  time_t current_time;
+  struct tm * timeinfo;
+  time(&current_time);
+  timeinfo = localtime(&current_time);
+  
+  string date = to_string(timeinfo->tm_mon + 1) + "-"
+              + to_string(timeinfo->tm_mday) + "-"
+              + to_string(timeinfo->tm_year + 1900);
+  
+  return date;
+}
+
+
 
 // Member List Implementation ==================================================
 
@@ -187,17 +208,21 @@ int member_list::generate_member_report(int member_id)
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
     if(mptr->compare(member_id)) {  // Match!
 
-      //TODO: generate filename
       // Generate filename and open file
       string directory = "Member_Reports/";
-      string filename = "addFileName";
+      string filename = mptr->get_last_name() + "-" + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
 
       // Ensure Connection and write report 
       if(write) { 
-      //TODO: generate header info
-      write << "Header Info";
+      
+      // Write Header
+      write << "Member Report\n"
+            << "Date: " << get_date() << endl
+            << "----------------------------------------\n\n";
+
+      // Write Report
       mptr->member_report(write);
       }
 
@@ -390,18 +415,21 @@ int provider_list::generate_provider_report(int provider_id)
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
     if(pptr->compare(provider_id)) {  // Match!
 
-      //TODO: generate filename
       // Generate filename and open file
       string directory = "Provider_Reports/";
-      string filename = "addFilename";
+      string filename = pptr->get_last_name() + "-" + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
 
       // Ensure Connection and write report 
       if(write) { 
-      //TODO: generate header info
-      write << "Header Info";
-      // pptr->provider_report(write);
+      // Write Header
+      write << "Provider Report\n"
+            << "Date: " << get_date() << endl
+            << "----------------------------------------\n\n";
+
+      // Write Report
+      pptr->provider_report(write);
       }
 
       write.close();  // Close the file
