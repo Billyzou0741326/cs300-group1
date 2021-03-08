@@ -1162,7 +1162,7 @@ void writeServiceEntry(Service*& s, void* outStream)
 }
 
 
-bool ProviderDirectory::validateServiceCode(int serviceCode) const
+bool ProviderDirectory::validateServiceCode(int serviceCode, Service& service) const
 {
   bool found = false;
   Service* s = NULL;
@@ -1170,7 +1170,10 @@ bool ProviderDirectory::validateServiceCode(int serviceCode) const
 
   ok = serviceByCode.get(serviceCode, &s);
   if (0 == ok)
+  {
     found = true;
+    service = *s;
+  }
 
   return found;
 }

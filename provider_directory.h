@@ -87,8 +87,9 @@ class ProviderDirectory
     /** validateServiceCode checks if a service code is present
      *
      *  @returns true on found, false on absent
+     *  @params  targetService will be set if the service is found
      */
-    bool validateServiceCode(int serviceCode) const;
+    bool validateServiceCode(int serviceCode, Service& targetService) const;
 
     /** size returns the number of entries in the provider directory
      */
