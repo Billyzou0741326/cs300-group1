@@ -148,11 +148,15 @@ void DataCenter::managerMenu(){
         switch(choice){
             //Display Members
             case 1:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 memberList.display_all();
                 break;
 
             //Display Providers
             case 2:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 providerList.display_all();
                 break;
 
@@ -243,6 +247,8 @@ int DataCenter::manipulateMembers(){
                 break;
             //Display Members
             case 4:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 memberList.display_all();
                 break;
             //Back
@@ -287,6 +293,8 @@ int DataCenter::manipulateProviders(){
                 break;
             //Display Provider
             case 4:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 providerList.display_all();
                 break;
             //Back
