@@ -108,7 +108,9 @@ void DataCenter::providerMenu(){
 
             //Request Provider Directory
             case 2:
-                UI("2");
+                //TODO catch failure
+                providerDirectory.sendTo(to_string(currentProviderNumber));
+                UI("Provider directory successfully sent");
                 break;
 
             //Record Service
