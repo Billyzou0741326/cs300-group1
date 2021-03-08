@@ -169,18 +169,20 @@ bool provider::provider_report(ofstream &fstream) {
 */
 
 bool provider::provider_report(ofstream & write){
+	int numConsultations;
+	float totalFees;
 	it = services.begin();
 	if(!it->weekVerificationWrapper()){
+		write << "No services this week" << "\n";
 	}
-	//TODO "No services available for this week" message 
-/*
-	for(it = services.begin(); it != services.end; ++it){
-		if(it->verify_date()){
+	for(it = services.begin(); it != services.end(); ++it){
+		if(it->weekVerificationWrapper()){
 			save_provider(write);
-			it->generate_service_report(write);
+			it->generateProviderReport(write, numConsultations, totalFees);
 		}		
 	}
-	*/
+	write << "Number of Consultations: " << numConsultations << "\n";
+	write << "Total Fees: " << totalFees << "\n";
 	return true;
 }
 

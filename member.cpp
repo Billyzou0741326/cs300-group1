@@ -128,17 +128,19 @@ bool member::load_member(ifstream & load)
 
 
 
-bool member::member_report(ofstream &fstream) {
-    bool loopControl = true;
-    //Deal with the boolean return value TODO
-		/*
-    person_report(fstream);
-    for(list<ServiceRecord>::iterator it = services.begin(); it != services.end(); ++it) {
-        loopControl = it->generateMemberReport(fstream);
-        if(loopControl == false) {
-            break;
-        }
-    }
-		*/
-    return false;
+bool member::member_report(ofstream &write) {
+	it = services.begin();
+	if(!it->weekVerificationWrapper()){
+		write <<"NO services this week " << "\n";
+	}
+	for(it = services.begin(); it != services.end(); ++it){
+		if(it ->weekVerificationWrapper()){
+			save_member(write);
+			it->generateMemberReport(write);
+			write << "Valid Member : ";
+
+			(current_member) ? write<< "Yes\n\n": write<< "No\n\n";
+		}
+	}
+	return false;
 }
