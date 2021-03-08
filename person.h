@@ -31,7 +31,7 @@ class person
         bool save_records(ofstream & write);         // Write out all service records to file 'write' 
         bool load_info(ifstream & load);             // Load info into current member from file 'read'
 				
-				string & get_name();												//return the name as a string	
+		string & get_name();												//return the name as a string	
         // Need to be looked at
         // bool load_records(ofstream & load)        // Load info into current member services list
         bool add_service(ServiceRecord to_add);      // Add services to the person's list of services
