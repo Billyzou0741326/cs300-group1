@@ -152,3 +152,13 @@ float ServiceRecord::getFee() {
 bool ServiceRecord::weekVerificationWrapper() {
     return weekVerification(dateOfService);
 }
+
+bool ServiceRecord::accountingReport(int &numOfConsulations, float &totalFees) {
+    if(weekVerification(dateOfService)) {
+        numOfConsulations++;
+        totalFees += fees;
+    } else {
+        return false;
+    }
+    return true;
+}

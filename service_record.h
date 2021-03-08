@@ -24,6 +24,7 @@ class ServiceRecord {
         bool load(std::ifstream & read); //Load a service record if one exists, otherwise returns false
         float getFee();
         bool weekVerificationWrapper(); //This fucntion is a wrapper function for the week verification function
+        bool accountingReport(int &numOfConsultations, float &totalFees); //This function accumulates the number of consulations and the fees for a specific provider. This function returns false when a record is reached that is outside of the week range and true otherwise.
 	private:
         std::string recordDateAndTime;
         std::string dateOfService;
