@@ -1157,8 +1157,6 @@ bool ProviderDirectory::sendTo(std::ostream& outStream) const
 
 void ProviderDirectory::formatProviderDirectory(std::string& filename, int providerId) const
 {
-  const char* const PROVIDER_DIRECTORY_PREFIX = "provider_directory/";
-
   std::ostringstream temp;
   time_t now = std::time(NULL);
   struct tm* time = std::localtime(&now);

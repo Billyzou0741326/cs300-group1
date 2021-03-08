@@ -9,6 +9,9 @@
 #include "provider_directory_internal.h"
 
 
+const char* const PROVIDER_DIRECTORY_PREFIX = "provider_directory/";
+
+
 class Service
 {
   public:
