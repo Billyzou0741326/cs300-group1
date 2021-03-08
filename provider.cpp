@@ -191,8 +191,7 @@ bool provider:: accounting_report(ofstream & file, int & consult_total, float & 
 		file <<"ID: " << person::ID_number <<"\n";
 		++total_providers;
 	}
-	for(it; it != services.end() || !it->accountingReport(consult_total, total_amount); ++it){
-	}
+	for(it; it != services.end() || !it->accountingReport(consult_total, total_amount); ++it){}
 	return 1;
 }
 
@@ -201,8 +200,7 @@ bool provider::EFT_report(ofstream & file){
 
 	file << "Name: " << person::name <<"\n";
 	file <<"ID: " << person::ID_number << "\n";
-	for(it = services.begin(); it != services.end()|| !it->EFTReport(total_amount); ++it){
-	}
+	for(it = services.begin(); it != services.end()|| !it->EFTReport(total_amount); ++it){}
 	file << "Total Fee: " << total_amount << "\n";
 	return 1;
 }
