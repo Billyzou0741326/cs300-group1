@@ -60,6 +60,14 @@ bool member_list::add_member(member &toadd)
 
 
 
+bool member_list::add_service(int member_id, ServiceRecord &toadd)
+{
+
+  return false;
+}
+
+
+
 bool member_list::edit_member(int member_id, member &toupdate)
 {
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
@@ -233,6 +241,14 @@ bool provider_list::add_provider(provider &toadd)
 
   return true;
   // Not sure this can fail...
+}
+
+
+
+bool provider_list::add_service(int provider_id, ServiceRecord &toadd)
+{
+
+  return false;
 }
 
 
