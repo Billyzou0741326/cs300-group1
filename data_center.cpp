@@ -39,7 +39,6 @@ int main(){
 
 //Constructors
 DataCenter::DataCenter(){
-    //call functions of various objects to read in data from save file
     providerOptions = "Menu Options:\n\n";
     providerOptions.append("[1] Verify Member Number\n");
     providerOptions.append("[2] Request Provider Directory\n");
@@ -60,6 +59,14 @@ DataCenter::DataCenter(){
     managerOptions.append("\nEnter the number for your selection");
 
     currentProviderNumber = -1;
+
+    //memberList.load_list("member_list.data");
+    //providerList.load_list("provider_list.data");
+}
+
+DataCenter::~DataCenter(){
+    //memberList.save_list("member_list.data");
+    //providerList.save_list("provider_list.data");
 }
 
 

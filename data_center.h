@@ -12,6 +12,7 @@
 class DataCenter{
     public:
         DataCenter();
+        ~DataCenter();
 
         //Start the program from either perspective
         void providerMenu();
