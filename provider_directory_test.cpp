@@ -249,3 +249,13 @@ TEST(ProviderDirectorySendToTest, HandleNormal)
 
   EXPECT_EQ(outStream.str(), expected);
 }
+
+
+TEST(ProviderDirectorySendToTest, FormatFile)
+{
+  ProviderDirectory dir;
+  std::string filename;
+  dir.formatProviderDirectory(filename, 123456789);
+
+  std::cout << filename << '\n';
+}

@@ -2,7 +2,9 @@
 // Original author: Billy Zou
 
 #include <fstream>
+#include <sstream>
 #include <cstring>
+#include <ctime>
 #include <stdexcept>
 #include "provider_directory.h"
 #include "provider_directory_internal.h"
@@ -1130,9 +1132,12 @@ enum ProviderDirectory::LoadResult ProviderDirectory::readEntry(std::istream& in
 }
 
 
-bool ProviderDirectory::sendTo(const std::string& email) const
+bool ProviderDirectory::sendTo(int providerId) const
 {
-  std::ofstream outS(email.c_str(), std::ofstream::out);
+  std::string filename;
+  formatProviderDirectory(filename, providerId);
+
+  std::ofstream outS(filename.c_str(), std::ofstream::out);
   if (!outS.is_open())
   {
     // Failed to open file
@@ -1147,6 +1152,45 @@ bool ProviderDirectory::sendTo(std::ostream& outStream) const
 {
   serviceByCode.traverse(writeServiceEntry, (void*)&outStream);
   return true;
+}
+
+
+void ProviderDirectory::formatProviderDirectory(std::string& filename, int providerId) const
+{
+  const char* const PROVIDER_DIRECTORY_PREFIX = "provider_directory/";
+
+  std::ostringstream temp;
+  time_t now = std::time(NULL);
+  struct tm* time = std::localtime(&now);
+
+  temp << std::string(PROVIDER_DIRECTORY_PREFIX);
+  temp << providerId << '_';
+  temp << (1900 + time->tm_year) << '_';
+
+  if (time->tm_mon + 1 < 10)
+    temp << '0';
+  temp << (1+time->tm_mon);
+
+  if (time->tm_mday < 10)
+    temp << '0';
+  temp << time->tm_mday;
+  temp << '_';
+
+  if (time->tm_hour < 10)
+    temp << '0';
+  temp << time->tm_hour;
+
+  if (time->tm_min < 10)
+    temp << '0';
+  temp << time->tm_min;
+
+  if (time->tm_sec < 10)
+    temp << '0';
+  temp << time->tm_sec;
+
+  temp << ".txt";
+
+  filename = temp.str();
 }
 
 
