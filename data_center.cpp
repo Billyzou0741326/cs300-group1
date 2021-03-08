@@ -108,7 +108,9 @@ void DataCenter::providerMenu(){
 
             //Request Provider Directory
             case 2:
-                UI("2");
+                //TODO catch failure
+                providerDirectory.sendTo(to_string(currentProviderNumber));
+                UI("Provider directory successfully sent");
                 break;
 
             //Record Service
@@ -146,11 +148,15 @@ void DataCenter::managerMenu(){
         switch(choice){
             //Display Members
             case 1:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 memberList.display_all();
                 break;
 
             //Display Providers
             case 2:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 providerList.display_all();
                 break;
 
@@ -241,6 +247,8 @@ int DataCenter::manipulateMembers(){
                 break;
             //Display Members
             case 4:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 memberList.display_all();
                 break;
             //Back
@@ -285,6 +293,8 @@ int DataCenter::manipulateProviders(){
                 break;
             //Display Provider
             case 4:
+                cout << endl << "Name, ID" << endl
+                     << "-----------" << endl;
                 providerList.display_all();
                 break;
             //Back
@@ -552,6 +562,7 @@ int DataCenter::recordService(){
     int serviceCode = 0;
     char confirm = 'N';
     string comments;
+    Service service;
     
     UI(memberNumber, "Please enter member number", 9, 9);
     retval = memberList.validate_member(memberNumber);
@@ -571,8 +582,13 @@ int DataCenter::recordService(){
     //input and verify service code by displaying name
     while(confirm != 'Y'){
         UI(serviceCode, "Enter six digit service code", 6, 6);
-        //special message for non-existent service TODO
-        UI(confirm, "You provided: [service name]? (y/n)");
+        while(!providerDirectory.validateServiceCode(serviceCode, service)){
+            UI(serviceCode, "That is not a recognized service code.\nPlease try again");
+        }
+        string prompt = "You provided: ";
+        prompt.append(service.getName());
+        prompt.append("? (y/n)");
+        UI(confirm, prompt);
         confirm = toupper(confirm);
     }
 
@@ -582,14 +598,14 @@ int DataCenter::recordService(){
         UI(comments, "Enter comments (up to 100 characters)", 100);
     }
 
+    member memb;
+    provider prov;
+    memberList.retrieve_member(memberNumber, memb);
+    providerList.retrieve_provider(currentProviderNumber, prov);
 
-    //Create and populate service record object TODO
-    //I have a constructor that will accept all the necessary
-    //data in order to create a service record object. Here is the function prototype:
-    //ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees)
-    //I will populate the time of record creation in the contructor. BTW this is Bennett
-
-
+    ServiceRecord record(date, currentProviderNumber, memberNumber, serviceCode, comments, prov.get_name(), memb.get_name(), service.getName(), service.getFees());
+    //memberList.add_service(memberNumber, record);
+    //providerList.add_service(currentProviderNumber, record);
     UI("Service Successfully Recorded!");
 
     return 1;

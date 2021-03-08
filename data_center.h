@@ -6,7 +6,7 @@
 #include <fstream>
 #include "member-provider_list.h"
 #include "person.h"
-//#include "provider_directory.h"
+#include "provider_directory.h"
 
 
 class DataCenter{
@@ -21,7 +21,7 @@ class DataCenter{
         //Objects
         member_list memberList;
         provider_list providerList;
-        //ProviderDirectory providerDirectory;
+        ProviderDirectory providerDirectory;
         //Other things
         std::string providerOptions;
         std::string managerOptions;

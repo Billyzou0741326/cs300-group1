@@ -15,6 +15,7 @@ TEST(ProviderDirectoryLoadTest, HandleCorrentInput)
 {
   ProviderDirectory dir;
   ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
+  Service svc;
   bool res = false;
   std::istringstream input(
       "ServiceCode: 12345\n"
@@ -32,11 +33,13 @@ TEST(ProviderDirectoryLoadTest, HandleCorrentInput)
   status = dir.load(input);
   EXPECT_EQ(status, ProviderDirectory::Ok);
 
-  res = dir.validateServiceCode(12345);
+  res = dir.validateServiceCode(12345, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 12345);
 
-  res = dir.validateServiceCode(12347);
+  res = dir.validateServiceCode(12347, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 12347);
 
   EXPECT_EQ(2, dir.size());
 }
@@ -115,6 +118,7 @@ TEST(ProviderDirectoryLoadTest, HandleDuplicateServiceCode)
 {
   ProviderDirectory dir;
   ProviderDirectory::LoadResult status = ProviderDirectory::Ok;
+  Service svc;
   bool res = false;
   std::istringstream input(
       "ServiceCode: 123123\n"
@@ -133,8 +137,9 @@ TEST(ProviderDirectoryLoadTest, HandleDuplicateServiceCode)
   EXPECT_EQ(status, ProviderDirectory::Ok);
   EXPECT_EQ(1, dir.size());
 
-  res = dir.validateServiceCode(123123);
+  res = dir.validateServiceCode(123123, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 123123);
 }
 
 
@@ -169,39 +174,45 @@ void setupProviderDirectory(ProviderDirectory& dir)
 TEST(ProviderDirectoryCodeValidateTest, HandleCorrectCode)
 {
   ProviderDirectory dir;
+  Service svc;
   bool res = false;
   setupProviderDirectory(dir);
 
-  res = dir.validateServiceCode(123123);
+  res = dir.validateServiceCode(123123, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 123123);
 
-  res = dir.validateServiceCode(123456);
+  res = dir.validateServiceCode(123456, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 123456);
 
-  res = dir.validateServiceCode(123321);
+  res = dir.validateServiceCode(123321, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 123321);
 
-  res = dir.validateServiceCode(654321);
+  res = dir.validateServiceCode(654321, svc);
   EXPECT_EQ(res, true);
+  EXPECT_EQ(svc.getCode(), 654321);
 }
 
 
 TEST(ProviderDirectoryCodeValidateTest, HandleInvalidCode)
 {
   ProviderDirectory dir;
+  Service svc;
   bool res = false;
   setupProviderDirectory(dir);
 
-  res = dir.validateServiceCode(23498212);
+  res = dir.validateServiceCode(23498212, svc);
   EXPECT_EQ(res, false);
 
-  res = dir.validateServiceCode(123455);
+  res = dir.validateServiceCode(123455, svc);
   EXPECT_EQ(res, false);
 
-  res = dir.validateServiceCode(123311);
+  res = dir.validateServiceCode(123311, svc);
   EXPECT_EQ(res, false);
 
-  res = dir.validateServiceCode(754321);
+  res = dir.validateServiceCode(754321, svc);
   EXPECT_EQ(res, false);
 }
 

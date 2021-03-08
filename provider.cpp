@@ -182,17 +182,17 @@ bool provider::provider_report(ofstream & write){
 }
 
 bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
+	it = services.begin();
+	if(true /*it ->verify_date()*/){
+		file<< "Name: " << person::name <<"\n";
+		file <<"ID: " << person::ID_number <<"\n";
+		++total_providers;
+	}
 	for(it = services.begin(); it != services.end(); ++it){
 		if(true/*it->verify_date()*/){
-			file<< "Name: " << person::name <<"\n";
-			//file.get();
-			file <<"ID: " << person::ID_number <<"\n";
-			//file.get();
 			total_amount += /*it->get_fee()*/ 0;
 			++consult_total;
 		}
-		++total_providers;
-		return 1;
 	}
 	return 1;
 }
@@ -202,15 +202,12 @@ bool provider::EFT_report(ofstream & file){
 	int total_amount = 0;
 
 	file << "Name: " << person::name <<"\n";
-	//file.get();
 	file <<"ID: " << person::ID_number << "\n";
-	//file.get();
 	for(it = services.begin(); it != services.end(); ++it){
 		if(/*it->verify_date()*/true){
 			total_amount += /*it->get_fee()*/ 0;
 		}
 	}
 	file << "Total Fee: " << total_amount << "\n";
-	//file.get();
 	return 1;
 }
