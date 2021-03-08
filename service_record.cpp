@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main() {
+//int main() {
     //ofstream fstream;
     //fstream("providerRecord.txt");
     //ServiceRecord record;
@@ -13,8 +13,8 @@ int main() {
     //record.weekVerification(date);
 
     //ServiceRecord record("03-03-2021",789789789,789789789,789789,"This is a comment","Jeff Johnson","Bennett Desmond","Elbow Gris",5.00);
-    return 0;
-}
+    //return 0;
+//}
 
 
 ServiceRecord::ServiceRecord() {
@@ -30,7 +30,7 @@ ServiceRecord::ServiceRecord() {
     fees = 00.00;
 }
 
-ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, double fees) {
+ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int memberNumber, int serviceCode, string comments, string providerName, string memberName, string serviceName, float fees) {
     time_t rawTime;
     struct tm * timeInfo;
     char buffer[80];
@@ -83,7 +83,7 @@ bool ServiceRecord::generateMemberReport(ofstream &outputFile) {
     }
 }
 
-bool ServiceRecord::EFTReport(double &totalFees) {
+bool ServiceRecord::EFTReport(float &totalFees) {
     if(weekVerification(dateOfService)) {
         totalFees += fees;
         return true;
@@ -143,4 +143,12 @@ bool ServiceRecord::load(ifstream & read) {
         return false;
     }
     return true;
+}
+
+float ServiceRecord::getFee() {
+    return fees;
+}
+
+bool ServiceRecord::weekVerificationWrapper() {
+    return weekVerification(dateOfService);
 }
