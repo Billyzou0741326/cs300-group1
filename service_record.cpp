@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//int main() {
+int main() {
     //ofstream fstream;
     //fstream("providerRecord.txt");
     //ServiceRecord record;
@@ -13,8 +13,8 @@ using namespace std;
     //record.weekVerification(date);
 
     //ServiceRecord record("03-03-2021",789789789,789789789,789789,"This is a comment","Jeff Johnson","Bennett Desmond","Elbow Gris",5.00);
-    //return 0;
-//}
+    return 0;
+}
 
 
 ServiceRecord::ServiceRecord() {
@@ -39,7 +39,7 @@ ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int membe
     strftime(buffer,sizeof(buffer),"%m-%d-%Y %H:%M:%S",timeInfo);
     string recordDateAndTime(buffer);
     //cout << "The time is: " << recordDateAndTime << endl;
-    this->dateOfService;
+    this->dateOfService = dateOfService;
     this->providerNumber = providerNumber;
     this->memberNumber = memberNumber;
     this->serviceCode = serviceCode;
@@ -101,7 +101,7 @@ bool ServiceRecord::weekVerification(string dateOfService) {
     memset(&tmTime, 0, sizeof(tmTime));
     strptime(convDateOfService.c_str(), "%Y%m%d", &tmTime);
     const time_t dateOfServiceTimeVar = mktime(&tmTime);
-    const int monthDays[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    //const int monthDays[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
     string delimiter = "-";
     std::time_t current_time;
     current_time = time(NULL);
@@ -109,4 +109,38 @@ bool ServiceRecord::weekVerification(string dateOfService) {
         return true;
     }
     return false;
+}
+
+void ServiceRecord::save(ofstream & write) {
+    write << "\t" << recordDateAndTime << "," << dateOfService << "," << providerNumber << "," << memberNumber << "," << serviceCode << "," << comments << "," << providerName << "," << memberName << "," << serviceName << "," << fees << endl;
+}
+
+bool ServiceRecord::load(ifstream & read) {
+    if(read.peek() == '\t') {
+        char temp[100];
+        read.get();
+        read.getline(temp,100,',');
+        recordDateAndTime = temp;
+        read.getline(temp,100,',');
+        dateOfService = temp;
+        read >> providerNumber;
+        read.get();
+        read >> memberNumber;
+        read.get();
+        read >> serviceCode;
+        read.get();
+        read.getline(temp,100,',');
+        comments = temp;
+        read.getline(temp,100,',');
+        providerName = temp;
+        read.getline(temp,100,',');
+        memberName = temp;
+        read.getline(temp,100,',');
+        serviceName = temp;
+        read >> fees;
+        read.get();
+    } else {
+        return false;
+    }
+    return true;
 }
