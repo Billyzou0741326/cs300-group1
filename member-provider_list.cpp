@@ -198,6 +198,9 @@ int member_list::load_list(string filename)
     
     return 0;  //Success
   }
+
+  read.close();
+  read.clear();
   
   return 2;  // Fail - File open error
 }
@@ -405,6 +408,9 @@ int provider_list::load_list(string filename)
     
     return 0;  //Success
   }
+
+  read.close();  // Close the file
+  read.clear();  // Recycle var
   
   return 1;  // Fail - File open error
 }
