@@ -60,8 +60,8 @@ DataCenter::DataCenter(){
 
     currentProviderNumber = -1;
 
-    //memberList.load_list("member_list.data");
-    //providerList.load_list("provider_list.data");
+    memberList.load_list("member_list.data");
+    providerList.load_list("provider_list.data");
 }
 
 DataCenter::~DataCenter(){
