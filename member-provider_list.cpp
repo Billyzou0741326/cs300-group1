@@ -7,10 +7,12 @@
 
 // Testing =====================================================================
 
+/*
 int main()
 {
   return 0;
 }
+*/
 
 
 // General Helper Functions ====================================================
@@ -421,8 +423,9 @@ int provider_list::generate_provider_report(int provider_id)
       ofstream write;
       write.open(directory + filename);
 
-      // Ensure Connection and write report 
+      // Ensure Connection
       if(write) { 
+
       // Write Header
       write << "Provider Report\n"
             << "Date: " << get_date() << endl
@@ -448,8 +451,33 @@ int provider_list::generate_provider_report(int provider_id)
 
 int provider_list::generate_ETF_report() 
 {
+  // Generate filename and open file
+  string directory = "ETF_Reports/";
+  string filename = get_date() + "-ETF_Report.txt";
+  ofstream write;
+  write.open(directory + filename);
 
-  return false;
+  // Ensure Connection and write report 
+  if(write) {
+
+    // Write Header
+    write << "EFT Report\n"
+          << "Date: " << get_date() << endl
+          << "----------------------------------------\n\n";
+
+    // Write Report
+    for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
+      if(!pptr->EFT_report(write))
+        return 1;  // Fail - File write error
+    }
+
+  }
+
+  write.close();  // Close the file
+  write.clear();  // Recycle var
+    
+  return 0;  // Success 
+
 }
 
 
@@ -460,17 +488,16 @@ int provider_list::generate_accounting_report()
   float total_amount = 0;
   int total_providers = 0;
 
-  //TODO: Generate filename
   // Generate filename and open file
   string directory = "Accounting_Reports/";
-  string filename = "addFilename";
+  string filename = get_date() + "-accounting_report";
   ofstream write;
   write.open(directory + filename);
 
   if(write) {
     // Write Header Info
-    write << "Accounting Report"
-          << "Date: ";  // TODO: Add Date and newlines
+    write << "Date: " << get_date() << endl
+          << "----------------------------------------\n\n";
     
     // Write Provider Data and update summary info
     for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
@@ -480,7 +507,7 @@ int provider_list::generate_accounting_report()
     }
 
     // Write Summary Info
-    write << "Summary:"   // TODO: Add newline
+    write << "\n\nSummary:\n"
           << "Total number of Providers: " << total_providers << endl
           << "Total number of Consultaions: " << total_consult << endl
           << "Total dollar amout of all Services Provided: $" << total_amount;
