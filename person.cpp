@@ -176,6 +176,19 @@ string & person::get_name()
 }
 
 
+string  person::get_last_name(){
+	string name2;
+
+	for(int i = 0; i < name.length(); ++i){
+		if(name[i] == ' ')
+			for(int e = i+ 1; e < name.length(); ++e){
+				name2 += name[e];
+			}
+	}
+	return name2;
+}
+
+
 
 
 

@@ -169,45 +169,40 @@ bool provider::provider_report(ofstream &fstream) {
 */
 
 bool provider::provider_report(ofstream & write){
-	//TODO "No services available for this week" message 
-/*
-	for(it = services.begin(); it != services.end; ++it){
-		if(it->verify_date()){
+	int numConsultations;
+	float totalFees;
+	it = services.begin();
+	if(!it->weekVerificationWrapper()){
+		write << "No services this week" << "\n";
+	}
+	for(it = services.begin(); it != services.end(); ++it){
+		if(it->weekVerificationWrapper()){
 			save_provider(write);
-			it->generate_service_report(write);
+			it->generateProviderReport(write, numConsultations, totalFees);
 		}		
 	}
-	*/
+	write << "Number of Consultations: " << numConsultations << "\n";
+	write << "Total Fees: " << totalFees << "\n";
 	return true;
 }
 
 bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
 	it = services.begin();
-	if(true /*it ->verify_date()*/){
+	if(it ->weekVerificationWrapper()){
 		file<< "Name: " << person::name <<"\n";
 		file <<"ID: " << person::ID_number <<"\n";
 		++total_providers;
 	}
-	for(it = services.begin(); it != services.end(); ++it){
-		if(true/*it->verify_date()*/){
-			total_amount += /*it->get_fee()*/ 0;
-			++consult_total;
-		}
-	}
+	for(it; it != services.end() || !it->accountingReport(consult_total, total_amount); ++it){}
 	return 1;
 }
 
-
 bool provider::EFT_report(ofstream & file){
-	int total_amount = 0;
+	float total_amount = 0;
 
 	file << "Name: " << person::name <<"\n";
 	file <<"ID: " << person::ID_number << "\n";
-	for(it = services.begin(); it != services.end(); ++it){
-		if(/*it->verify_date()*/true){
-			total_amount += /*it->get_fee()*/ 0;
-		}
-	}
+	for(it = services.begin(); it != services.end()|| !it->EFTReport(total_amount); ++it){}
 	file << "Total Fee: " << total_amount << "\n";
 	return 1;
 }

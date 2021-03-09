@@ -9,6 +9,9 @@
 #include "provider_directory_internal.h"
 
 
+const char* const PROVIDER_DIRECTORY_PREFIX = "provider_directory/";
+
+
 class Service
 {
   public:
@@ -82,7 +85,7 @@ class ProviderDirectory
      *
      *  @returns true on success, false on failure
      */
-    bool sendTo(const std::string& email) const;
+    bool sendTo(int providerId) const;
 
     /** validateServiceCode checks if a service code is present
      *
@@ -94,6 +97,8 @@ class ProviderDirectory
     /** size returns the number of entries in the provider directory
      */
     int size() const;
+
+    void formatProviderDirectory(std::string& str, int providerId) const;
 
   private:
     TreeMap<int, Service*> serviceByCode;
