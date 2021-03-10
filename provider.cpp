@@ -41,16 +41,17 @@ provider::provider(string set_name,
 // Should always return true as of current.
 bool provider::display_provider()
 {
-    person::display_person();
-    cout << "# of Consults: " << num_consults << endl
-         << "Total Fee    : " << total_fee << endl;
-
-		cout<< "Valid Provider : ";
+    if(person::display_person())
+    {
+        cout << "# of Consults: " << num_consults << endl
+             << "Total Fee    : " << total_fee << endl
+             << "Valid Provider : ";
     
 		(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
 		cout << endl;
-
-    return true;
+        return true;
+    }
+    return false;
 }
 
 // Displays the provider information in an enumerated format, 

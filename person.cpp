@@ -34,14 +34,21 @@ person::person(string set_name,
 
 bool person::display_basic()
 {
-    cout << name << ", " << ID_number << endl;
-    return true;
+    if(name == "")
+    {
+        cout << name << ", " << ID_number << endl;
+        return true;
+    }
 
+    return false;
 }
 
 // Display the base class information in a formatted view - Used for general display purposes
 bool person::display_person()
 {
+    if(name == "")
+        return false;
+
     cout << "Name         : " << name << endl
          << "ID #         : " << ID_number << endl
          << "Address      : " << street_address << ", " << city << ", " << state << ". " << zipcode << endl;
@@ -126,31 +133,35 @@ bool person::save_records(ofstream & write)
 
 bool person::load_info(ifstream & load)
 {	
-	if(!load.eof()){
-		char temp[100]; 
-		load.getline(temp, 100, ':');
-		name = temp;
+    if(!load.eof())
+    {
+        char temp[100];
+        load.getline(temp, 100, ':');
 
-		load >> ID_number;
-		load.get(); // clear buff
+        name = temp;
 
-		load.getline(temp, 100, ':');
-		street_address = temp;
+        if(!name.empty())
+        {
+            load >> ID_number;
+            load.ignore(50, ':');
 
-		load.getline(temp, 100, ':');
-		city = temp;
+            load.getline(temp, 100, ':');
+            street_address = temp;
 
-		load.getline(temp, 100, ':');
-		state = temp;
+            load.getline(temp, 100, ':');
+            city = temp;
 
-		load >> zipcode;
-		load.get();
+            load.getline(temp, 100, ':');
+            state = temp;
 
-		return true;
-	}
-	else{
-		return false;
-	}
+            load >> zipcode;
+            load.ignore(100, '\n');
+
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
