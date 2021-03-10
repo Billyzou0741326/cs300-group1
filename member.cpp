@@ -36,12 +36,14 @@ member::member(string set_name,
 // Used for general display purposes. Should always return true as of current.
 bool member::display_member()
 {
+	if(person::display_person())
+    {
+        cout<< "Valid Member : ";
+        (current_member) ? cout << "Yes\n\n": cout << "No\n\n";
+        return true;
+    }
 
-	person::display_person();
-	cout<< "Valid Member : ";
-    
-	(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
-	return true;
+    return false;
 }
 
 // Display enumerated derived member information - Used by Mack for editing purposes
