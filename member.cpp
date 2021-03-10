@@ -115,18 +115,17 @@ bool member::save_member(ofstream & write)
 // if something went wrong.
 bool member::load_member(ifstream & load)
 {
-	char temp[100];
-
 	if(person::load_info(load))
 	{
 		load >> current_member;
-		load.getline(temp, 100, '\n');
+        load.ignore(100, '\n');
 
 		for(it = services.begin(); it != services.end(); ++it){
 			it ->load(load);
 		}
 		return true;
 	}
+
 	return false;
 }
 

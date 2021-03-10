@@ -155,7 +155,7 @@ bool person::load_info(ifstream & load)
             state = temp;
 
             load >> zipcode;
-            load.ignore(100, '\n');
+            load.ignore(100, ':');
 
             return true;
         }

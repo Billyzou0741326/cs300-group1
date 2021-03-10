@@ -131,15 +131,14 @@ bool provider::save_provider(ofstream & write)
 // false if something went wrong.
 bool provider::load_provider(ifstream & load)
 {
-    char temp[100];
     if(person::load_info(load))
     {
         load >> num_consults;
-        load.get();
+        load.ignore(100, '\n');
         load >> total_fee;
-        load.get();
-		load >>current_provider;
-		load.get();
+        load.ignore(100, '\n');
+		load >> current_provider;
+		load.ignore(100, '\n');
 
 		for(it = services.begin(); it != services.end(); ++it){
 			it->load(load);
