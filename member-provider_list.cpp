@@ -214,7 +214,7 @@ int member_list::generate_member_report(int member_id)
     if(mptr->compare(member_id)) {  // Match!
 
       // Generate filename and open file
-      string directory = "Member_Reports/";
+      string directory = MEM_REPORT_DIR;
       string filename = mptr->get_last_name() + "-" + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
@@ -424,7 +424,7 @@ int provider_list::generate_provider_report(int provider_id)
     if(pptr->compare(provider_id)) {  // Match!
 
       // Generate filename and open file
-      string directory = "Provider_Reports/";
+      string directory = PRO_REPORT_DIR;
       string filename = pptr->get_last_name() + "-" + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
@@ -458,7 +458,7 @@ int provider_list::generate_provider_report(int provider_id)
 int provider_list::generate_ETF_report() 
 {
   // Generate filename and open file
-  string directory = "ETF_Reports/";
+  string directory = EFT_REPORT_DIR;
   string filename = get_date() + "-ETF_Report.txt";
   ofstream write;
   write.open(directory + filename);
@@ -495,8 +495,8 @@ int provider_list::generate_accounting_report()
   int total_providers = 0;
 
   // Generate filename and open file
-  string directory = "Accounting_Reports/";
-  string filename = get_date() + "-accounting_report";
+  string directory = ACC_REPORT_DIR;
+  string filename = get_date() + "-accounting_report.txt";
   ofstream write;
   write.open(directory + filename);
 
