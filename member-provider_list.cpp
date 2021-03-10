@@ -412,7 +412,7 @@ int provider_list::load_list(string filename)
   read.close();  // Close the file
   read.clear();  // Recycle var
   
-  return 1;  // Fail - File open error
+  return 2;  // Fail - File open error
 }
 
 
@@ -432,23 +432,25 @@ int provider_list::generate_provider_report(int provider_id)
       // Ensure Connection
       if(write) { 
 
-      // Write Header
-      write << "Provider Report\n"
-            << "Date: " << get_date() << endl
-            << "----------------------------------------\n\n";
+        // Write Header
+        write << "Provider Report\n"
+              << "Date: " << get_date() << endl
+              << "----------------------------------------\n\n";
 
-      // Write Report
-      if(pptr->provider_report(write))
-        return 1;
+        // Write Report
+        if(pptr->provider_report(write))
+          return 1;  // Fail - File write error
+
+        write.close();  // Close the file
+        write.clear();  // Recycle var
+
+        return 0;  // Success  
       }
-
-      write.close();  // Close the file
-      write.clear();  // Recycle var
-
-      return 0;  // Success  
+    
+      return 2;  // Fail - File open error
     } 
 
-    return 2;  // Fail - File open error
+    return 3;  // Fail - No Match / Empty list 
   }
 
   return 3;  // Fail - No Match / Empty List
