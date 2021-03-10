@@ -86,7 +86,7 @@ public:
   int save_list(string filename);
 
   // Load the member list from a file with the given filename
-  // Returns true for success, false for bad filename... update
+  // Returns 0 for success, 1 for read error, 2 file error 
   int load_list(string filename);
 
   // Member service report - List of a member's service record for the past 
@@ -142,29 +142,30 @@ public:
   int validate_provider(int provider_id);
 
   // Save the provider list to file with the given filename
-  // Returns true for success, false for failure
+  // Returns 0 for success, 1 for write error, 2 file error 
   bool save_list(string filename);
 
   // Load the provider list from a file with the given filename
-  // Returns true for success, false for bad filename... update
+  // Returns 0 for success, 1 for read error, 2 file error 
   int load_list(string filename);
 
   // Provider Service Report - List of a providers's service record for the past 
   // seven days. Creates a text file in Provider_Reports directory.
-  // Returns true for success, false otherwise.
+  // Returns 0 for success, 1 for write error, 2 file error 
+  // Returns 0 for success, 1 for write error, 2 file error, 3 No Match / Empty List
   int generate_provider_report(int provider_id);
 
   // EFT Report - List of provider names, ID Numbers, Total Amout Charged for
   // the past seven days 
   // Creates a text file in ETF_Reports directory.
-  // Returns true for success, false otherwise.
+  // Returns 0 for success, 1 for write error, 2 file error 
   int generate_ETF_report();
   
   // Accounting Report - List of providers having provided services in the past
   // seven days plus the number of providers in this list, the total number
   // of consultations, and the total dollar amount for all services provided.
   // Creates a text file in Accounting_Reports directory 
-  // Returns true for success, false otherwise
+  // Returns 0 for success, 1 for write error, 2 file error 
   int generate_accounting_report();
 
 private:
