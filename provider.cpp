@@ -113,12 +113,11 @@ bool provider::save_provider(ofstream & write)
     {
         write << num_consults << ":"
               << total_fee << ":" 
-							<< current_provider <<"\n";
+			  << current_provider <<"\n";
 
-        // all service records could start with \t
-        // while(auto : list)
-        //     list.save(write)
-
+		for(it = services.begin(); it != services.end(); ++it){
+			it.save(write);
+		}
         return true;
     }
     return false;
@@ -139,8 +138,8 @@ bool provider::load_provider(ifstream & load)
         load.get();
         load >> total_fee;
         load.get();
-				load >>current_provider;
-				load.get();
+		load >>current_provider;
+		load.get();
 
         // while(auto : list)
         //     list.load(load) <- while loop iterate over all service records
