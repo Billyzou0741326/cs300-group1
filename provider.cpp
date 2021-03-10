@@ -131,7 +131,6 @@ bool provider::save_provider(ofstream & write)
 bool provider::load_provider(ifstream & load)
 {
     char temp[100];
-
     if(person::load_info(load))
     {
         load >> num_consults;
@@ -141,8 +140,9 @@ bool provider::load_provider(ifstream & load)
 		load >>current_provider;
 		load.get();
 
-        // while(auto : list)
-        //     list.load(load) <- while loop iterate over all service records
+		for(it = services.begin(); it != services.end(); ++it){
+			it->load(load);
+		}
         return true;
     }
     return false;
@@ -171,18 +171,23 @@ bool provider::provider_report(ofstream & write){
 	int numConsultations;
 	float totalFees;
 	it = services.begin();
-	if(!it->weekVerificationWrapper()){
-		write << "No services this week" << "\n";
+	if(person::person_report(write)){
+		if(!it->weekVerificationWrapper()){
+			write << "No services this week" << "\n";
+		}
+		for(it = services.begin(); it != services.end(); ++it){
+			if(it->weekVerificationWrapper()){
+				save_provider(write);
+				it->generateProviderReport(write, numConsultations, totalFees);
+			}		
+		}
+		write << "Number of Consultations: " << numConsultations << "\n";
+		write << "Total Fees: " << totalFees << "\n";
+		return true;
 	}
-	for(it = services.begin(); it != services.end(); ++it){
-		if(it->weekVerificationWrapper()){
-			save_provider(write);
-			it->generateProviderReport(write, numConsultations, totalFees);
-		}		
+	else{
+	return false;
 	}
-	write << "Number of Consultations: " << numConsultations << "\n";
-	write << "Total Fees: " << totalFees << "\n";
-	return true;
 }
 
 bool provider:: accounting_report(ofstream & file, int & consult_total, float & total_amount, int & total_providers){
