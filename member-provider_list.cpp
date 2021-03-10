@@ -163,7 +163,7 @@ int member_list::save_list(string filename)
       
     // Write
     for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
-      if(!mptr->save_info(write))
+      if(!mptr->save_member(write))
         return false; // Fail - Write error
     }
 
@@ -373,7 +373,7 @@ bool provider_list::save_list(string filename)
       
     // Write 
     for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-      if(!pptr->save_info(write))
+      if(!pptr->save_provider(write))
         return false; // Fail - Write error
     }
 
@@ -487,7 +487,6 @@ int provider_list::generate_ETF_report()
   }
 
   return 2;  // Fail - File open error
-
 }
 
 

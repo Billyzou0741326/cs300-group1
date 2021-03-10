@@ -96,11 +96,12 @@ bool member::save_member(ofstream & write)
 {
    if(person::save_info(write))
    {
-       write << current_member << "\n";
+      write << current_member << "\n";
 
-	   for(it = services.begin(); it != services.end(); ++it){
-		it->save(write);
-	   }
+	    for(it = services.begin(); it != services.end(); ++it){
+		    it->save(write);
+	    }
+
 	   return true;
    }
 
