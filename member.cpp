@@ -96,9 +96,10 @@ bool member::save_member(ofstream & write)
    {
        write << current_member << "\n";
 
-       // for(auto : list)
-       //     list.save_info(write)
-       return true;
+	   for(it = services.begin(); it != services.end(); ++it){
+		it.save(write);
+	   }
+	   return true;
    }
 
    return false;
@@ -111,18 +112,18 @@ bool member::save_member(ofstream & write)
 // if something went wrong.
 bool member::load_member(ifstream & load)
 {
-    char temp[100];
+	char temp[100];
 
-    if(person::load_info(load))
-    {
-        load >> current_member;
-        load.getline(temp, 100, '\n');
+	if(person::load_info(load))
+	{
+		load >> current_member;
+		load.getline(temp, 100, '\n');
 
-        // while(auto:list)
-        //     list.load(load);
-        return true;
-    }
-    return false;
+		// while(auto:list)
+		//     list.load(load);
+		return true;
+	}
+	return false;
 }
 
 
