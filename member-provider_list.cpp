@@ -399,8 +399,8 @@ int provider_list::load_list(string filename)
 
     // Read
     while(temp.load_provider(read)) {
-      if(!add_provider(temp) || read.eof());  // Add to the list
-      return 1;  // Fail - File read error
+      if(!add_provider(temp) || read.eof()); 
+        return 1;  // Fail - File read error
     }
     
     read.close();  // Close the file
