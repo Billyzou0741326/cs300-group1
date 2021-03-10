@@ -187,9 +187,9 @@ int member_list::load_list(string filename)
   if(read) {
     member temp;  // Hold data to add to the list
 
-    // Read
+    // Read - How could we get out of this loop in an emergancy? 
     while(temp.load_member(read)) {
-      if(!add_member(temp))  // Add to list
+      if(!add_member(temp) || read.eof())  // Add to list
         return 1;  // Fail - File read error
     }
     
@@ -198,6 +198,9 @@ int member_list::load_list(string filename)
     
     return 0;  //Success
   }
+
+  read.close();
+  read.clear();
   
   return 2;  // Fail - File open error
 }
@@ -396,8 +399,8 @@ int provider_list::load_list(string filename)
 
     // Read
     while(temp.load_provider(read)) {
-      if(!add_provider(temp));  // Add to the list
-      return 1;  // Fail - File read error
+      if(!add_provider(temp) || read.eof()); 
+        return 1;  // Fail - File read error
     }
     
     read.close();  // Close the file
@@ -405,6 +408,9 @@ int provider_list::load_list(string filename)
     
     return 0;  //Success
   }
+
+  read.close();  // Close the file
+  read.clear();  // Recycle var
   
   return 1;  // Fail - File open error
 }
