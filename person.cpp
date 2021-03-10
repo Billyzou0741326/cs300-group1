@@ -34,25 +34,25 @@ person::person(string set_name,
 
 bool person::display_basic()
 {
-    if(name == "")
+    if(!name.empty())
     {
         cout << name << ", " << ID_number << endl;
         return true;
     }
-
     return false;
 }
 
 // Display the base class information in a formatted view - Used for general display purposes
 bool person::display_person()
 {
-    if(name == "")
-        return false;
-
-    cout << "Name         : " << name << endl
-         << "ID #         : " << ID_number << endl
-         << "Address      : " << street_address << ", " << city << ", " << state << ". " << zipcode << endl;
-    return true;
+    if(!name.empty())
+    {
+        cout << "Name         : " << name << endl
+             << "ID #         : " << ID_number << endl
+             << "Address      : " << street_address << ", " << city << ", " << state << ". " << zipcode << endl;
+        return true;
+    }
+    return false;
 }
 
 // Display enumerated base class information - Used by Mack for editing purposes
