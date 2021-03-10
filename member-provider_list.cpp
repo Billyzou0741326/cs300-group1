@@ -438,7 +438,8 @@ int provider_list::generate_provider_report(int provider_id)
             << "----------------------------------------\n\n";
 
       // Write Report
-      pptr->provider_report(write);
+      if(pptr->provider_report(write))
+        return 1;
       }
 
       write.close();  // Close the file
@@ -447,10 +448,10 @@ int provider_list::generate_provider_report(int provider_id)
       return 0;  // Success  
     } 
 
-    return 1;  // Fail - File open error
+    return 2;  // Fail - File open error
   }
 
-  return 2;  // Fail - No Match / Empty List
+  return 3;  // Fail - No Match / Empty List
 }
 
 
@@ -477,12 +478,13 @@ int provider_list::generate_ETF_report()
         return 1;  // Fail - File write error
     }
 
+    write.close();  // Close the file
+    write.clear();  // Recycle var
+
+    return 0;  // Success 
   }
 
-  write.close();  // Close the file
-  write.clear();  // Recycle var
-    
-  return 0;  // Success 
+  return 2;  // Fail - File open error
 
 }
 
@@ -509,7 +511,7 @@ int provider_list::generate_accounting_report()
     for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
        if(!pptr->accounting_report(write, total_consult, total_amount, 
                                    total_providers))
-         return 2;  // Fail - File write error
+         return 1;  // Fail - File write error
     }
 
     // Write Summary Info
@@ -521,6 +523,8 @@ int provider_list::generate_accounting_report()
     write.close();  // Close the file
     write.clear();  // Recycle var
 
+    return 0;  // Success
+
   }
-  return 1;  // Fail - File open error
+  return 2;  // Fail - File open error
 }
