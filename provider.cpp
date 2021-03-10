@@ -116,7 +116,7 @@ bool provider::save_provider(ofstream & write)
 			  << current_provider <<"\n";
 
 		for(it = services.begin(); it != services.end(); ++it){
-			it.save(write);
+			it->save(write);
 		}
         return true;
     }

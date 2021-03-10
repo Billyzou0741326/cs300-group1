@@ -125,54 +125,59 @@ bool person::save_records(ofstream & write)
 // TODO *** end of save ***
 
 bool person::load_info(ifstream & load)
-{
-    char temp[100]; 
-    load.getline(temp, 100, ':');
-    name = temp;
+{	
+	if(!load.eof()){
+		char temp[100]; 
+		load.getline(temp, 100, ':');
+		name = temp;
 
-    load >> ID_number;
-    load.get(); // clear buff
+		load >> ID_number;
+		load.get(); // clear buff
 
-    load.getline(temp, 100, ':');
-    street_address = temp;
+		load.getline(temp, 100, ':');
+		street_address = temp;
 
-    load.getline(temp, 100, ':');
-    city = temp;
+		load.getline(temp, 100, ':');
+		city = temp;
 
-    load.getline(temp, 100, ':');
-    state = temp;
+		load.getline(temp, 100, ':');
+		state = temp;
 
-    load >> zipcode;
-    load.get();
-    
-    return true;
+		load >> zipcode;
+		load.get();
+
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 
 
 bool person::add_service(ServiceRecord to_add) {
-    //Figure out return case for false TODO
-    //if(to_add != nullptr) {
-        services.push_back(to_add);
-        return true;
-    //} else {
-        //return false;
-    //}
+	//Figure out return case for false TODO
+	//if(to_add != nullptr) {
+	services.push_back(to_add);
+	return true;
+	//} else {
+	//return false;
+	//}
 }
 
 bool person::person_report(ofstream &fstream) {
-    //Deal with the return value TODO
-    fstream << name << endl;
-    fstream << ID_number << endl;
-    fstream << street_address << endl;
-    fstream << city << endl;
-    fstream << state << endl;
-    fstream << zipcode << endl;
-    return true;
+	//Deal with the return value TODO
+	fstream << name << endl;
+	fstream << ID_number << endl;
+	fstream << street_address << endl;
+	fstream << city << endl;
+	fstream << state << endl;
+	fstream << zipcode << endl;
+	return true;
 }
 
 string & person::get_name()
 {
-  return name;
+	return name;
 }
 
 

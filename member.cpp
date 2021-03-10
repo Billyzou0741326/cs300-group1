@@ -97,7 +97,7 @@ bool member::save_member(ofstream & write)
        write << current_member << "\n";
 
 	   for(it = services.begin(); it != services.end(); ++it){
-		it.save(write);
+		it->save(write);
 	   }
 	   return true;
    }
