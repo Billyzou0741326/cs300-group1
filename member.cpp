@@ -119,8 +119,9 @@ bool member::load_member(ifstream & load)
 		load >> current_member;
 		load.getline(temp, 100, '\n');
 
-		// while(auto:list)
-		//     list.load(load);
+		for(it = services.begin(); it != services.end(); ++it){
+			it ->load(load);
+		}
 		return true;
 	}
 	return false;
@@ -130,18 +131,24 @@ bool member::load_member(ifstream & load)
 
 
 bool member::member_report(ofstream &write) {
+	
 	it = services.begin();
-	if(!it->weekVerificationWrapper()){
-		write <<"NO services this week " << "\n";
-	}
-	for(it = services.begin(); it != services.end(); ++it){
-		if(it ->weekVerificationWrapper()){
-			save_member(write);
-			it->generateMemberReport(write);
-			write << "Valid Member : ";
-
-			(current_member) ? write<< "Yes\n\n": write<< "No\n\n";
+	if(person::person_report(write)){
+		if(!it->weekVerificationWrapper()){
+			write <<"NO services this week " << "\n";
 		}
+		for(it = services.begin(); it != services.end(); ++it){
+			if(it ->weekVerificationWrapper()){
+				save_member(write);
+				it->generateMemberReport(write);
+				write << "Valid Member : ";
+
+				(current_member) ? write<< "Yes\n\n": write<< "No\n\n";
+			}
+		}
+		return true;
 	}
+	else{
 	return false;
+	}
 }
