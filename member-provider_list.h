@@ -151,7 +151,6 @@ public:
 
   // Provider Service Report - List of a providers's service record for the past 
   // seven days. Creates a text file in Provider_Reports directory.
-  // Returns 0 for success, 1 for write error, 2 file error 
   // Returns 0 for success, 1 for write error, 2 file error, 3 No Match / Empty List
   int generate_provider_report(int provider_id);
 
