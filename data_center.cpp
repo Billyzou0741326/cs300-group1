@@ -62,6 +62,7 @@ DataCenter::DataCenter(){
 
     memberList.load_list("member_list.data");
     providerList.load_list("provider_list.data");
+    providerDirectory.loadFromFile("provider_directory.data");
 }
 
 DataCenter::~DataCenter(){
