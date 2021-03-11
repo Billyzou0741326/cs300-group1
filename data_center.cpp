@@ -82,7 +82,7 @@ void DataCenter::providerMenu(){
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
     
     UI(var, "Enter your provider number", 9, 9);
-/*    do{
+    do{
         if(!providerList.validate_provider(var)){
             again = 0;
             UI("Successfully validated");
@@ -90,7 +90,7 @@ void DataCenter::providerMenu(){
         else{
             UI(var, "Number could not be validated, please try again", 9, 9);
         }
-    }while(again);*/
+    }while(again);
     currentProviderNumber = var;
 
     again = 1;
