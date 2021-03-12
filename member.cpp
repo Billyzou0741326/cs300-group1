@@ -24,7 +24,7 @@ member::member(string set_name,
              set_city,
              set_state,
              set_zip),
-      current_member(set_current_member)
+             current_member(set_current_member)
 {
 
 }
@@ -125,12 +125,8 @@ bool member::load_member(ifstream & load)
 		}
 		return true;
 	}
-
 	return false;
 }
-
-
-
 
 bool member::member_report(ofstream &write) {
 	

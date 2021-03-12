@@ -6,7 +6,7 @@
 provider::provider()
     : num_consults(0),
       total_fee(0),
-			current_provider(0)
+	  current_provider(0)
 {
 
 }
@@ -20,7 +20,7 @@ provider::provider(string set_name,
                    int set_zip,
                    int set_num_consults,
                    float set_total_fee,
-									 bool set_current_provider)
+				   bool set_current_provider)
     : person(set_name,
              set_ID,
              set_street,
@@ -62,7 +62,7 @@ bool provider::display_provider_edit()
     if(person::display_person_edit())
     {
         cout << "[7] Valid Prov.  : ";
-    
+
         (current_provider) ? cout << "Yes\n\n": cout << "No\n\n" << endl;
         return true;
     }
@@ -79,7 +79,7 @@ bool provider::copy(provider & copy_to)
     {
         copy_to.num_consults = num_consults;
         copy_to.total_fee = total_fee;
-				copy_to.current_provider = current_provider;
+			copy_to.current_provider = current_provider;
 
         return true;
     }
@@ -96,7 +96,8 @@ bool provider::edit(provider & edit_from)
         num_consults = edit_from.num_consults;
     if(edit_from.total_fee != 0)
         total_fee = edit_from.num_consults;
-		current_provider = edit_from.current_provider;
+
+    current_provider = edit_from.current_provider;
 
     return true;
 }
