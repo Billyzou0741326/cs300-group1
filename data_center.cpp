@@ -407,14 +407,16 @@ int DataCenter::editProvider(){
     string city;
     string state;
     int zip = 0;
+    bool status = true;
 
     int choice = 0;
     int check = 0;
     int again = 1;
+    char statusChoice = 'Y';
     do{
         prov.display_provider_edit();
         cout << "[9] Save and close" << endl;
-        UI(choice, "Enter the number of the field you'd like to edit");
+        UI(choice, "Enter the number of the field you'd like to edit\nNote that changes aren't reflected until you save");
         
         switch(choice){
 
@@ -451,6 +453,13 @@ int DataCenter::editProvider(){
             //Zip
             case 6:
                 UI(zip, "Enter new zip", 5, 5);
+                break;
+            
+            //Membership Status
+            case 7:
+                UI(statusChoice, "Are they a current provider? (y/n)");
+                statusChoice = toupper(statusChoice);
+                if(statusChoice == 'N') status = false;
                 break;
 
             //Save and close
@@ -539,7 +548,7 @@ int DataCenter::editMember(){
 
             //Membership Status
             case 7:
-                UI(statusChoice, "Are they a current member? (y\n)");
+                UI(statusChoice, "Are they a current member? (y/n)");
                 statusChoice = toupper(statusChoice);
                 if(statusChoice == 'N') status = false;
                 break;
