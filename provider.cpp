@@ -135,9 +135,9 @@ bool provider::load_provider(ifstream & load)
     if(person::load_info(load))
     {
         load >> num_consults;
-        load.ignore(100, '\n');
+        load.ignore(100, ':');
         load >> total_fee;
-        load.ignore(100, '\n');
+        load.ignore(100, ':');
 		load >> current_provider;
 		load.ignore(100, '\n');
 
