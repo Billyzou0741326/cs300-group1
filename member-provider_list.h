@@ -18,7 +18,7 @@ using namespace std;
 // Report Directories
 #define MEM_REPORT_DIR "member_reports/"
 #define PRO_REPORT_DIR "provider_reports/"
-#define EFT_REPORT_DIR "EFT_reoprts/"
+#define EFT_REPORT_DIR "EFT_reports/"
 #define ACC_REPORT_DIR "accounting_reports/"
  
 
