@@ -141,9 +141,15 @@ bool provider::load_provider(ifstream & load)
 		load >> current_provider;
 		load.ignore(100, '\n');
 
+
+        ServiceRecord obj;
+        while(obj.load(load)){
+            services.push_back(obj);
+        }
+        /*
 		for(it = services.begin(); it != services.end(); ++it){
 			it->load(load);
-		}
+		}*/
         return true;
     }
     return false;
