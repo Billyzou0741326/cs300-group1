@@ -172,6 +172,7 @@ bool provider::provider_report(ofstream & write){
 	int numConsultations = 0;
 	float totalFees = 0;
 	if(services.empty()){
+		write << "No services to display" << "\n";
 		return false;
 	}
 	it = services.begin();
