@@ -181,31 +181,36 @@ void DataCenter::managerMenu(){
             //Member Report
             case 5:
                 UI(var, "Enter member number", 9, 9);
-                if(!memberList.generate_member_report(var))
-                    UI("Report generation failure! Check input.");
+                retval = memberList.generate_member_report(var);
+                if(retval == 1) UI("There was a problem opening the file.");
+                else if(retval == 2) UI("That user was not found.");
                 else UI("Report successfully generated.");
                 break;
 
             //Provider Report
             case 6:
                 UI(var, "Enter provider number", 9, 9);
-                if(!providerList.generate_provider_report(var))
-                    UI("Report generation failure! Check input.");
+                retval = providerList.generate_provider_report(var);
+                if(retval == 1) UI("There was a write problem.");
+                else if(retval == 2) UI("There was a problem opening the file.");
+                else if(retval == 3) UI("That user was not found.");
                 else UI("Report successfully generated.");
                 break;
 
             //EFT Report
             case 7:
-                if(!providerList.generate_ETF_report())
-                    UI("Record generation failure! Check input.");
-                else UI("EFT record successfully generated.");
+                retval = providerList.generate_ETF_report();
+                if(retval == 1) UI("There was a problem opening the file.");
+                else if(retval == 2) UI("That user was not found.");
+                else UI("Report successfully generated.");
                 break;
 
             //Accounting Report
             case 8:
-                if(!providerList.generate_accounting_report())
-                    UI("Report generation failure! Check input.");
-                else UI("Accounting report successfully generated.");
+                retval = providerList.generate_accounting_report();
+                if(retval == 1) UI("There was a problem opening the file.");
+                else if(retval == 2) UI("That user was not found.");
+                else UI("Report successfully generated.");
                 break;
 
             //Exit
@@ -232,7 +237,8 @@ int DataCenter::manipulateMembers(){
     options.append("[2] Remove Member\n");
     options.append("[3] Edit Member\n");
     options.append("[4] Display Members\n");
-    options.append("[9] Back");
+    options.append("[9] Back\n");
+    options.append("\nEnter the number for your selection");
 
     int choice = 9;
     int again = 1;
@@ -278,7 +284,8 @@ int DataCenter::manipulateProviders(){
     options.append("[2] Remove Provider\n");
     options.append("[3] Edit Provider\n");
     options.append("[4] Display Providers\n");
-    options.append("[9] Back");
+    options.append("[9] Back\n");
+    options.append("\nEnter the number for your selection");
 
     int choice = 9;
     int again = 1;
