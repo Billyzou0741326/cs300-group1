@@ -169,8 +169,11 @@ bool provider::provider_report(ofstream &fstream) {
 */
 
 bool provider::provider_report(ofstream & write){
-	int numConsultations;
-	float totalFees;
+	int numConsultations = 0;
+	float totalFees = 0;
+	if(services.empty()){
+		return false;;
+	}
 	it = services.begin();
 	if(person::person_report(write)){
 		if(!it->weekVerificationWrapper()){

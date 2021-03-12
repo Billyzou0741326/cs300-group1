@@ -130,6 +130,9 @@ bool member::load_member(ifstream & load)
 
 bool member::member_report(ofstream &write) {
 	
+	if(services.empty()){
+		return false;
+	}
 	it = services.begin();
 	if(person::person_report(write)){
 		if(!it->weekVerificationWrapper()){
