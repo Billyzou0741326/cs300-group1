@@ -6,7 +6,7 @@
 provider::provider()
     : num_consults(0),
       total_fee(0),
-	  current_provider(0)
+	  current_provider(true)
 {
 
 }
