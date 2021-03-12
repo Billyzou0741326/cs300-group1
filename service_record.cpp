@@ -6,13 +6,22 @@
 using namespace std;
 
 //int main() {
-    //ofstream fstream;
-    //fstream("providerRecord.txt");
+    //ofstream stream;
+    //stream.open("providerRecord.txt");
+
+    //if(!stream) {
+        //cout << "The file was not opened" << endl;
+    //}
+
     //ServiceRecord record;
     //string date = "03-01-2021";
     //record.weekVerification(date);
 
     //ServiceRecord record("03-03-2021",789789789,789789789,789789,"This is a comment","Jeff Johnson","Bennett Desmond","Elbow Gris",5.00);
+
+    //record.save(stream);
+
+
     //return 0;
 //}
 
@@ -37,8 +46,8 @@ ServiceRecord::ServiceRecord(string dateOfService, int providerNumber, int membe
     time (&rawTime);
     timeInfo = localtime(&rawTime);
     strftime(buffer,sizeof(buffer),"%m-%d-%Y %H:%M:%S",timeInfo);
-    string recordDateAndTime(buffer);
-    //cout << "The time is: " << recordDateAndTime << endl;
+    string tempRecordDateAndTime(buffer);
+    this->recordDateAndTime = tempRecordDateAndTime;
     this->dateOfService = dateOfService;
     this->providerNumber = providerNumber;
     this->memberNumber = memberNumber;
