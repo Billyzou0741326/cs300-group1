@@ -10,7 +10,7 @@
 /*
 int main()
 {
-  return 0;
+  return 0
 }
 */
 
@@ -211,7 +211,7 @@ int member_list::generate_member_report(int member_id)
 {
   // Find Member
   for(mptr = mList.begin(); mptr != mList.end(); ++mptr) {
-    if(mptr->compare(member_id)) {  // Match!
+    if(mptr->compare(member_id)) {  // Found!
 
       // Generate filename and open file
       string directory = MEM_REPORT_DIR;
@@ -219,28 +219,29 @@ int member_list::generate_member_report(int member_id)
       ofstream write;
       write.open(directory + filename);
 
-      // Ensure Connection and write report 
+      // Ensure Connection 
       if(write) { 
       
-      // Write Header
-      write << "Member Report\n"
-            << "Date: " << get_date() << endl
-            << "----------------------------------------\n\n";
+        // Write Header
+        write << "Member Report\n"
+              << "Date: " << get_date() << endl
+              << "----------------------------------------\n\n";
 
-      // Write Report
-      mptr->member_report(write);
+        // Write Report
+        if(!mptr->member_report(write))
+          return 1;  // Fail - File write error
+
+        write.close();  // Close the file
+        write.clear();  // Recycle var
+
+        return 0;  // Success  
       }
-
-      write.close();  // Close the file
-      write.clear();  // Recycle var
-
-      return 0;  // Success  
+      
+      return 2; // Fail - File open error
     } 
-
-    return 1;  // Fail - File open error
   }
 
-  return 2;  // Fail - No Match / Empty List
+  return 3;  // Fail - No Match / Empty List
 }
 
  
@@ -421,7 +422,7 @@ int provider_list::generate_provider_report(int provider_id)
 {
   // Find Provider 
   for(pptr = pList.begin(); pptr != pList.end(); ++pptr) {
-    if(pptr->compare(provider_id)) {  // Match!
+    if(pptr->compare(provider_id)) {  // Found!
 
       // Generate filename and open file
       string directory = PRO_REPORT_DIR;
@@ -438,7 +439,7 @@ int provider_list::generate_provider_report(int provider_id)
               << "----------------------------------------\n\n";
 
         // Write Report
-        if(pptr->provider_report(write))
+        if(!pptr->provider_report(write))
           return 1;  // Fail - File write error
 
         write.close();  // Close the file
@@ -449,8 +450,6 @@ int provider_list::generate_provider_report(int provider_id)
     
       return 2;  // Fail - File open error
     } 
-
-    return 3;  // Fail - No Match / Empty list 
   }
 
   return 3;  // Fail - No Match / Empty List

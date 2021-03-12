@@ -86,12 +86,12 @@ public:
   int save_list(string filename);
 
   // Load the member list from a file with the given filename
-  // Returns 0 for success, 1 for read error, 2 file error 
+  // Returns 0 for success, 1 for read error, 2 file open error 
   int load_list(string filename);
 
   // Member service report - List of a member's service record for the past 
   // seven days. Creates a text file in Member_Reports directory.
-  // Returns 0 for success, 1 for file open error, 2 for no match / empty list
+  // Returns 0 for success, 1 for write error, 2 file error, 3 for no match / empty list
   int generate_member_report(int member_id);
 
 private:
