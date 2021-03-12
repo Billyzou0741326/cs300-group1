@@ -4,4 +4,4 @@ a.exe
 .vscode
 a.out
 provider_directory_test
-provider_directory.o
+*.o
