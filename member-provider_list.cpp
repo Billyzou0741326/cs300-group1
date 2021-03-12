@@ -228,8 +228,11 @@ int member_list::generate_member_report(int member_id)
               << "----------------------------------------\n\n";
 
         // Write Report
-        if(!mptr->member_report(write))
+        if(!mptr->member_report(write)) {
+          write << "Error generating member report!";
           return 1;  // Fail - File write error
+        }
+
 
         write.close();  // Close the file
         write.clear();  // Recycle var
@@ -439,8 +442,10 @@ int provider_list::generate_provider_report(int provider_id)
               << "----------------------------------------\n\n";
 
         // Write Report
-        if(!pptr->provider_report(write))
+        if(!pptr->provider_report(write)) { 
+          write << "Error generating provider report!";
           return 1;  // Fail - File write error
+        }
 
         write.close();  // Close the file
         write.clear();  // Recycle var

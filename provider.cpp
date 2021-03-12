@@ -104,7 +104,7 @@ bool provider::edit(provider & edit_from)
 
 bool provider::validate(){
 	return current_provider;
-};
+}
 // Saves the provider information to the ofstream 'write' variable.
 // Returns true if the superclass save_info is successful, the provider
 // information is written, and the provider list is written. Otherwise
@@ -172,7 +172,8 @@ bool provider::provider_report(ofstream & write){
 	int numConsultations = 0;
 	float totalFees = 0;
 	if(services.empty()){
-		return false;;
+		write << "No services to display" << "\n";
+		return false;
 	}
 	it = services.begin();
 	if(person::person_report(write)){
