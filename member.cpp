@@ -130,10 +130,14 @@ bool member::load_member(ifstream & load)
 
 bool member::member_report(ofstream &write) {
 	
+	if(services.empty()){
+		write << "No services to display " << "\n";
+		return false;
+	}
 	it = services.begin();
 	if(person::person_report(write)){
 		if(!it->weekVerificationWrapper()){
-			write <<"NO services this week " << "\n";
+			write <<"No services this week " << "\n";
 		}
 		for(it = services.begin(); it != services.end(); ++it){
 			if(it ->weekVerificationWrapper()){
