@@ -232,7 +232,8 @@ int DataCenter::manipulateMembers(){
     options.append("[2] Remove Member\n");
     options.append("[3] Edit Member\n");
     options.append("[4] Display Members\n");
-    options.append("[9] Back");
+    options.append("[9] Back\n");
+    options.append("\nEnter the number for your selection");
 
     int choice = 9;
     int again = 1;
@@ -278,7 +279,8 @@ int DataCenter::manipulateProviders(){
     options.append("[2] Remove Provider\n");
     options.append("[3] Edit Provider\n");
     options.append("[4] Display Providers\n");
-    options.append("[9] Back");
+    options.append("[9] Back\n");
+    options.append("\nEnter the number for your selection");
 
     int choice = 9;
     int again = 1;
