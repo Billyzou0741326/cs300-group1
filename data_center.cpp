@@ -201,8 +201,8 @@ void DataCenter::managerMenu(){
             //EFT Report
             case 7:
                 retval = providerList.generate_ETF_report();
-                if(retval == 1) UI("There was a problem opening the file.");
-                else if(retval == 2) UI("That user was not found.");
+                if(retval == 1) UI("There was a problem writing to the file.");
+                else if(retval == 2) UI("There was a problem opening the file.");
                 else UI("Report successfully generated.");
                 break;
 
