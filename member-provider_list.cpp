@@ -215,7 +215,7 @@ int member_list::generate_member_report(int member_id)
 
       // Generate filename and open file
       string directory = MEM_REPORT_DIR;
-      string filename = mptr->get_last_name() + "-" + get_date() + ".txt";
+      string filename = mptr->get_last_name() + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
 
@@ -429,7 +429,7 @@ int provider_list::generate_provider_report(int provider_id)
 
       // Generate filename and open file
       string directory = PRO_REPORT_DIR;
-      string filename = pptr->get_last_name() + "-" + get_date() + ".txt";
+      string filename = pptr->get_last_name() + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
 
