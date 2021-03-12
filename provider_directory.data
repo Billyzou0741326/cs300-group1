@@ -1,39 +1,39 @@
-ServiceCode: 175336000
+ServiceCode: 176000
 ServiceName: Doctor Care
 Fees:        120.00
 Description: A doctor visits a patient
 ----
-ServiceCode: 175336001
+ServiceCode: 176001
 ServiceName: Volunteer Care
 Fees:        5.00
 Description: A volunteer from the community visits a patient
 ----
-ServiceCode: 175336002
+ServiceCode: 176002
 ServiceName: Nutritional Support
 Fees:        15.00
 Description: Dietitians provide expert advises on dietary assessments
 ----
-ServiceCode: 175336003
+ServiceCode: 176003
 ServiceName: Weight Management
 Fees:        20.00
 Description: Provider assists the patient on managing body weight
 ----
-ServiceCode: 175336004
+ServiceCode: 176004
 ServiceName: Imaging & X-Ray Service
 Fees:        80.00
 Description: Performs an X-Ray scan on the patient
 ----
-ServiceCode: 175336005
+ServiceCode: 176005
 ServiceName: Therapy Service
 Fees:        18.00
 Description: A therapist will work with the patient
 ----
-ServiceCode: 175336006
+ServiceCode: 176006
 ServiceName: Medical Social Service
 Fees:        12.00
 Description: A doctor will assist the patient in addressing social and emotional issues
 ----
-ServiceCode: 175336007
+ServiceCode: 176007
 ServiceName: Meal Delivery Service
 Fees:        35.00
 Description: Meals will be delivered to the patient's place at scheduled hours
