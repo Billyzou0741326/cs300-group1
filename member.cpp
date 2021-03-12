@@ -130,10 +130,14 @@ bool member::load_member(ifstream & load)
 
 bool member::member_report(ofstream &write) {
 	
+	write << "Valid Member : ";
+	(current_member) ? write<< "Yes\n": write<< "No\n";
+
 	if(services.empty()){
 		write << "No services to display " << "\n";
 		return false;
 	}
+
 	it = services.begin();
 	if(person::person_report(write)){
 		if(!it->weekVerificationWrapper()){
@@ -141,11 +145,8 @@ bool member::member_report(ofstream &write) {
 		}
 		for(it = services.begin(); it != services.end(); ++it){
 			if(it ->weekVerificationWrapper()){
-				save_member(write);
+				//save_member(write);
 				it->generateMemberReport(write);
-				write << "Valid Member : ";
-
-				(current_member) ? write<< "Yes\n": write<< "No\n";
 			}
 		}
 		return true;

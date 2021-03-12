@@ -182,7 +182,7 @@ bool provider::provider_report(ofstream & write){
 		}
 		for(it = services.begin(); it != services.end(); ++it){
 			if(it->weekVerificationWrapper()){
-				save_provider(write);
+				//save_provider(write);
 				it->generateProviderReport(write, numConsultations, totalFees);
 			}		
 		}
