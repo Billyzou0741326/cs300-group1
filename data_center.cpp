@@ -81,7 +81,8 @@ void DataCenter::providerMenu(){
     int var = 0;
 
     cout << "Welcome to the ChocAn Interactive Terminal" << endl;
-    
+
+    //Validate provider number 
     UI(var, "Enter your provider number", 9, 9);
     do{
         if(!providerList.validate_provider(var)){
@@ -116,7 +117,6 @@ void DataCenter::providerMenu(){
 
             //Request Provider Directory
             case 2:
-                //TODO catch failure
                 providerDirectory.sendTo(currentProviderNumber);
                 UI("Provider directory successfully sent");
                 break;
@@ -600,20 +600,23 @@ int DataCenter::recordService(){
         confirm = toupper(confirm);
     }
 
+    //Check for comments
     UI(confirm, "Would you like to enter comments? (y/n)");
     confirm = toupper(confirm);
     if(confirm == 'Y'){
         UI(comments, "Enter comments (up to 100 characters)", 100);
     }
 
+    //Find info about the people
     member memb;
     provider prov;
     memberList.retrieve_member(memberNumber, memb);
     providerList.retrieve_provider(currentProviderNumber, prov);
 
+    //Create the record and send it in
     ServiceRecord record(date, currentProviderNumber, memberNumber, serviceCode, comments, prov.get_name(), memb.get_name(), service.getName(), service.getFees());
-    //memberList.add_service(memberNumber, record);
-    //providerList.add_service(currentProviderNumber, record);
+    memberList.add_service(memberNumber, record);
+    providerList.add_service(currentProviderNumber, record);
     UI("Service Successfully Recorded!");
 
     return 1;
