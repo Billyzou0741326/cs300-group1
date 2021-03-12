@@ -480,7 +480,7 @@ int DataCenter::editProvider(){
         }
     }while(again);
         
-    provider edited(name, ID, address, city, state, zip, 0, 0, true);
+    provider edited(name, ID, address, city, state, zip, 0, 0, status);
     providerList.edit_provider(oldID, edited);
     
     return 1;
