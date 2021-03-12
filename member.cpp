@@ -39,7 +39,7 @@ bool member::display_member()
 	if(person::display_person())
     {
         cout<< "Valid Member : ";
-        (current_member) ? cout << "Yes\n\n": cout << "No\n\n";
+        (current_member) ? cout << "Yes\n": cout << "No\n";
         return true;
     }
 
@@ -54,7 +54,7 @@ bool member::display_member_edit()
 	if(	person::display_person_edit()){
 		cout<< "[7] Valid Member : ";
     
-		(current_member) ? cout << "Yes\n\n": cout << "No\n\n";
+		(current_member) ? cout << "Yes\n": cout << "No\n";
 	}
 
 	return true;
@@ -141,7 +141,7 @@ bool member::member_report(ofstream &write) {
 				it->generateMemberReport(write);
 				write << "Valid Member : ";
 
-				(current_member) ? write<< "Yes\n\n": write<< "No\n\n";
+				(current_member) ? write<< "Yes\n": write<< "No\n";
 			}
 		}
 		return true;

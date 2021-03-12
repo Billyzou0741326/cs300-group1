@@ -47,7 +47,7 @@ bool provider::display_provider()
              << "Total Fee    : " << total_fee << endl
              << "Valid Provider : ";
     
-		(current_provider) ? cout << "Yes\n\n": cout << "No\n\n";
+		(current_provider) ? cout << "Yes\n": cout << "No\n";
 		cout << endl;
         return true;
     }
@@ -63,7 +63,7 @@ bool provider::display_provider_edit()
     {
         cout << "[7] Valid Prov.  : ";
 
-        (current_provider) ? cout << "Yes\n\n": cout << "No\n\n" << endl;
+        (current_provider) ? cout << "Yes\n": cout << "No\n" << endl;
         return true;
     }
     return false;
