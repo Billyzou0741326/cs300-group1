@@ -586,7 +586,7 @@ int DataCenter::recordService(){
     string date;
     int serviceCode = 0;
     char confirm = 'N';
-    string comments;
+    string comments = "None";
     Service service;
     
     UI(memberNumber, "Please enter member number", 9, 9);
