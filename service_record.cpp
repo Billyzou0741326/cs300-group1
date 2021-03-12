@@ -55,14 +55,15 @@ ServiceRecord::~ServiceRecord() {
 }
 
 bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsultations, float &totalFees) {
-    if(weekVerification(dateOfService)) {
+    //if(weekVerification(dateOfService)) {
+    if(outputFile){
         outputFile << endl;
-        outputFile << "    " << dateOfService << endl;
-        outputFile << "    " << recordDateAndTime << endl;
-        outputFile << "    " << memberName << endl;
-        outputFile << "    " << memberNumber << endl;
-        outputFile << "    " << serviceCode << endl;
-        outputFile << "    " << fees << endl;
+        outputFile << "Date of service: " << dateOfService << endl;
+        outputFile << "Date of record: " << recordDateAndTime << endl;
+        outputFile << "Member name: " << memberName << endl;
+        outputFile << "Member number: " << memberNumber << endl;
+        outputFile << "Service code: " << serviceCode << endl;
+        outputFile << "Fees: " << fees << endl << endl;
         numOfConsultations++;
         totalFees += fees;
         return true;
@@ -72,11 +73,12 @@ bool ServiceRecord::generateProviderReport(ofstream &outputFile, int &numOfConsu
 }
 
 bool ServiceRecord::generateMemberReport(ofstream &outputFile) {
-    if(weekVerification(dateOfService)) {
+    //if(weekVerification(dateOfService)) {
+    if(outputFile){
         outputFile << endl;
-        outputFile << "    " << dateOfService << endl;
-        outputFile << "    " << providerName << endl;
-        outputFile << "    " << serviceName << endl;
+        outputFile << "Date of service: " << dateOfService << endl;
+        outputFile << "Provider name: " << providerName << endl;
+        outputFile << "Service name: " << serviceName << endl << endl;
         return true;
     } else {
         return false;
@@ -96,16 +98,25 @@ bool ServiceRecord::weekVerification(string dateOfService) {
     string month = dateOfService.substr(0,2);
     string day = dateOfService.substr(3,2);
     string year = dateOfService.substr(6,4);
-    string convDateOfService = "20210301";
+    
+    /*string convDateOfService = year + month + day;
     tm tmTime;
     memset(&tmTime, 0, sizeof(tmTime));
     strptime(convDateOfService.c_str(), "%Y%m%d", &tmTime);
     const time_t dateOfServiceTimeVar = mktime(&tmTime);
     //const int monthDays[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-    string delimiter = "-";
+    string delimiter = "-";*/
+
+    tm convert;
+    convert.tm_sec = convert.tm_min = convert.tm_hour = 0;
+    convert.tm_mday = stoi(day);
+    convert.tm_mon = stoi(month) - 1;
+    convert.tm_year = stoi(year) - 1900;
+    time_t converted = mktime(&convert);
+
     std::time_t current_time;
     current_time = time(NULL);
-    if((current_time - dateOfServiceTimeVar) <= 604800) {
+    if((current_time - converted) <= 604800) {
         return true;
     }
     return false;
