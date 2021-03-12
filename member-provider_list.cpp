@@ -215,7 +215,7 @@ int member_list::generate_member_report(int member_id)
 
       // Generate filename and open file
       string directory = MEM_REPORT_DIR;
-      string filename = mptr->get_last_name() + "-" + get_date() + ".txt";
+      string filename = mptr->get_last_name() + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
 
@@ -228,8 +228,11 @@ int member_list::generate_member_report(int member_id)
               << "----------------------------------------\n\n";
 
         // Write Report
-        if(!mptr->member_report(write))
+        if(!mptr->member_report(write)) {
+          write << "Error generating member report!";
           return 1;  // Fail - File write error
+        }
+
 
         write.close();  // Close the file
         write.clear();  // Recycle var
@@ -426,7 +429,7 @@ int provider_list::generate_provider_report(int provider_id)
 
       // Generate filename and open file
       string directory = PRO_REPORT_DIR;
-      string filename = pptr->get_last_name() + "-" + get_date() + ".txt";
+      string filename = pptr->get_last_name() + get_date() + ".txt";
       ofstream write;
       write.open(directory + filename);
 
@@ -439,8 +442,10 @@ int provider_list::generate_provider_report(int provider_id)
               << "----------------------------------------\n\n";
 
         // Write Report
-        if(!pptr->provider_report(write))
+        if(!pptr->provider_report(write)) { 
+          write << "Error generating provider report!";
           return 1;  // Fail - File write error
+        }
 
         write.close();  // Close the file
         write.clear();  // Recycle var
