@@ -182,8 +182,9 @@ void DataCenter::managerMenu(){
             case 5:
                 UI(var, "Enter member number", 9, 9);
                 retval = memberList.generate_member_report(var);
-                if(retval == 1) UI("There was a problem opening the file.");
-                else if(retval == 2) UI("That user was not found.");
+                if(retval == 1) UI("There was a problem writing to the file.");
+                else if(retval == 2) UI("There was a problem opening the file.");
+                else if(retval == 3) UI("User not found.");
                 else UI("Report successfully generated.");
                 break;
 
@@ -191,9 +192,9 @@ void DataCenter::managerMenu(){
             case 6:
                 UI(var, "Enter provider number", 9, 9);
                 retval = providerList.generate_provider_report(var);
-                if(retval == 1) UI("There was a write problem.");
+                if(retval == 1) UI("There was a problem writing to the file.");
                 else if(retval == 2) UI("There was a problem opening the file.");
-                else if(retval == 3) UI("That user was not found.");
+                else if(retval == 3) UI("User not found.");
                 else UI("Report successfully generated.");
                 break;
 
@@ -480,7 +481,7 @@ int DataCenter::editProvider(){
         }
     }while(again);
         
-    provider edited(name, ID, address, city, state, zip, 0, 0, true);
+    provider edited(name, ID, address, city, state, zip, 0, 0, status);
     providerList.edit_provider(oldID, edited);
     
     return 1;
