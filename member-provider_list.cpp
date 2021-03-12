@@ -399,7 +399,7 @@ int provider_list::load_list(string filename)
 
     // Read
     while(temp.load_provider(read)) {
-      if(!add_provider(temp) || read.eof()); 
+      if(!add_provider(temp) || read.eof()) 
         return 1;  // Fail - File read error
     }
     
