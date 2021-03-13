@@ -120,6 +120,7 @@ bool member::load_member(ifstream & load)
 		load >> current_member;
         load.ignore(100, '\n');
 
+		services.clear();
         ServiceRecord obj;
         while(obj.load(load)){
             services.push_back(obj);
