@@ -95,7 +95,7 @@ bool ServiceRecord::generateMemberReport(ofstream &outputFile) {
 }
 
 bool ServiceRecord::EFTReport(float &totalFees) {
-    if(weekVerification(dateOfService)) {
+    if(weekVerification()) {
         totalFees += fees;
         return true;
     } else {
@@ -103,7 +103,7 @@ bool ServiceRecord::EFTReport(float &totalFees) {
     }
 }
 
-bool ServiceRecord::weekVerification(string dateOfService) {
+bool ServiceRecord::weekVerification() {
     string month = dateOfService.substr(0,2);
     string day = dateOfService.substr(3,2);
     string year = dateOfService.substr(6,4);
@@ -170,11 +170,11 @@ float ServiceRecord::getFee() {
 }
 
 bool ServiceRecord::weekVerificationWrapper() {
-    return weekVerification(dateOfService);
+    return weekVerification();
 }
 
 bool ServiceRecord::accountingReport(int &numOfConsulations, float &totalFees) {
-    if(weekVerification(dateOfService)) {
+    if(weekVerification()) {
         numOfConsulations++;
         totalFees += fees;
     } else {

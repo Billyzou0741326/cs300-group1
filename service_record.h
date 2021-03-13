@@ -19,7 +19,7 @@ class ServiceRecord {
         
         bool generateMemberReport(std::ofstream &OutputFile); //Writed the necessary information for a meber report. This function returns false when a record is outside of a week and true otherwise.
         bool EFTReport(float &totalFees); //This function accumulates the total fees for an EFT report. This function returns false if the record is outside of week and true otherwise.
-        bool weekVerification(std::string dateOfService); //This function verifies that the date passed to it is within seven days of the current date
+        bool weekVerification(); //This function verifies that the date passed to it is within seven days of the current date
         void save(std::ofstream & write); //Saves a record to the file passed to it
         bool load(std::ifstream & read); //Load a service record if one exists, otherwise returns false
         float getFee();
