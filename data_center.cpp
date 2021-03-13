@@ -515,7 +515,7 @@ int DataCenter::editMember(){
     do{
         memb.display_member_edit();
         cout << "[9] Save and close" << endl;
-        UI(choice, "Enter the number of the field you'd like to edit");
+        UI(choice, "Enter the number of the field you'd like to edit\nNote that changes aren't reflected until you save");
         
         switch(choice){
 
