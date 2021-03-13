@@ -2,7 +2,7 @@ CC=g++
 CXXFLAGS=-Wall
 object_files=member.o provider.o person.o member-provider_list.o \
 			 service_record.o provider_directory.o data_center.o
-tests=provider_directory_test
+tests=provider_directory_test member-provider_list_test
 
 
 all: data_center
@@ -31,6 +31,18 @@ provider_directory_test: provider_directory.h provider_directory.o provider_dire
 		provider_directory_test.cpp                 \
 		provider_directory.o                        \
 		-lgtest_main -lgtest -lpthread
+member-provider_list_test: person.h member-provider_list.h service_record.h member-provider_list_test.cpp \
+	person.o member.o member-provider_list.o service_record.o provider.o
+	$(CC) $(CXXFLAGS) -g -o member-provider_list_test \
+		member-provider_list_test.cpp                 \
+		member-provider_list.o                        \
+		person.o                                      \
+		member.o                                      \
+		provider.o                                    \
+		service_record.o                              \
+		-lgtest_main -lgtest -lpthread
+
+
 
 .PHONY: clean
 clean:

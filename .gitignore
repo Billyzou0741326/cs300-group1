@@ -4,4 +4,5 @@ a.exe
 .vscode
 a.out
 provider_directory_test
+member-provider_list_test
 *.o
